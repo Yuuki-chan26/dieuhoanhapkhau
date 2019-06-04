@@ -1,0 +1,20 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@model HtmlPage
+@{
+    ViewBag.Title = Model.HtmlPageTitle;
+    var protag = ViewData["ProTag"];
+    var currenturl = Request.RawUrl;
+}
+<script>
+    $(document).ready(function () {
+        $('.htmlpage-content img').addClass('img-responsive');
+    });
+</script>
+
+<div class="container">
+<div class="row htmlpage-content">
+    <div class="col-lg-12">
+        @MvcHtmlString.Create(Model.HtmlPageBody)
+    </div>
+</div>
+</div>

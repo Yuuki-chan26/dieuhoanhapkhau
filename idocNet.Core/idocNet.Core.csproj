@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A0A8CE0B-C6E3-4DBA-A0BD-5C5D2011B9BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>idocNet.Core</RootNamespace>
+    <AssemblyName>idocNet.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\Lib\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="NLog">
+      <HintPath>..\Lib\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v2.0\Assemblies\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\CachedNullValue.cs" />
+    <Compile Include="Caching\CacheExpiredNotification.cs" />
+    <Compile Include="Caching\CacheManager.cs" />
+    <Compile Include="Caching\CacheManagerFactory.cs" />
+    <Compile Include="Caching\CacheUtils.cs" />
+    <Compile Include="Caching\INotifyCacheExpired.cs" />
+    <Compile Include="Caching\MemoryCacheManager.cs" />
+    <Compile Include="Caching\ObjectCacheExtensions.cs" />
+    <Compile Include="ComponentModel\MetadataForAttribute.cs" />
+    <Compile Include="ComponentModel\TypeDescriptorHelper.cs" />
+    <Compile Include="Configuration\AuthorizationProvidersElement.cs" />
+    <Compile Include="Configuration\CDataBaseConfigurationElement.cs" />
+    <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
+    <Compile Include="Configuration\CDataElement.cs" />
+    <Compile Include="Configuration\CustomDbAuthenticationProviderElement.cs" />
+    <Compile Include="Configuration\DataAccessElement.cs" />
+    <Compile Include="Configuration\FormsAuthElement.cs" />
+    <Compile Include="Configuration\ForumSorting.cs" />
+    <Compile Include="Configuration\HtmlInputElement.cs" />
+    <Compile Include="Configuration\IOptionalElement.cs" />
+    <Compile Include="Configuration\KeySecretElement.cs" />
+    <Compile Include="Configuration\Nav.cs" />
+    <Compile Include="Configuration\Notifications\NotificationElement.cs" />
+    <Compile Include="Configuration\Notifications\NotificationsContainerElement.cs" />
+    <Compile Include="Configuration\RedirectorConfiguration.cs" />
+    <Compile Include="Configuration\RedirectorUrl.cs" />
+    <Compile Include="Configuration\RedirectorUrlCollection.cs" />
+    <Compile Include="Configuration\RedirectorUrlGroup.cs" />
+    <Compile Include="Configuration\RedirectorUrlGroupCollection.cs" />
+    <Compile Include="Configuration\Redirector\RedirectorConfiguration.cs" />
+    <Compile Include="Configuration\Redirector\RedirectorUrl.cs" />
+    <Compile Include="Configuration\Redirector\RedirectorUrlCollection.cs" />
+    <Compile Include="Configuration\Redirector\RedirectorUrlGroup.cs" />
+    <Compile Include="Configuration\Redirector\RedirectorUrlGroupCollection.cs" />
+    <Compile Include="Configuration\ReplacementCollection.cs" />
+    <Compile Include="Configuration\ReplacementItem.cs" />
+    <Compile Include="Configuration\ResourcesElement.cs" />
+    <Compile Include="Configuration\RouteElement.cs" />
+    <Compile Include="Configuration\RouteElementCollection.cs" />
+    <Compile Include="Configuration\RouteMappingConfiguration.cs" />
+    <Compile Include="Configuration\Routing\RouteElement.cs" />
+    <Compile Include="Configuration\Routing\RouteElementCollection.cs" />
+    <Compile Include="Configuration\Routing\RouteMappingConfiguration.cs" />
+    <Compile Include="Configuration\SiteConfiguration.cs" />
+    <Compile Include="Configuration\SpamPreventionElement.cs" />
+    <Compile Include="Configuration\SSOOpenIdElement.cs" />
+    <Compile Include="Configuration\TemplateElement.cs" />
+    <Compile Include="Configuration\TemplateMobileElement.cs" />
+    <Compile Include="Configuration\UIElement.cs" />
+    <Compile Include="Data\CacheObjectProviderBase.cs" />
+    <Compile Include="Data\DataAccessExtensions.cs" />
+    <Compile Include="Data\DataAccess\AdoExtensions.cs" />
+    <Compile Include="Data\DataAccess\DataAccessBase.cs" />
+    <Compile Include="Data\Dynamic\DynamicDictionary.cs" />
+    <Compile Include="Data\Entities\DataColumAttribute.cs" />
+    <Compile Include="Data\Entities\EntityBase.cs" />
+    <Compile Include="Data\Entities\Paging\PageInfo.cs" />
+    <Compile Include="Data\Entities\Validation\IEnsureValidation.cs" />
+    <Compile Include="Data\Entities\Validation\ValidationAttribute.cs" />
+    <Compile Include="Data\Entities\Validation\ValidationError.cs" />
+    <Compile Include="Data\Entities\Validation\ValidationErrorType.cs" />
+    <Compile Include="Data\Entities\Validation\ValidationException.cs" />
+    <Compile Include="Data\DataManagerBase.cs" />
+    <Compile Include="Data\IDataProvider.cs" />
+    <Compile Include="Data\Serialization\DataContractSerializationHelper.cs" />
+    <Compile Include="Data\Serialization\JsonSerializer.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\MovedPermanentlyResult.cs" />
+    <Compile Include="Extensions\PagedList.cs" />
+    <Compile Include="Extensions\PagerExtensions.cs" />
+    <Compile Include="Extensions\SpamPreventionElement.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\ValidationExtensions.cs" />
+    <Compile Include="Extensions\ViewDataExtensions.cs" />
+    <Compile Include="HealthMonitoring\Log.cs" />
+    <Compile Include="HealthMonitoring\LoggerServiceClient.cs" />
+    <Compile Include="HealthMonitoring\WebRequestErrorEventWrapper.cs" />
+    <Compile Include="IO\IOUtility.cs" />
+    <Compile Include="IO\StreamExtensions.cs" />
+    <Compile Include="Localization\LocalizationParser.cs" />
+    <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\MemberException.cs" />
+    <Compile Include="Reflection\MemberNotFoundException.cs" />
+    <Compile Include="Reflection\ObjectExtensions.cs" />
+    <Compile Include="Reflection\PropertyExtensions.cs" />
+    <Compile Include="SR.cs" />
+    <Compile Include="Utils\CookieUtils.cs" />
+    <Compile Include="Utils\EncryptUtils.cs" />
+    <Compile Include="Utils\FutureActionUtils.cs" />
+    <Compile Include="Utils\HashUtils.cs" />
+    <Compile Include="Utils\RandomPassword.cs" />
+    <Compile Include="Utils\StringCipher.cs" />
+    <Compile Include="Utils\UniqueIdGenerator.cs" />
+    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="Web\Mvc\DataSourceAttribute.cs" />
+    <Compile Include="Web\Mvc\Grid\Class1.cs" />
+    <Compile Include="Web\Mvc\Grid\GridAction.cs" />
+    <Compile Include="Web\Mvc\Grid\GridActionAttribute.cs" />
+    <Compile Include="Web\Mvc\Grid\GridAttribute.cs" />
+    <Compile Include="Web\Mvc\Grid\GridColumn.cs" />
+    <Compile Include="Web\Mvc\Grid\GridColumnAttribute.cs" />
+    <Compile Include="Web\Mvc\Grid\GridCommand.cs" />
+    <Compile Include="Web\Mvc\Grid\GridCommandAttribute.cs" />
+    <Compile Include="Web\Mvc\Grid\GridExtensions.cs" />
+    <Compile Include="Web\Mvc\Grid\GridItem.cs" />
+    <Compile Include="Web\Mvc\Grid\GridItemAction.cs" />
+    <Compile Include="Web\Mvc\Grid\GridModel.cs" />
+    <Compile Include="Web\Mvc\Grid\IColumnHeaderRender.cs" />
+    <Compile Include="Web\Mvc\Grid\IItemColumnRender.cs" />
+    <Compile Include="Web\Mvc\Grid\PageSizeAttribute.cs" />
+    <Compile Include="Web\Mvc\Grid\PageSizeCommand.cs" />
+    <Compile Include="Web\Mvc\Html\HtmlControlBase.cs" />
+    <Compile Include="Web\Mvc\Html\HtmlExtensions.cs" />
+    <Compile Include="Web\Mvc\Html\HtmlHidden.cs" />
+    <Compile Include="Web\Mvc\Html\HtmlTextarea.cs" />
+    <Compile Include="Web\Mvc\Html\HtmlTextbox.cs" />
+    <Compile Include="Web\Mvc\Html\IHtmlControl.cs" />
+    <Compile Include="Web\Mvc\Html\LabelExtensions.cs" />
+    <Compile Include="Web\Mvc\Html\LinkExtensions.cs" />
+    <Compile Include="Web\Mvc\Html\RadioButtonListExtensions.cs" />
+    <Compile Include="Web\Mvc\Html\TagBuilderUtility.cs" />
+    <Compile Include="Web\Mvc\Html\ValidationExtensions.cs" />
+    <Compile Include="Web\Mvc\ISelectListDataSource.cs" />
+    <Compile Include="Web\Mvc\ModelMetadataExtensions.cs" />
+    <Compile Include="Web\Mvc\NextPortalDataAnnotationsModelMetadataProvider.cs" />
+    <Compile Include="Web\Mvc\NextPortalModelMetadata.cs" />
+    <Compile Include="Web\Mvc\Paging\PagedList.cs" />
+    <Compile Include="Web\Mvc\Paging\PageLinqExtensions.cs" />
+    <Compile Include="Web\Mvc\Paging\PagerBuilder.cs" />
+    <Compile Include="Web\Mvc\Paging\PagerHelper.cs" />
+    <Compile Include="Web\Mvc\Paging\PagerItem.cs" />
+    <Compile Include="Web\Mvc\Paging\PagerOptions.cs" />
+    <Compile Include="Web\Mvc\RequestContextExtensions.cs" />
+    <Compile Include="Web\Url\UrlUtility.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

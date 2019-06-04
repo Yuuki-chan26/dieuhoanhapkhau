@@ -1,0 +1,129 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@model Company
+@{
+    ViewBag.Title = "Sửa thông tin công ty";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li><a href="@Url.Action("Admin", "Account")">Dashboard</a></li>
+            <li><a href="@Url.Action("Search","Company")">Thông tin công ty</a></li>
+
+            <li class="active">Sửa thông tin công ty</li>
+
+        </ul>
+        <!-- /.breadcrumb -->
+
+
+    </div>
+
+    <div class="page-content">
+        <div class="page-header">
+            <h1>
+                Sửa thông tin công ty
+            </h1>
+        </div>
+        <!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "manageForm", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+                            {
+                                @Html.HiddenFor(mbox => mbox.CompanyId)
+                            }
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="CompanyName">Tên công ty:</label>
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="CompanyName" id="CompanyName" class="col-xs-12 col-sm-6" value="@Model.CompanyName" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="CompanyHotline">Hotline:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="CompanyHotline" id="CompanyHotline" class="col-xs-12 col-sm-6" value="@Model.CompanyHotline" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="CompanyMail">Email liên hệ:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="CompanyMail" id="CompanyMail" class="col-xs-12 col-sm-6" value="@Model.CompanyMail" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="CompanyFace">Địa chỉ Facebook:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="CompanyFace" id="CompanyFace" class="col-xs-12 col-sm-6" value="@Model.CompanyFace" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="CompanyGoogle">Địa chỉ google+:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="CompanyGoogle" id="CompanyGoogle" class="col-xs-12 col-sm-6" value="@Model.CompanyGoogle" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="CompanyYoutube">Địa chỉ youtube:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="CompanyYoutube" id="CompanyYoutube" class="col-xs-12 col-sm-6" value="@Model.CompanyYoutube" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="CompanyInfo">Nội dung:</label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        @Html.TextAreaFor(model => model.CompanyInfo)
+                                        @Html.Partial("EditorScripts","CompanyInfo")
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-success" value="Lưu" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+<script type="text/javascript">
+    $('textarea[class*=autosize]').autosize({ append: "\n" });
+    $('textarea.limited').inputlimiter({
+        remText: '%n character%s remaining...',
+        limitText: 'max allowed : %n.'
+    });
+</script>
+
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("Search","Setting")');
+</script>

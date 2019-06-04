@@ -1,0 +1,8 @@
+D:\Allprjs\idocNet\dieuhoanhapkhau\dieuhoanhapkhau.biz\bin\Debug\dieuhoanhapkhau.biz.dll
+D:\Allprjs\idocNet\dieuhoanhapkhau\dieuhoanhapkhau.biz\bin\Debug\dieuhoanhapkhau.biz.pdb
+D:\Allprjs\idocNet\dieuhoanhapkhau\dieuhoanhapkhau.biz\bin\Debug\idocNet.Core.dll
+D:\Allprjs\idocNet\dieuhoanhapkhau\dieuhoanhapkhau.biz\bin\Debug\NLog.dll
+D:\Allprjs\idocNet\dieuhoanhapkhau\dieuhoanhapkhau.biz\bin\Debug\idocNet.Core.pdb
+D:\Allprjs\idocNet\dieuhoanhapkhau\dieuhoanhapkhau.biz\obj\Debug\dieuhoanhapkhau.biz.dll
+D:\Allprjs\idocNet\dieuhoanhapkhau\dieuhoanhapkhau.biz\obj\Debug\dieuhoanhapkhau.biz.pdb
+D:\Allprjs\idocNet\dieuhoanhapkhau\dieuhoanhapkhau.biz\obj\Debug\dieuhoanhapkhau.biz.csprojResolveAssemblyReference.cache

@@ -1,0 +1,181 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using dieuhoanhapkhau.biz.Services
+@model List<Product>
+
+@{
+    var manufacter = ViewBag.Manufacter;
+    ViewBag.Title = "Hãng điều hòa " + manufacter.ProducerName;
+    var parentid = ViewBag.ParentId;
+    var parentCate = ServiceFactory.ProductCategoryManager.Get(new ProductCategory { PrdCategoryId = parentid });
+
+
+
+}
+<div id="body" class=" uk-container uk-container-center" style="margin-top:30px;">
+    <section class="main_main">
+        @if (Model.Count > 0)
+        {
+            <section class="products_catelogies key-1">
+                <div class="breadcrumb">
+                    <ul class="uk-breadcrumb">
+                        <li><a href="#" title="Trang chủ"><i class="fa fa-home"></i> Trang chủ</a></li>
+
+                        @foreach (Product item1 in Model)
+                        {
+                            var category1 = ServiceFactory.ProductManager.ProductGetByCateId(item1.PrdCategoryId, Culture);
+
+                            <li class="uk-active"><a href="@Url.Action("GetByParentId","Product",new { parentId=parentCate.PrdCategoryId})" title="Tin Tức &amp; Sự Kiện">@parentCate.PrdCategoryTitle</a></li>
+                        }
+
+                    </ul>
+                </div>
+            </section>
+
+
+            <section class="home_products">
+
+                <div class="uk-container-center">
+                    <section class="panel-body">
+                        <div class="row10">
+                            <ul data-uk-grid-match="{target: '.box_box_categories .prd-title'}" class="uk-grid lib-grid-0 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-xlarge-1-4 listProductptops">
+                                @if (Model.Count > 0 && Model != null)
+                                {
+                                    var listChildrenCates = ServiceFactory.ProductManager.ProductGetByCateId(ViewBag.ParentId, "vi-VN");
+
+                                    if (listChildrenCates.Count > 0 && listChildrenCates != null)
+                                    {
+                                        foreach (var itemprd in listChildrenCates)
+                                        {
+                                            <li style="padding-left:0px; padding-right:10px;" class="p10">
+                                                <div class="box_box_categories">
+                                                    <div class="img_box_categories">
+                                                        <a href="@Url.Action("Detail", "Products", new { productcode = itemprd.ProductCode })" title="@itemprd.ProductName">
+                                                            <img src="@itemprd.ProductImage" alt="@itemprd.ProductName">
+                                                        </a>
+                                                    </div>
+                                                    <div class="content_box_categories">
+                                                        <h3 class="prd-title" style="">
+                                                            <a href="@Url.Action("Detail", "Products", new { productcode = itemprd.ProductCode })" title="@itemprd.ProductName">
+                                                                @itemprd.ProductName
+                                                            </a>
+                                                        </h3>
+                                                        <div class="item_price_box_categories">
+                                                            <span class="no-trike">Giá: <font>@String.Format("{0:0,0}", Convert.ToDouble(itemprd.ProductPrice)) đ</font></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+                                    <p class="data-up">Đang cập nhật dữ liệu</p>
+                                }
+                            </ul>
+                        </div>
+                    </section>
+
+                </div>
+            </section>
+
+
+        }
+
+    </section>
+</div>
+<script>
+    setAdminCurrentUrl('@Url.Action("GetByParentId","Products",new { parentId=parentid})','@Url.Action("GetByParentId", "Product", new { parentId = parentid })')
+</script>
+
+<script>
+    selectItem('@Url.Action("GetByProducer","Products")')
+</script>
+<script>
+    $(document).ready(function () {
+        $('.quantity').change(function () {
+            var number = $(this).val();
+            $('.ajax-addtocart').attr('data-quantity', '');
+            $('.ajax-addtocart').attr('data-quantity', number);
+        });
+        $('.ajax-addtocart').click(function () {
+            var product = $(this);
+            // var quantity = $('#ajax-cart-quantity').val();
+            var modal = UIkit.modal('#modal-cart', {
+                bgclose: false,
+            });
+            modal.show();
+            $('#modal-cart .cart-content').html('Loading...');
+            $.post('https://dieuhoanhapkhauchinhhang.com.vn/products/ajax/cart/addtocart.html', {
+                id: product.attr('data-id'),
+                quantity: product.attr('data-quantity'),
+            }, function (data) {
+                var json = JSON.parse(data);
+                $('#modal-cart .cart-content').html(json.html);
+                $('#ajax-home-cart-quantity').html(json.item);
+            });
+            return false;
+        });
+
+        $(document).on('click', '#ec-module-cart .augment', function () {
+            var item = $(this);
+            var quantity = parseInt($(this).parent().find('.quantity').val());
+            quantity = quantity + 1;
+            item.parent().find('.quantity').val(quantity);
+            ajax_cart_update();
+            return false;
+        });
+
+        $(document).on('click', '#ec-module-cart .abate', function () {
+            var item = $(this);
+            var quantity = parseInt($(this).parent().find('.quantity').val());
+            if (quantity <= 1) {
+                quantity = 1
+            } else {
+                quantity = quantity - 1;
+            }
+            item.parent().find('.quantity').val(quantity);
+            ajax_cart_update();
+            return false;
+        });
+
+        $(document).on('click', '#ec-module-cart .delete', function () {
+            var item = $(this);
+            item.parent().parent().parent().parent().parent().find('.quantity').val(0);
+            item.parent().parent().parent().parent().parent().addClass('uk-hidden').removeClass('item');
+            ajax_cart_update();
+            return false;
+        });
+
+        $(document).on('click', '.ec-cart-continue', function () {
+            UIkit.modal('#modal-cart').hide();
+            return false;
+        });
+
+        $('.augment').click(function () {
+            var num_order = parseInt($(this).parent().find('.quantity').val());
+            num_order += 1;
+            $(this).parent().find('.quantity').val(num_order);
+        });
+        $('.abate').click(function () {
+            var cart_class = $(this).attr('data-cart');
+            var num_order = parseInt($(this).parent().find('.quantity').val());
+            if (num_order <= 1) {
+                num_order = 1
+            } else {
+                num_order -= 1;
+            }
+            $(this).parent().find('.quantity').val(num_order);
+        });
+    });
+
+    function ajax_cart_update() {
+        $.post('https://dieuhoanhapkhauchinhhang.com.vn/products/ajax/cart/updatetocart.html', $('#ajax-cart-form').serialize(), function (data) {
+            var price = JSON.parse(data);
+            $('#ajax-cart-form').html(price.html);
+        });
+        return false;
+    }
+</script>

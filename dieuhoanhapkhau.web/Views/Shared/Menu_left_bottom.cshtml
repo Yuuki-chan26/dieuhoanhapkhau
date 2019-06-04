@@ -1,0 +1,74 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using dieuhoanhapkhau.biz.Services;
+@using idocNet.Core.Extensions
+@model Product
+@{
+    /**/
+
+    var ProductHot = ServiceFactory.ProductManager.GetListHotProduct(Culture);
+}
+<section class="aside_block bor" style="margin-top:30px">
+    <section class="panel-body bor">
+        <div class="hotline_left">
+
+        </div>
+        <div class="tu-van">
+            <div class="blink">0974.028.279</div>
+        </div>
+
+        <div class="productDetailSupport">
+            <div class="content">
+                <div class="hotline_support">
+                    <div class="avatar_support">
+                        <a href="tel: 0435 627 671" title="Gọi ngay">
+                            <img src="~/images/cham-soc-khach-hang-noi-that-amu-01.jpg" alt="Tư vấn viên">
+                        </a>
+                    </div>
+                    <div class="content_support">
+                        <h6>Mr Ký</h6>
+                        <a href="tel: 0435 627 671" title="Gọi ngay">
+                            0435 627 671
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<section class="aside_block none768" style="margin-top:20px; float:left">
+    <section class="panel-body">
+        <div class="title_block_cat">
+            Sản phẩm bán chạy
+        </div>
+        <ul class="list_item_bl">
+            <li>
+                @if (ProductHot.Count > 0)
+                {
+                    foreach (Product item in ProductHot)
+                    {
+                        <div class="box_bl">
+                            <div class="img_bl">
+                                <a href="@Url.Action("Detail", "Products", new { productcode = item.ProductCode })" title="@item.ProductName">
+                                    <img src="@item.ProductImage" alt="@item.ProductName">
+                                </a>
+                            </div>
+                            <div>
+                                <h3>
+                                    <a href="@Url.Action("Detail", "Products", new { productcode = item.ProductCode })" title="@item.ProductName">
+                                        @item.ProductName
+                                    </a>
+                                </h3>
+                                <div class="item_price">
+                                    <span class="no-trike">Giá: <font>@String.Format("{0:0,0}", Convert.ToDouble(item.ProductPrice)) đ</font></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </li>
+
+        </ul>
+
+    </section>
+</section>

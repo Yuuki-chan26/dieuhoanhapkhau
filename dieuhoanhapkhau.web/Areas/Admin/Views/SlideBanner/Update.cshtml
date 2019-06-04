@@ -1,0 +1,207 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using idocNet.Core.Extensions
+@model SlideBanner
+@{
+                /**/
+
+                if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+                {
+                    ViewBag.Title = "Sửa SlideBanner";
+                }
+                else
+                {
+                    ViewBag.Title = "Thêm mới SlideBanner";
+                }
+                Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<script>
+    function Browser(e) {
+        var finder = new CKFinder();
+        finder.selectActionFunction = function (url) {
+            $('#Image').val(url);
+        };
+        finder.popup();
+    };
+    //var editor = CKEDITOR.replace('txtContent', {
+    //    customConfig: '/Content/ckeditor/config.js',
+    //});
+</script>
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li><a href="@Url.Action("Admin", "Account")">Dashboard</a></li>
+            <li><a href="@Url.Action("Search", "SlideBanner")">Danh sách slide</a></li>
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <li class="active">Edit @Model.SlideBannerId</li>
+            }
+            else
+            {
+                <li class="active">Tạo mới slide</li>
+            }
+        </ul>
+        <!-- /.breadcrumb -->
+
+
+    </div>
+
+    <div class="page-content">
+
+
+        <div class="page-header">
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <h1>
+                    Sửa Slide id @Model.SlideBannerId
+
+                </h1>
+            }
+            else
+            {
+                <h1>
+                    Tạo mới slideBanner
+
+                </h1>
+            }
+        </div>
+        <!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "manageForm", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+                            {
+                                @Html.HiddenFor(mbox => mbox.SlideBannerId)
+                            }
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="Url">Đường dẫn:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="Url" id="Url" class="col-xs-12 col-sm-6" value="@Model.Url" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageTitle">Danh mục:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @Html.DropDownListDefault("ProductId", ViewData.Get<SelectList>("Categories"), "", "-- Tất cả --", new { @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="Image">Ảnh:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        @Html.TextBoxFor(model => model.Image)
+                                        <button type="button" id="btnBrowser" class="btn btn-sm btn-success" onclick="Browser();">Browser...</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="OrderNo"></label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @if (Model.Image != null)
+                                        {
+                                            <img src="@Model.Image" width="250" height="150" alt="" />
+                                        }
+                                        else
+                                        {
+                                            <img src="noimage.jpg" width="250" height="150" alt="" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="OrderNo">Thứ tự:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="number" name="OrderNo" id="OrderNo" class="col-xs-12 col-sm-1" value="@Model.OrderNo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @{var check = Model.IsActive ? "checked" : "";}
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="IsActive">Trạng thái:</label>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="IsActive" type="checkbox" class="ace" value="true" @check>
+
+                                        <span class="lbl"> Ẩn/Hiện bài viết</span>
+                                        <input name="IsActive" type="hidden" value="false" />
+                                    </label>
+                                </div>
+                            </div>
+
+
+
+                            <input type="submit" class="btn btn-success" value="Lưu" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+<script src="~/ckeditor/ckeditor.js"></script>
+
+<script>
+
+    CKEDITOR.replace("IDCuaTextArea");
+
+</script>
+<script type="text/javascript">
+    $('textarea[class*=autosize]').autosize({ append: "\n" });
+    $('textarea.limited').inputlimiter({
+        remText: '%n character%s remaining...',
+        limitText: 'max allowed : %n.'
+    });
+</script>
+
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("Search", "SlideBanner")');
+</script>
+<style type="text/css">
+
+
+    .pick-a-color-markup {
+        margin: 0px 0px;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".pick-a-color").pickAColor({
+            showSpectrum: true,
+            showSavedColors: true,
+            saveColorsPerElement: true,
+            fadeMenuToggle: true,
+            showAdvanced: true,
+            showBasicColors: true,
+            showHexInput: true,
+            allowBlank: true,
+            inlineDropdown: true
+        });
+
+    });
+
+</script>

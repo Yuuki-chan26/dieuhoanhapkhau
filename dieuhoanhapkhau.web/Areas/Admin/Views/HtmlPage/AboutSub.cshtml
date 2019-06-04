@@ -1,0 +1,85 @@
+﻿@using dieuhoanhapkhau.biz.Services;
+@using dieuhoanhapkhau.biz.Models
+@using idocNet.Core.Extensions
+@model HtmlPageCategory
+@{
+    //ViewBag.Title = "Về công ty - " + Model.HtmlPageCategoryTitle;
+    var listcate = ViewBag.ListCates as List<HtmlPageCategory>;
+
+}
+<script>
+    $(document).ready(function () {
+        $('.htmlpage-content img').addClass('img-responsive');
+    });
+</script>
+
+<div class="col-sm-12 no-padding htmlpage-detail">
+    @if (Model.ListPage.Count > 0)
+    {
+        if (Model.ListPage.Count == 1)
+        {
+            <div class="col-md-12">
+                @MvcHtmlString.Create(Model.ListPage[0].HtmlPageBody)
+            </div>
+        }
+        else
+        {
+            <div class="col-md-4 no-padding">
+
+                <ul class="listpage-new">
+                    @foreach (HtmlPage item in Model.ListPage)
+                    {
+                        if (item.HtmlPageTitle.Length < 37)
+                        {
+
+                            <li>
+                                <h2>
+                                    <a href="@Url.Action("AboutSub", "HtmlPage",
+                                                                  new { shortname = item.HtmlPageCategoryTitle.ToUrlSegment(280), shortnamehtml = item.HtmlPageShortName })">
+                                        @item.HtmlPageTitle
+                                    </a>
+                                </h2>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <h2 class="line2">
+                                    <a href="@Url.Action("AboutSub", "HtmlPage",
+                                                                  new { shortname = item.HtmlPageCategoryTitle.ToUrlSegment(280), shortnamehtml = item.HtmlPageShortName })">
+                                        @item.HtmlPageTitle
+                                    </a>
+                                </h2>
+                            </li>
+
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="col-md-8 htmlpage-content">
+                @if (String.IsNullOrEmpty(ViewBag.ShortNameHtml))
+                {
+                    <h1 style="">@Model.ListPage[0].HtmlPageTitle</h1>
+                    @MvcHtmlString.Create(Model.ListPage[0].HtmlPageBody)
+                }
+                else
+                {
+                    foreach (HtmlPage item in Model.ListPage)
+                    {
+                        if (item.HtmlPageShortName == ViewBag.ShortNameHtml)
+                        {
+                            <h1>@item.HtmlPageTitle</h1>
+                            @MvcHtmlString.Create(item.HtmlPageBody)
+                        }
+                    }
+                }
+            </div>
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("AboutSub", "HtmlPage")',
+        '@Url.Action("AboutSub", "HtmlPage")');
+    setServiceUrl('@Url.Action("AboutSub", "HtmlPage", new { HtmlPageCateId = Model.HtmlPageCategoryId, shortname = Model.HtmlPageCategoryShortName })');
+</script>

@@ -1,0 +1,165 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using idocNet.Core.Extensions
+@model ProductCategory
+@{
+                /**/
+
+                ViewBag.Title = Model.PrdCategoryTitle;
+                Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li><a href="@Url.Action("Admin", "Account")">Dashboard</a></li>
+            <li><a href="@Url.Action("SearchCate", "Product")">Danh sách loại xe</a></li>
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <li class="active">Edit @Model.PrdCategoryId</li>
+            }
+            else
+            {
+                <li class="active">Tạo mới loại xe</li>
+            }
+        </ul>
+        <!-- /.breadcrumb -->
+
+
+    </div>
+
+    <div class="page-content">
+
+
+        <div class="page-header">
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <h1>
+                    Sửa danh mục loại xe id @Model.PrdCategoryId
+
+                </h1>
+            }
+            else
+            {
+                <h1>
+                    Tạo mới loại xe
+
+                </h1>
+            }
+        </div>
+        <!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "manageForm", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+                            {
+                                @Html.HiddenFor(mbox => mbox.PrdCategoryId)
+                            }
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageTitle">Tiêu đề loại xe:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="PrdCategoryTitle" id="PrdCategoryTitle" class="col-xs-12 col-sm-6" value="@Model.PrdCategoryTitle" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageTitle">Hãng:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @Html.DropDownListDefault("ProducerId", ViewData.Get<SelectList>("Producers"), "0", "-- Tất cả --", new { @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageTitle">Danh mục:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @Html.DropDownListDefault("ParentId", ViewData.Get<SelectList>("Categories"), "0", "-- Tất cả --", new { @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageSummary">Mô tả:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        <textarea class="form-control limited autosize-transition" required id="PrdCategoryDescription" name="PrdCategoryDescription" maxlength="150">@Model.PrdCategoryDescription</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageSummary">Keyword:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        @Html.TextAreaFor(m => m.PrdCategoryKeyword, new { @class = "form-control limited autosize-transition", @required = "" })
+                                        @*<textarea class="form-control limited autosize-transition" required id="HtmlPageKeyword" name="HtmlPageKeyword" maxlength="150">@Model.HtmlPageKeyword</textarea>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageSummary">Tóm tắt:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        <textarea class="form-control limited autosize-transition" required id="PrdCategorySummary" name="PrdCategorySummary" maxlength="150">@Model.PrdCategorySummary</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="OrderNo">Thứ tự:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="number" name="OrderNo" id="OrderNo" class="col-xs-12 col-sm-1" value="@Model.OrderNo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @{var check = Model.IsActive ? "checked" : "";}
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="IsActive">Trạng thái:</label>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="IsActive" type="checkbox" class="ace" value="true" @check>
+
+                                        <span class="lbl"> Ẩn/Hiện loại xe</span>
+                                        <input name="IsActive" type="hidden" value="false" />
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-success" value="Lưu" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+<script type="text/javascript">
+    $('textarea[class*=autosize]').autosize({ append: "\n" });
+    $('textarea.limited').inputlimiter({
+        remText: '%n character%s remaining...',
+        limitText: 'max allowed : %n.'
+    });
+</script>
+
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("UpdateCate", "Product")');
+</script>

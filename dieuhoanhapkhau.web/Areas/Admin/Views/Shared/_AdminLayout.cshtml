@@ -1,0 +1,443 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>@*@ViewBag.Title*@ - Điều hòa nhập khẩu Admin</title>
+
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <!-- bootstrap & fontawesome -->
+    @*  <link rel="stylesheet" href="~/Content/color/bootstrap-3.0.0.min.css">*@
+    <link rel="stylesheet" href="~/Content/admin/Css/bootstrap.min.css" />
+
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/images/icon-hyundai.ico" type="image/x-icon" />
+    <link rel="icon" href="/images/icon-hyundai.ico" type="image/x-icon" />
+
+
+    <link rel="stylesheet" href="~/Content/color/pick-a-color-1.2.3.min.css">
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="~/Content/admin/Css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+            <link rel="stylesheet" href="~/Content/admin/Css/ace-part2.min.css" class="ace-main-stylesheet" />
+        <![endif]-->
+    <!--[if lte IE 9]>
+          <link rel="stylesheet" href="~/Content/admin/Css/ace-ie.min.css" />
+        <![endif]-->
+    <!-- inline styles related to this page -->
+    <!--[if !IE]> -->
+    <script src="~/Content/admin/Script/jquery.min.js"></script>
+    @*<script src="~/Content/admin/Script/jquery2.1.1/jquery.min.js"></script>*@
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script src="~/Content/admin/Script/jquery1.11.1/jquery.min.js"></script>
+    <![endif]-->
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/Content/admin/Script/jquery.min.js'>" + "<" + "/script>");
+    </script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+     window.jQuery || document.write("<script src='/Content/admin/Script/jquery1x.min.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='/Content/admin/Script/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <!-- ace settings handler -->
+    <script src="~/Content/color/jquery-1.9.1.min.js"></script>
+    <script src="~/Content/color/tinycolor-0.9.15.min.js"></script>
+    <script src="~/Content/color/pick-a-color-1.2.3.min.js"></script>
+    <script src="~/Content/admin/Script/ace-extra.min.js"></script>
+    <script src="~/Content/admin/Script/jquery.dataTables.min.js"></script>
+    <script src="~/Content/admin/Script/jquery.dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/admin/Script/dataTables.tableTools.min.js"></script>
+    <script src="~/Content/admin/Script/dataTables.colVis.min.js"></script>
+    <script src="~/Content/admin/Script/bootbox.min.js"></script>
+    <script src="~/Content/admin/Script/jquery.validate.min.js"></script>
+    <script src="~/Content/admin/Script/jquery.inputlimiter.1.3.1.min.js"></script>
+    <script src="~/Content/admin/Script/jquery.autosize.min.js"></script>
+
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+        <script src="~/Content/admin/Script/html5shiv.min.js"></script>
+        <script src="~/Content/admin/Script/respond.min.js"></script>
+        <![endif]-->
+    <script type="text/javascript">
+
+        function setAdminCurrentUrl(url) {
+
+            $('.nav-list a[href="' + url + '"]').each(function () {
+                $(this).closest('li').addClass('active');
+                $(this).closest('li').closest('ul').closest('li').addClass('active open');
+            });
+        }
+
+
+    </script>
+    <script src="~/Areas/Admin/Content/ckfinder/ckfinder.js"></script>
+    <script src="~/Areas/Admin/Content/ckeditor/ckeditor.js"></script>
+    <script>
+        function Browser(e) {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#Image').val(url);
+            };
+            finder.popup();
+        };
+        var editor = CKEDITOR.replace('txtContent', {
+            customConfig: '/Areas/Admin/Content/ckeditor/config.js',
+        });
+    </script>
+    <script>
+        function Browser(e) {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#HtmlPageImage').val(url);
+            };
+            finder.popup();
+        };
+        //var editor = CKEDITOR.replace('txtContent', {
+        //    customConfig: '/Content/ckeditor/config.js',
+        //});
+    </script>
+</head>
+
+<body class="no-skin">
+    <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-container" id="navbar-container">
+            <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+                <span class="sr-only">Toggle sidebar</span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+            </button>
+
+            <div class="navbar-header pull-left">
+                <a href="@Url.Action("Admin", "Account")" class="navbar-brand">
+                    <small>
+                        Điều hòa nhập khẩu Administrators
+                    </small>
+                </a>
+                <a style="color: #eee; font-size: 16px; width: 16px; float: left;" target="_blank" href="/" title="Go to front site"><i class="ace-icon fa fa-external-link-square  bigger-120"></i></a>
+            </div>
+            @*@if (Request.IsAuthenticated)
+            {*@
+                <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                    <ul class="nav ace-nav">
+                        <li class="light-blue">
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <span class="user-info">
+                                    <small>Welcome,</small>
+                                    @*@CurrentUser.Name*@
+                                </span>
+
+                                <i class="ace-icon fa fa-caret-down"></i>
+                            </a>
+
+                            <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                <li>
+                                    <a href="#">
+                                        <i class="ace-icon fa fa-cog"></i>
+                                        Settings
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="ace-icon fa fa-user"></i>
+                                        Profile
+                                    </a>
+                                </li>
+
+                                <li class="divider"></li>
+
+                                <li>
+                                    <a href="@Url.Action("LogOff", "Account")">
+                                        <i class="ace-icon fa fa-power-off"></i>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            @*}*@
+        </div>
+        <!-- /.navbar-container -->
+    </div>
+
+    <div class="main-container" id="main-container">
+        <!--menu-min cho vào class sidebar-->
+        <div id="sidebar" class="sidebar responsive sidebar-fixed sidebar-scroll">
+
+            <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+            </div>
+            <ul class="nav nav-list">
+
+                <li class="">
+                    <a href="@Url.Action("Admin", "Account")">
+                        <i class="menu-icon fa fa-tachometer"></i>
+                        <span class="menu-text">Dashboard </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-car"></i>
+                        <span class="menu-text">Sản phẩm </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="@Url.Action("SearchCate", "Product")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh sách nhóm sản phẩm
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="">
+                            <a href="@Url.Action("Search", "Product")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh sách sản phẩm
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="@Url.Action("Search", "ImageProduct")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh sách ảnh
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="@Url.Action("Properties", "Product")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh sách thuộc tính
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="@Url.Action("Search","Producers")">
+                        <i class="menu-icon fa fa-file-text-o"></i>
+                        Danh sách hãng
+                    </a>
+                    <b class="arrow fa fa-angle-down"></b>
+                    
+                </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-file-text-o"></i>
+
+                        <span class="menu-text">
+                            Trang tĩnh
+
+                            @*<span class="badge badge-primary">5</span>*@
+
+                        </span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="@Url.Action("SearchCategory", "HtmlPage")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh mục trang tĩnh
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="">
+                            <a href="@Url.Action("Search", "HtmlPage")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh sách trang tĩnh
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+                <li class="">
+                    <a href="@Url.Action("Search", "Orders")" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-file-text-o"></i>
+
+                        <span class="menu-text">
+                            Đơn hàng
+
+                            @*<span class="badge badge-primary">5</span>*@
+
+                        </span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+
+                        <li class="">
+                            <a href="@Url.Action("Search", "Orders")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh sách đơn hàng
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="@Url.Action("Search", "Customer")">
+                        <i class="menu-icon fa fa-picture-o"></i>
+
+                        <span class="menu-text">
+                            Khách hàng
+                        </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="@Url.Action("Search", "SlideBanner")">
+                        <i class="menu-icon fa fa-picture-o"></i>
+
+                        <span class="menu-text">
+                            Slide
+                        </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li class="">
+                    <a href="@Url.Action("List", "User")">
+                        <i class="menu-icon fa fa-users"></i>
+                        <span class="menu-text">Người dùng </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-cog"></i>
+
+                        <span class="menu-text">
+                            Setting
+                            @*<span class="badge badge-primary">5</span>*@
+                        </span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="@Url.Action("LocationDiscount", "Setting")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh sách khu vực
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="@Url.Action("Search", "Company")">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Thông tin liên hệ
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.nav-list -->
+
+            <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+            </div>
+
+            <script type="text/javascript">
+                try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+            </script>
+        </div>
+
+        <div class="main-content">
+            @RenderBody()
+        </div>
+        <!-- /.main-content -->
+
+        <div class="footer">
+            <div class="footer-inner">
+                <div class="footer-content">
+                    <span class="bigger-120">
+                        <span class="blue">idoc</span><span class="red">Net</span>
+                        Application &copy; 2015
+                    </span>
+
+                    &nbsp; &nbsp;
+                    <span class="action-buttons">
+                        <a href="#">
+                            <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+                        </a>
+
+                        <a href="#">
+                            <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+                        </a>
+
+                        <a href="#">
+                            <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+
+
+
+
+    <script src="~/Content/admin/Script/bootstrap.min.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <!--[if lte IE 8]>
+          <script src="~/Content/admin/Script/excanvas.min.js"></script>
+        <![endif]-->
+    <!-- ace scripts -->
+    <script src="~/Content/admin/Script/ace-elements.min.js"></script>
+    <script src="~/Content/admin/Script/ace.min.js"></script>
+
+    <!-- inline scripts related to this page -->
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+﻿@if (Request.IsAuthenticated) {
+    <ul>
+		<li class="htcli">
+		    @Html.ActionLink(User.Identity.Name, "ChangePassword", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })
+		</li>
+        <li class="htcli"><a>|</a></li>
+		<li class="htcli">
+			@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+            @Html.AntiForgeryToken()
+            <a href="javascript:void(0);" onclick="logOff();">Đăng xuất</a>
+        }
+		</li>                        
+    </ul> 
+    
+} else {
+    <ul>
+		<li>@Html.ActionLink("Trang chủ", "Index", "Home", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li><a>|</a></li>
+        <li>@Html.ActionLink("Đăng nhập", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+
+<script type="text/javascript">
+    function logOff() {
+        document.getElementById('logoutForm').submit();
+    }
+</script>

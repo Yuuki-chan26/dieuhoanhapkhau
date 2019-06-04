@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9EEB566C-57BE-403E-8A9A-AE87E07ADE2F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>dieuhoanhapkhau.biz</RootNamespace>
+    <AssemblyName>dieuhoanhapkhau.biz</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\HtmlPageCategoryExtentions.cs" />
+    <Compile Include="Extensions\NewsCategoryExtensions.cs" />
+    <Compile Include="Extensions\ProductCategoryExtensions.cs" />
+    <Compile Include="Models\AuthenticationResult.cs" />
+    <Compile Include="Models\Customers.cs" />
+    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\LocationDiscount.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\Orders.cs" />
+    <Compile Include="Models\ProducerBase.cs" />
+    <Compile Include="Models\ProducerProperties.cs" />
+    <Compile Include="Models\Producers.cs" />
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\HtmlPage.cs" />
+    <Compile Include="Models\HtmlPageCategory.cs" />
+    <Compile Include="Models\HtmlPageCategoryBase.cs" />
+    <Compile Include="Models\IIdentity.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductCategory.cs" />
+    <Compile Include="Models\ProductCategoryBase.cs" />
+    <Compile Include="Models\ProductImages.cs" />
+    <Compile Include="Models\ProductProperty.cs" />
+    <Compile Include="Models\SlideBanner.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Persistance\IAuthenticationProvider.cs" />
+    <Compile Include="Persistance\ICompanyProvider.cs" />
+    <Compile Include="Persistance\ICustomerProvider.cs" />
+    <Compile Include="Persistance\IHtmlPageCategoryProvider.cs" />
+    <Compile Include="Persistance\IHtmlPageProvider.cs" />
+    <Compile Include="Persistance\ILocationDiscountProvider.cs" />
+    <Compile Include="Persistance\ILocationProvider.cs" />
+    <Compile Include="Persistance\IImageProductProvider.cs" />
+    <Compile Include="Persistance\IOrderDetailProvider.cs" />
+    <Compile Include="Persistance\IOrderProvider.cs" />
+    <Compile Include="Persistance\IProducerProvider.cs" />
+    <Compile Include="Persistance\IProductCategoryProvider.cs" />
+    <Compile Include="Persistance\IProductPropertyProvider.cs" />
+    <Compile Include="Persistance\IProductProvider.cs" />
+    <Compile Include="Persistance\ISlideBannerProvider.cs" />
+    <Compile Include="Persistance\IUserProvider.cs" />
+    <Compile Include="Persistance\IProducerPropertyProvider.cs" />
+    <Compile Include="Persistance\SqlServer\AuthenticationProvider.cs" />
+    <Compile Include="Persistance\SqlServer\CompanyProvider.cs" />
+    <Compile Include="Persistance\SqlServer\CustomerProvider.cs" />
+    <Compile Include="Persistance\SqlServer\HtmlPageCategoryProvider.cs" />
+    <Compile Include="Persistance\SqlServer\HtmlPageProvider.cs" />
+    <Compile Include="Persistance\SqlServer\ImageProductProvider.cs" />
+    <Compile Include="Persistance\SqlServer\LocationDiscountProvider.cs" />
+    <Compile Include="Persistance\SqlServer\LocationProvider.cs" />
+    <Compile Include="Persistance\SqlServer\OrderDetailProvider.cs" />
+    <Compile Include="Persistance\SqlServer\OrderProvider.cs" />
+    <Compile Include="Persistance\SqlServer\ProducerPropertyProvider.cs" />
+    <Compile Include="Persistance\SqlServer\ProducerProvider.cs" />
+    <Compile Include="Persistance\SqlServer\ProductCategoryProvider.cs" />
+    <Compile Include="Persistance\SqlServer\ProductPropertyProvider.cs" />
+    <Compile Include="Persistance\SqlServer\ProductProvider.cs" />
+    <Compile Include="Persistance\SqlServer\SlideBannerProvider.cs" />
+    <Compile Include="Persistance\SqlServer\UserProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CompanyManager.cs" />
+    <Compile Include="Services\CustomerManager.cs" />
+    <Compile Include="Services\HtmlPageCategoryManager.cs" />
+    <Compile Include="Services\HtmlPageManager.cs" />
+    <Compile Include="Services\ImageProductManager.cs" />
+    <Compile Include="Services\ImagesProductManager.cs" />
+    <Compile Include="Services\LocationDiscountManager.cs" />
+    <Compile Include="Services\LocationManager.cs" />
+    <Compile Include="Services\OrderDetailManager.cs" />
+    <Compile Include="Services\OrderManager.cs" />
+    <Compile Include="Services\ProducerManager.cs" />
+    <Compile Include="Services\ProducerPropertyManager.cs" />
+    <Compile Include="Services\ProductCategoryManager.cs" />
+    <Compile Include="Services\ProductManager.cs" />
+    <Compile Include="Services\ProductPropertyManager.cs" />
+    <Compile Include="Services\ServiceFactory.cs" />
+    <Compile Include="Services\SlideBannerManager.cs" />
+    <Compile Include="Services\UserManager.cs" />
+    <Compile Include="Setting.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\idocNet.Core\idocNet.Core.csproj">
+      <Project>{a0a8ce0b-c6e3-4dba-a0bd-5c5d2011b9bf}</Project>
+      <Name>idocNet.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

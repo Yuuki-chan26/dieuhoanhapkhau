@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="vi">
+    <link rel="alternate" href="" hreflang="vi-vn">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="CÔNG TY TNHH THẾ GIỚI ĐIỆN LẠNH GIA ĐÌNH">
+    <meta name="copyright" content="CÔNG TY TNHH THẾ GIỚI ĐIỆN LẠNH GIA ĐÌNH">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta http-equiv="refresh" content="1800">
+    <!-- for Google -->
+    <title>Điều hòa nhập khẩu chính hãng</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="Điều hòa nhập khẩu chính hãng">
+    <link rel="icon" href="/images/faicon.png" type="image/png" sizes="30x30">
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/owl-carousel/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/reset.css" rel="stylesheet" />
+    <link href="~/Content/library/library.css" rel="stylesheet" />
+    <link href="~/Content/uikit/uikit.modify.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <script src="~/Scripts/Jquery.js"></script>
+    <script src="~/Scripts/frontend/uikit/uikit.min.js"></script>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body>
+    <script type="text/javascript">window._sbzq || function (e) { e._sbzq = []; var t = e._sbzq; t.push(["_setAccount", 65913]); var n = e.location.protocol == "https:" ? "https:" : "http:"; var r = document.createElement("script"); r.type = "text/javascript"; r.async = true; r.src = n + "//static.subiz.com/public/js/loader.js"; var i = document.getElementsByTagName("script")[0]; i.parentNode.insertBefore(r, i) }(window);</script>
+    @RenderPage("Header.cshtml")
+    <div class="clearfix"></div>
+    <div id="body" class=" container" style="margin-top:30px;">
+        <section class="main_main">
+            <div class="uk-grid uk-grid-collapse">
+                <div class="col-main-left uk-width-23 uk-visible-large">
+                    
+                    @RenderPage("Menu_left.cshtml")
+                    <!-- .uk-panel -->
+                    <div class="clr"></div>
+                    @RenderPage("Menu_left_bottom.cshtml")
+                </div>
+                <div class="col-main-right uk-width-77" style="padding-left:20px;">
+                    <!-- List Catelogies -->
+                    <section class="products_catelogies key-1">
+                        <div class="breadcrumb">
+                            <ul class="uk-breadcrumb">
+                                <li><a href="#" title="Trang chủ"><i class="fa fa-home"></i> Trang chủ</a></li>
+
+
+                                <li class="uk-active"><a href="tin-tuc-su-kien.html" title="Tin Tức &amp; Sự Kiện">Tin Tức &amp; Sự Kiện</a></li>
+
+                            </ul>
+                        </div>
+                        
+                        @RenderBody()
+                    </section>
+                    
+                    <!-- END Catelogies -->
+                </div>
+            </div>
+            
+        </section>
+    </div>
+    
+
+    
+    @RenderPage("Footer.cshtml")
+             @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/frontend/funtion.js"></script>
+    <script src="~/Scripts/frontend/owl.carousel.js"></script>
+    <script src="~/Scripts/frontend/lightbox.js"></script>
+    <script src="~/Scripts/frontend/uikit/slider.min.js"></script>
+    <script src="~/Scripts/frontend/uikit/slideshow.min.js"></script>
+    <script src="~/Scripts/frontend/plugins/jquery.flexslider-min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,563 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using idocNet.Core.Extensions
+@using dieuhoanhapkhau.biz.Services
+@{
+    ViewBag.Title = "Điều hòa nhập nhập";
+    var listslide = ViewData["ListSlide"] as List<SlideBanner>;
+    var listhotpro = ViewData["ListHotProduct"] as List<Product>;
+    var listhotnews = ViewData["ListHotNews"] as List<HtmlPage>;
+    var services = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("huong-dan", Culture);
+    var listprall = dieuhoanhapkhau.biz.Services.ServiceFactory.ProductManager.ProductGetAllActive(Culture);
+    var listcate = dieuhoanhapkhau.biz.Services.ServiceFactory.ProductCategoryManager.ListAllProductCategory(Culture);
+    var listProjects = ViewBag.ListProjects as List<HtmlPage>;
+    int total = 0;
+    var listParentCate = ViewBag.ListCate as List<ProductCategory>;
+}
+
+<div id="body">
+    <section class="main_main">
+        <div class="uk-container uk-container-center" style="margin-top: 0;">
+            <div class="main-content mb20" style="margin-top: 0;">
+
+                <section class="main-slide">
+                    <div class="uk-slidenav-position" data-uk-slideshow="{animation: 'swipe', autoplay: true, autoplayInterval: 7500}">
+
+                        <ul class="uk-slideshow" style="height: 385px;">
+                            @if (listslide.Count > 0)
+                            {
+                                foreach (SlideBanner item in listslide)
+                                {
+                                    <li class="item uk-active" data-slideshow-slide="html" aria-hidden="false" style="animation-duration: 500ms; opacity: 1; height: 385px;">
+                                        <a class="image img-cover" href="@item.Url" title="@item.SlideTitle"><img src="@item.Image" alt="@item.SlideTitle"></a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+
+                        <a href="" class="uk-slidenav uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
+                        <a href="" class="uk-slidenav uk-slidenav-next" data-uk-slideshow-item="next"></a>
+                    </div>
+                </section><!-- .main-slide -->
+            </div>
+            <div class="homepage_gt">
+                <h1>CẢM ƠN QUÝ KHÁCH HÀNG ĐÃ TIN TƯỞNG VÀO SỰ UY TÍN CỦA CÔNG TY THẾ GIỚI ĐIỆN LẠNH GIA ĐÌNH  <br> CHÚNG TÔI CAM KẾT :</h1>
+                <div class="line_intro"></div>
+                @if (listhotnews.Count > 0 && listhotnews != null)
+                {
+                    <div class="uk-grid lib-grid-0 uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-4 listIntroducts" data-uk-grid-match="{target: '.item_intro .item_intro_title'}">
+                        @foreach (var item in listhotnews)
+                        {
+                            if (item.HtmlPageCategoryTitle == "4 cam kết")
+                            {
+                                <div class="item_intro">
+
+                                    <div class="boxx_item_img">
+                                        <span class="transition">icont-1</span>
+                                    </div>
+                                    <h6 class="item_intro_title" style="min-height: 45px;"><a href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })" title="@item.HtmlPageTitle">@item.HtmlPageTitle</a></h6>
+                                    <p>@item.HtmlPageDescription</p>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+            <div class="uk-grid uk-grid-collapse">
+                <div class="col-main-left uk-width-23 uk-visible-large">
+                    @Html.Partial("Menu_left")
+                </div>
+                <div class="col-main-right uk-width-77">
+                    <!-- List Catelogies -->
+                    @if (listParentCate.Count > 0 && listParentCate != null)
+                    {
+
+                        foreach (var item in listParentCate)
+                        {
+                            var producers = ServiceFactory.ProducerManager.GetAllProducer(Culture);
+                            var listChildrenCates = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(item.PrdCategoryId, Culture);
+                            <section class="products_catelogies key-1">
+                                <div class="hearder_cat">
+                                    <h2>
+                                        <span>
+                                            <img src="~/tempfiles/uploads/products/DHTreoTuong/icon_sofas.png" alt="icon">
+                                        </span>
+                                        <a href="" title="Điều hòa treo tường">
+                                            @item.PrdCategoryTitle
+                                        </a>
+                                    </h2>
+                                    <div class="pcat-menu">
+                                        <ul>
+
+                                            @if (listChildrenCates.Count > 0 && listChildrenCates != null)
+                                            {
+                                                foreach (var itemChil1 in listChildrenCates)
+                                                {
+                                                    var manufater = ServiceFactory.ProducerManager.Get(new Producers { ProducerId = itemChil1.ProducerId });
+                                                    <li>
+                                                        <a href="@Url.Action("GetByProducer", "Products", new { id = manufater.ProducerId, parentId = itemChil1.PrdCategoryId })" style="padding-left:10px;">@manufater.ProducerName</a>
+                                                        <ul class="sub_property">
+                                                            @{
+                                                                var proItems = ServiceFactory.ProductPropertyManager.GetByProducer(manufater.ProducerId, itemChil1.ParentId);
+                                                                if (proItems.Count > 0 && proItems != null)
+                                                                {
+                                                                    foreach (var itemPro in proItems)
+                                                                    {
+                                                                        <li>
+                                                                            <a href="@Url.Action("GetByPropertyShortName", "Products", new { shortname = itemPro.ShortName, culture = Culture })">@itemPro.ProductPropertyTitle</a>
+                                                                        </li>
+                                                                    }
+                                                                }
+
+                                                            }
+                                                        </ul>
+
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="clr"></div>
+                                <div class="uk-grid uk-grid-collapse">
+                                    <div class="col-main-right uk-width-1-1">
+                                        <div class="box_categories">
+                                            <ul class="uk-grid lib-grid-20 uk-grid-width-1-2 uk-grid-width-medium-1-4 products-catehome" data-uk-grid-match="{target: '.box_box_categories .prd-title'}">
+
+                                                @if (listChildrenCates.Count > 0 && listChildrenCates != null)
+                                                {
+                                                    foreach (var itemchil in listChildrenCates)
+                                                    {
+                                                        var listPros = ServiceFactory.ProductManager.ProductGetByCateId(itemchil.PrdCategoryId, Culture);
+                                                        if (listPros.Count > 0 && listPros != null)
+                                                        {
+                                                            foreach (var item1 in listPros.Take(6))
+                                                            {
+
+                                                                <li class="mb20" style="padding-left:0px; padding-right:20px;">
+                                                                    <div class="box_box_categories">
+                                                                        <div class="img_box_categories">
+                                                                            <a href="@Url.Action("Detail", "Products", new { productcode = item1.ProductCode })" title="@item1.ProductTitle">
+
+                                                                                <img src="@item1.ProductImage" alt="@item1.ProductName" />
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="content_box_categories">
+                                                                            <h3 class="prd-title" style="min-height: 63px;">
+                                                                                <a href="@Url.Action("Detail", "Products", new { productcode = item1.ProductCode })" title="">
+                                                                                    @item1.ProductName
+                                                                                </a>
+                                                                            </h3>
+                                                                            <div class="item_price_box_categories">
+                                                                                <span class="no-trike">Giá: <font>@String.Format("{0:0,0}", Convert.ToDouble(item1.ProductPrice))  đ</font></span>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+
+                                                            }
+                                                        }
+                                                    }
+
+
+                                                }
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        }
+
+                    }
+
+                </div>
+            </div>
+            <section class="box_video_home">
+
+                <div class="box_title_video">
+                    <h4>
+                        <a href="du-an-da-thuc-hien.html" title="Dự án đã thực hiện">Dự án đã thực hiện</a>
+                    </h4>
+                </div>
+                <div class="clr"></div>
+                <div class="box_videos row10">
+                    @if (listProjects.Count > 0 && listProjects != null)
+                    {
+
+                        <div class="uk-width-1-2 col-video-left p10">
+
+                            @foreach (var item in listProjects.Take(1))
+                            {
+
+
+                                <div class="box_video_1">
+                                    <div class="bg_opacity"></div>
+                                    <a href="lap-dat-dieu-hoa-tai-quan-long-bien.html" title="@item.HtmlPageTitle">
+                                        <img src="@item.HtmlPageImage" alt="@item.HtmlPageTitle">
+                                    </a>
+                                    <a class="d" href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })"><em>Xem chi tiết</em></a>
+                                </div>
+                                <div class="box_video_content">
+                                    <div class="title_video" style="width: calc(100% - 110px)">
+                                        <a href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })" title="@item.HtmlPageTitle">
+                                            @item.HtmlPageTitle
+                                        </a>
+                                    </div>
+                                    <div class="views_video bg_v" style="width:110px">
+                                        127 Lượt xem
+
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    }
+
+                    <div class="uk-width-1-2 col-video-right p10">
+                        <div class="box_videos row10">
+                            @if (listProjects.Count > 0)
+                            {
+                                foreach (HtmlPage item in listProjects.Take(4))
+                                {
+
+                                    <div class="uk-width-1-2 col-video-content p10" style="margin-bottom: 5px;">
+                                        <div class="box_video_1">
+                                            <div class="bg_opacity"></div>
+                                            <a href="lap-dat-dieu-hoa-tai-quan-tay-ho.html" title="@item.HtmlPageTitle">
+                                                <img src="@item.HtmlPageImage" alt="@item.HtmlPageTitle">
+                                            </a>
+                                            <a class="d none600" href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })"><em>Xem chi tiết</em></a>
+                                        </div>
+                                        <div class="box_video_content">
+                                            <div class="title_video">
+                                                <a href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })" title="@item.HtmlPageTitle">
+                                                    @item.HtmlPageTitle
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+        </div>
+        <div class="clr"></div>
+        <div class="clr"></div>
+        <section class="aside_subscribe">
+            <div class="uk-container uk-container-center">
+                <section class="panel-body">
+                    <div class="uk-grid uk-grid-collapse">
+                        <div class="col-main-sub uk-width-3-4">
+                            <form class="uk-form form" action="mailsubricre.html" method="post">
+                                <div class="form-group">
+                                    <div class="item_form"><span>Đăng ký để nhận khuyến mại</span></div>
+                                    <div class="item_form">
+                                        <input style="border-color: #ddb163;" class="text uk-width-1-1" id="EmailRe" name="EmailRe" placeholder="Email address *" required="" type="email">
+                                        <input class="text uk-width-1-1" name="create" value="1" type="hidden">
+                                        <button type="submit" name="create_button" class="style-form-submit search-form-submit" onclick="_Send()"><i class="fa fa-envelope" aria-hidden="true"></i> Đăng ký</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-main-sub uk-width-1-4">
+                            <div class="visit-page">
+                                <div class="item_form"><span>Follow us</span></div>
+                                <div class="social">
+                                    <ul class="social_media">
+                                        <li>
+                                            <a title="Facebook" href="https://www.facebook.com/C%C3%B4ng-ty-TNHH-th%E1%BA%BF-gi%E1%BB%9Bi-%C4%91i%E1%BB%87n-l%E1%BA%A1nh-212149249294606/" class="fb"></a>
+                                        </li>
+                                        <li>
+                                            <a title="Twitter" href="" class="twitter"></a>
+                                        </li>
+                                        <li>
+                                            <a title="Youtube" href="" class="youtube"></a>
+                                        </li>
+                                        <li>
+                                            <a title="Google Plus" href="" class="google"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+        <div class="tintuc bgwhite">
+            <div class="uk-container uk-container-center">
+                <div class="row10">
+                    <div class="uk-grid uk-grid-medium" style="margin-left: 0">
+                        <div class="uk-width-large-1-3 p10">
+
+                            <div class="header-col">
+                                <h2>
+                                    <a href="chuyen-de-noi-that.html" title="Bài viết hữu ích về điều hòa">Bài viết hữu ích về điều hòa</a>
+                                </h2>
+                            </div>
+                            <div class="box-tinhome">
+                                @{
+
+                                    var listBaiViet = ServiceFactory.HtmlPageManager.GetByShortNameCate("bai-viet-huu-ich-ve-dieu-hoa", 0, 3, ref total, Culture);
+                                    if (listBaiViet.Count > 0 && listBaiViet != null)
+                                    {
+                                        foreach (var item in listBaiViet)
+                                        {
+                                            <div class="highlight-item">
+
+                                                <div class="highlight-1 skin-1">
+                                                    <div class="highlight-thumb img-slide">
+                                                        <a class="highlight-image" href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })">
+                                                            <img src="@item.HtmlPageImage" alt="@item.HtmlPageTitle">
+                                                        </a>
+                                                    </div>
+                                                    <div class="highlight_item">
+                                                        <h3 class="highlight-title">
+                                                            <a href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })" title="@item.HtmlPageTitle">@item.HtmlPageTitle</a>
+                                                        </h3>
+                                                        <div class="des">
+                                                            Cách chọn mua điều hòa
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="uk-width-large-1-3 p10">
+                            <div class="header-col">
+                                <h2>Về chúng tôi</h2>
+                            </div>
+                            <div class="box-tinhome">
+                                <p>- Thanh toán linh hoạt</p>
+                                <p>- Giao hàng tận nơi</p>
+                                <p>- Lắp đặt tận tình</p>
+                                <p>- Đổi trả dễ dàng</p>
+                                <p>- Hậu mãi chu đáo</p>
+                            </div>
+                        </div>
+                        <div class="uk-width-large-1-3 p10">
+
+                            <div class="header-col">
+                                <h2>
+                                    <a href="y-kien-khach-hang.html" title="Ý kiến khách hàng">Ý kiến khách hàng</a>
+                                </h2>
+                            </div>
+                            <div class="box_owl">
+                                
+
+
+
+                                    
+                                            <div class="owl-item active" style="width: 380px;">
+                                                <div class="kh-item">
+                                                    <div class="kh-1 skin-1">
+                                                        <div class="kh-thumb img-slide">
+                                                            <a class="kh-image" href="chi-nguyen-ngoc-anh.html">
+                                                                <img src="~/tempfiles/uploads/News/y-kien-khach-hang-thiet-ke-noi-that-amu-02.jpg" alt="Chị Nguyễn Ngọc Anh">
+                                                            </a>
+                                                        </div>
+                                                        <div class="kh_item">
+                                                            <h3 class="kh-title">
+                                                                <a href="chi-nguyen-ngoc-anh.html" title="Chị Nguyễn Ngọc Anh">Chị Nguyễn Ngọc Anh</a>
+                                                            </h3>
+                                                            <p>Nam Từ Liêm - Hà Nội</p>
+                                                            <div class="line-kh"></div>
+                                                            <div class="des">
+                                                                Tôi rất thích mua điều hòa tại Cty thế giới điện lạnh gia đình, giá cả...
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('.owl-carousel').owlCarousel({
+
+            loop: true,
+
+            responsiveClass: true,
+
+            items: 8,
+
+            dot: false,
+
+            nav: false,
+
+            autoplay: false,
+
+            responsive: {
+
+                0: {
+
+                    items: 2,
+
+                    nav: true
+
+
+
+
+
+
+                },
+
+                600: {
+
+                    items: 4,
+
+                    nav: false,
+
+                    margin: 20
+
+                },
+
+                1000: {
+
+                    items: 6,
+
+                    nav: true,
+
+                    loop: false,
+
+                    margin: 20
+
+                }
+
+            }
+
+        });
+
+    })
+
+    $(document).ready(function () {
+
+        $(".mainCat li .parent").click(function () {
+
+            $(this).next().slideToggle("slow");
+
+        });
+
+    });
+
+    $(document).ready(function () {
+
+        $("a.cl_2").click(function () {
+
+            $("#sm_1").slideToggle("slow");
+
+        });
+
+    });
+
+    $(document).ready(function () {
+
+        "use strict";
+
+        $(".owl-carousel-kh").owlCarousel({
+
+            loop: true,
+
+            responsiveClass: true,
+
+            items: 1,
+
+            dot: false,
+
+            nav: true,
+
+            autoplay: true,
+
+            navText: [
+
+                "<i class='icon-chevron-left icon-white'><</i>",
+
+                "<i class='icon-chevron-right icon-white'>></i>"
+
+            ],
+
+            responsive: {
+
+                0: {
+
+                    items: 1,
+
+                    nav: true
+
+
+
+
+                },
+
+                600: {
+
+                    items: 1,
+
+                    nav: true,
+
+                },
+
+                1000: {
+
+                    items: 1,
+
+                    nav: true,
+
+                    loop: false,
+
+                }
+
+            }
+
+        });
+
+    });</script>
+<script>
+    function _Send() {
+        var email = $("#EmailRe").val();
+        var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+        if (email == null || email == "") {
+            alert("Nhập email của bạn");
+            return false;
+        }
+        if (reg.test(email) == false) {
+            alert("Email không đúng định dạng");
+            return false;
+        }
+        var url = '@Url.Action("SendMailTinTuc", "Home")';
+        $.ajax({
+            url: url,
+            data: { Email: email },
+            type: 'post',
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                if (data.Successful) {
+                    alert("Địa chỉ email " + email + " vừa đăng ký nhận mail từ Hyundai An Phú. Cảm ơn bạn đã gửi yêu cầu!");
+                }
+            },
+        });
+    }
+</script>

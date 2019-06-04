@@ -1,0 +1,48 @@
+﻿@using dieuhoanhapkhau.biz.Services
+@using dieuhoanhapkhau.biz.Models
+@{
+    var listcate = dieuhoanhapkhau.biz.Services.ServiceFactory.ProductCategoryManager.ListAllProductCategory(Culture);
+    var listCategories = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(0, Culture);
+}
+<section class="asideCategories">
+    <section class="panel-body">
+        <div class="box_cat_block" style="margin-bottom: 0; position: relative;height: 100%;">
+            <div class="menu_aside">
+                <a class="cl_2">Danh mục sản phẩm <i class="fa fa-bars" aria-hidden="false"></i></a>
+            </div>
+            @if (listcate != null)
+            {
+                foreach (ProductCategory item in listCategories)
+                {
+                    //var product = dieuhoanhapkhau.biz.Services.ServiceFactory.ProductManager.ProductGetByCateId(item.PrdCategoryId, Culture);
+                    var listProductCates = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(item.PrdCategoryId, Culture);
+                    <ul id="sm_1" class="uk-list mainCat" data-uk-accordion="{showfirst: false}">
+                        <li>
+                            <a class="aaaa" href="@Url.Action("GetByParentId","Products",new { parentId=item.PrdCategoryId})" title="@item.PrdCategoryTitle">@item.PrdCategoryTitle</a>
+                            <span class="parent"></span>
+                            <ul class="sub_menu_block">
+                                @foreach (ProductCategory item1 in listProductCates)
+                                {
+                                    var itemProperties = ServiceFactory.ProductPropertyManager.GetByCateId(item1.PrdCategoryId);
+                                    //var propItems = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(item1.PrdCategoryId, Culture);
+                                    <li>
+                                        <a href="@Url.Action("GetByParentId","Products",new { parentId=item1.PrdCategoryId})" title="@item1.PrdCategoryTitle"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> @item1.PrdCategoryTitle</a>
+
+                                        <ul class="uk-list uk-clearfix subMenus">
+                                            @foreach (ProductProperty item2 in itemProperties)
+                                            {
+                                                <li><a href="@Url.Action("GetByPropertyShortName", "Products", new { shortname=item2.ShortName, culture=Culture})" title="@item2.ProductPropertyTitle">@item2.ProductPropertyTitle</a></li>
+
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+
+                    </ul>
+                }
+            }
+        </div>
+    </section>
+</section>

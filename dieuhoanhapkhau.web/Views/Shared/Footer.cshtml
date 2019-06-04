@@ -1,0 +1,406 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using dieuhoanhapkhau.biz.Services;
+@using idocNet.Core.Extensions
+@{
+    //var companyinfo = ServiceFactory.CompanyManager.Get(new Company { CompanyId = 1 });
+    var listcatehtml = ServiceFactory.HtmlPageManager.GetHotNewsTop(100, Culture);
+    var news = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("tin-tuc", Culture);
+    var about = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("gioi-thieu", Culture);
+    var baogiavattu = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("bao-gia-vat-tu", Culture);
+    var contact = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("lien-he", Culture);
+    var listcate = dieuhoanhapkhau.biz.Services.ServiceFactory.ProductCategoryManager.ListAllProductCategory(Culture);
+    var listPrdCate = dieuhoanhapkhau.biz.Services.ServiceFactory.ProductCategoryManager.ListAllProductCategory(Culture);
+    var listCategories = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(0, Culture);
+
+}
+<div id="footer">
+
+    <div class="vnt-policy"><div class="uk-container uk-container-center"><div class="wrap-policy"><div class="item"><div class="i-image"><a href="/cam-ket-ban-hang-chinh-hang.html" target="_blank"><img src="https://dieuhoanhapkhauchinhhang.com.vn/uploads/images/icon/ficon1.jpg" alt="chính hãng - giá tốt"></a></div> <a href="/cam-ket-ban-hang-chinh-hang.html" target="_blank"><div class="i-desc"><div class="bold-transform">100% sản phẩm</div> <div>chính hãng - giá tốt</div></div></a> <div class="clear"></div></div><div class="item"><div class="i-image"><a href="/chinh-sach-doi-tra-san-pham.html" target="_blank"><img src="https://dieuhoanhapkhauchinhhang.com.vn/uploads/images/icon/ficon2.jpg" alt="Đổi trả hàng"></a></div> <a href="/chinh-sach-doi-tra-san-pham.html" target="_blank"><div class="i-desc"><div>Đổi trả hàng</div> <div class="bold-transform">Trong vòng 7 ngày</div></div></a> <div class="clear"></div></div><div class="item"><div class="i-image"><a href="/chinh-sach-van-chuyen-giao-nhan.html" target="_blank"><img src="https://dieuhoanhapkhauchinhhang.com.vn/uploads/images/icon/ficon3.jpg" alt="Giao hàng miễn phí"></a></div> <a href="/chinh-sach-van-chuyen-giao-nhan.html" target="_blank"><div class="i-desc"><div>Giao hàng miễn phí</div> <div class="bold-transform">trong vòng 24 giờ</div></div></a> <div class="clear"></div></div><div class="item"><div class="i-image"><a href="/chinh-sach-thanh-toan.html" target="_blank"><img src="https://dieuhoanhapkhauchinhhang.com.vn/uploads/images/icon/ficon4.jpg" alt="Thanh toán nhanh chóng - an toàn"></a></div> <a href="/chinh-sach-thanh-toan.html" target="_blank"><div class="i-desc"><div>Thanh toán</div> <div class="bold-transform">nhanh chóng &amp; an toàn</div></div></a> <div class="clear"></div></div> <div class="clear"></div></div></div></div>
+
+    <section class="footerCategories">
+        <div class="uk-container uk-container-center">
+            <div class="box_cat_foot" style="margin-bottom: 0; position: relative;">
+                <div class="header-col">
+                    <span>Danh mục sản phẩm</span>
+                </div>
+                <div class="uk-grid lib-grid-0 uk-grid-width-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-4 lcate">
+                    <div class="col_cate-foot">
+                        <h2>
+                            <a href="dieu-hoa-treo-tuong-pc150.html" title="Điều hòa treo tường">Điều hòa treo tường</a>
+                        </h2>
+                    </div>
+                    <div class="col_cate-foot">
+                        <h2>
+                            <a href="dieu-hoa-tu-dung-pc151.html" title="Điều hòa tủ đứng">Điều hòa tủ đứng</a>
+                        </h2>
+                    </div>
+                    <div class="col_cate-foot">
+                        <h2>
+                            <a href="dieu-hoa-cassete-am-tran-pc152.html" title="Điều hòa Cassete âm trần">Điều hòa Cassete âm trần</a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- .uk-panel -->
+
+    <section class="upper">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-medium">
+
+                <div class="uk-width-large-3-10">
+                    <section class="footer-contact footerContact">
+                        <header class="panel-head">
+                            <h3 class="heading"><span> CÔNG TY TNHH THẾ GIỚI ĐIỆN LẠNH GIA ĐÌNH</span></h3>
+                        </header>
+                        <section class="panel-body">
+                            <ul class="uk-list">
+                                <li class="address_fot">VP: </li>
+                                <li class="phone_fot">Hotline: <a href="@*@companyinfo.CompanyHotline*@" title="Gọi ngay"> 0435 627 671 - 0435 627 670 - 0435 627 672 - Mr kha : 0974.028.279</a></li>
+                                <li class="email_fot">Email: <a href="@*@companyinfo.CompanyMail*@" title=" Gửi mail cho chúng tôi">thegioidienlanhkd@gmail.com</a></li>
+                                <li class="web_fot">Website: <a href="https://dieuhoanhapkhauchinhhang.com.vn/" title="">https://dieuhoanhapkhauchinhhang.com.vn/</a></li>
+                            </ul>
+                        </section><!-- .panel-body -->
+                    </section><!-- .panel -->
+                    }
+                </div>
+
+
+                <div class="uk-width-large-2-10">
+                    <section class="">
+                        <header class="panel-head">
+                            <h3 class="heading"><span> Hướng dẫn</span></h3>
+                        </header>
+                        <section class="panel-body">
+                            <ul class="menu_footer">
+                                @foreach (var item in listcatehtml)
+                                {
+                                    if (item.HtmlPageCategoryTitle == "Hướng dẫn")
+                                    {
+                                        <li><a href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })" class="link" title="@item.HtmlPageTitle">@item.HtmlPageTitle</a></li>
+                                    }
+                                }
+                            </ul>
+                        </section>
+                    </section>
+                </div>
+                <div class="uk-width-large-2-10">
+                    <section class="">
+                        <header class="panel-head">
+                            <h3 class="heading"><span> Chính sách</span></h3>
+                        </header>
+                        <section class="panel-body">
+                            <ul class="menu_footer">
+                                @foreach (var item in listcatehtml)
+                                {
+                                    if (item.HtmlPageCategoryTitle == "Chính sách")
+                                    {
+                                        <li><a href="@Url.Action("Detail", "HtmlPages", new { category = item.HtmlPageCategoryTitle.ToUrlSegment(250).ToLower(), shortname = item.HtmlPageShortName, htmlid = item.HtmlPageId })" class="link" title="@item.HtmlPageTitle">@item.HtmlPageTitle</a></li>
+                                    }
+                                }
+                            </ul>
+                        </section>
+                    </section>
+                </div>
+
+
+                <div class="uk-width-large-3-10">
+                    <section class="panel-body">
+                        <div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/C%C3%B4ng-ty-TNHH-th%E1%BA%BF-gi%E1%BB%9Bi-%C4%91i%E1%BB%87n-l%E1%BA%A1nh-212149249294606/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=&amp;container_width=492&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FC%25C3%25B4ng-ty-TNHH-th%25E1%25BA%25BF-gi%25E1%25BB%259Bi-%25C4%2591i%25E1%25BB%2587n-l%25E1%25BA%25A1nh-212149249294606%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false"><span style="vertical-align: bottom; width: 0px; height: 0px;"><iframe name="f1f7d48bb8c8c8" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" title="fb:page Facebook Social Plugin" style="border: medium none; visibility: visible; width: 0px; height: 0px;" src="https://www.facebook.com/v2.7/plugins/page.php?adapt_container_width=true&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2Fd_vbiawPdxB.js%3Fversion%3D44%23cb%3Df860ef1603d48c%26domain%3Ddieuhoanhapkhauchinhhang.com.vn%26origin%3Dhttps%253A%252F%252Fdieuhoanhapkhauchinhhang.com.vn%252Ff3f881853ce3f56%26relation%3Dparent.parent&amp;container_width=492&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FC%25C3%25B4ng-ty-TNHH-th%25E1%25BA%25BF-gi%25E1%25BB%259Bi-%25C4%2591i%25E1%25BB%2587n-l%25E1%25BA%25A1nh-212149249294606%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false" class="" width="1000px" height="1000px" frameborder="0"></iframe></span></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section><!-- .upper -->
+
+    <section class="lower">
+        <div class="uk-container uk-container-center">
+            <div class="copyright">
+                Bản quyền thuộc về <a href="https://dieuhoanhapkhauchinhhang.com.vn/" title="">CÔNG TY TNHH THẾ GIỚI ĐIỆN LẠNH GIA ĐÌNH</a>.
+
+            </div>
+        </div>
+    </section><!-- .lower -->
+</div>
+<div class="hotline-fixed">
+    <a href="tel:0974.028.279">0974.028.279</a>
+</div>
+<a id="goTop" class="goTop" href="#" title="Về đầu trang" style="bottom: 50px;"></a>
+<script>
+    (function (d, s, id) {
+
+        var js, fjs = d.getElementsByTagName(s)[0];
+
+        if (d.getElementById(id)) return;
+
+        js = d.createElement(s); js.id = id;
+
+        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.7";
+
+        fjs.parentNode.insertBefore(js, fjs);
+
+    }(document, 'script', 'facebook-jssdk'));</script>
+<div id="offcanvas" class="uk-offcanvas offcanvas" aria-hidden="true">
+    <div class="uk-offcanvas-bar">
+        <form class="uk-search" action="tim-kiem.html" data-uk-search="{}">
+            <input class="uk-search-field" type="search" name="key" placeholder="Tìm kiếm...">
+        </form>
+
+        <ul class="l1 uk-nav uk-nav-offcanvas uk-nav uk-nav-parent-icon" data-uk-nav="">
+
+            <li class="l1 ">
+
+                <a href="@Url.Action("Index","Home")" title="Trang chủ" class="l1">Trang chủ</a>
+
+            </li>
+
+            <li class="l1 ">
+
+                <a href="@Url.Action("About", "Home", new { shortname = "gioi-thieu", shortnamehtml = "gioi-thieu" })" title="Giới thiệu" class="l1">Giới thiệu</a>
+
+            </li>
+            @if (listcate != null)
+            {
+                foreach (ProductCategory item in listCategories)
+                {
+                    var listProductCates = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(item.PrdCategoryId, Culture);
+                    <li class="l1 uk-parent uk-position-relative" aria-expanded="false">
+
+                        <a href="@Url.Action("GetByParentId","Products",new { parentId=item.PrdCategoryId})" title="@item.PrdCategoryTitle" class="l1">@item.PrdCategoryTitle</a>
+                        <a href="#" title="" class="dropicon"></a>
+                        <div class="menu_@item.PrdCategoryId" style="overflow: hidden; position: relative;">
+                            <ul class="l2 uk-nav-sub" role="menu">
+                                @foreach (ProductCategory item1 in listProductCates)
+                                {
+                                    var itemProperties = ServiceFactory.ProductPropertyManager.GetByCateId(item1.PrdCategoryId);
+                                    <li class="l2 uk-parent uk-position-relative">
+                                        <a href="@Url.Action("GetByParentId","Products",new { parentId=item1.PrdCategoryId})" title="@item1.PrdCategoryTitle" class="l2">@item1.PrdCategoryTitle</a>
+                                        <ul class="l2 uk-nav-subs">
+                                            @foreach (ProductProperty item2 in itemProperties)
+                                            {
+                                                <li><a href="@Url.Action("GetByPropertyShortName", "Products", new { shortname=item2.ShortName, culture=Culture})" title="@item2.ProductPropertyTitle">@item2.ProductPropertyTitle</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                    </li>
+                    <script>
+                        $(".dropicon").click(function () {
+                            $(".menu_@item.PrdCategoryId").toggle();
+                        });
+                    </script>
+                }
+            }
+            <li class="l1 ">
+
+                <a href="@Url.Action("ShowListNew", "HtmlPages", new { shortname = "tin-tuc", shortnamehtml = "tin-tuc" })" title="Tin tức" class="l1">Tin tức</a>
+
+            </li>
+
+            <li class="l1 ">
+
+                <a href="@Url.Action("Contact", "Home", new { shortname = "lien-he", shortnamehtml = "lien-he" })" title="Liên hệ" class="l1">Liên hệ</a>
+
+            </li>
+
+            <li class="l1 ">
+
+                <a href="@Url.Action("Baogiavattu", "Home", new { shortname = "bao-gia-vat-tu", shortnamehtml = "bao-gia-vat-tu" })" title="Báo giá vật tư" class="l1">Báo giá vật tư</a>
+
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $('.owl-carousel').owlCarousel({
+
+            loop: true,
+
+            responsiveClass: true,
+
+            items: 8,
+
+            dot: false,
+
+            nav: false,
+
+            autoplay: false,
+
+            responsive: {
+
+                0: {
+
+                    items: 2,
+
+                    nav: true
+
+
+
+
+                },
+
+                600: {
+
+                    items: 4,
+
+                    nav: false,
+
+                    margin: 20
+
+                },
+
+                1000: {
+
+                    items: 6,
+
+                    nav: true,
+
+                    loop: false,
+
+                    margin: 20
+
+                }
+
+            }
+
+        });
+
+    })
+
+    $(document).ready(function () {
+
+        $(".mainCat li .parent").click(function () {
+
+            $(this).next().slideToggle("slow");
+
+        });
+
+    });
+
+    $(document).ready(function () {
+
+        $("a.cl_2").click(function () {
+
+            $("#sm_1").slideToggle("slow");
+
+        });
+
+    });
+
+    $(document).ready(function () {
+
+        "use strict";
+
+        $(".owl-carousel-kh").owlCarousel({
+
+            loop: true,
+
+            responsiveClass: true,
+
+            items: 1,
+
+            dot: false,
+
+            nav: true,
+
+            autoplay: true,
+
+            navText: [
+
+                "<i class='icon-chevron-left icon-white'><</i>",
+
+                "<i class='icon-chevron-right icon-white'>></i>"
+
+            ],
+
+            responsive: {
+
+                0: {
+
+                    items: 1,
+
+                    nav: true
+
+
+                },
+
+                600: {
+
+                    items: 1,
+
+                    nav: true,
+
+                },
+
+                1000: {
+
+                    items: 1,
+
+                    nav: true,
+
+                    loop: false,
+
+                }
+
+            }
+
+        });
+
+    });
+
+</script>
+
+<div id="modal-cart" class="uk-modal" aria-hidden="true" style="display: none; overflow-y: scroll;">
+    <div class="uk-modal-dialog" style="width:768px;" tabindex="">
+        <a class="uk-modal-close uk-close"></a>
+        <div class="cart-content">
+            <div id="ec-module-cart">
+                <section class="uk-panel buynow-2">
+                    <form action="" id="ajax-cart-form">
+                        <header class="panel-head mb15"><h1 class="heading"><span class="text">Giỏ hàng của bạn (2 sản phẩm)</span></h1></header><!-- .header --><div class="panel-body">
+                            <ul class="uk-list uk-clearfix list-cart-heading"><li class="item product">Sản phẩm</li><li class="item price uk-text-right">Đơn giá</li><li class="item count uk-text-center">Số lượng</li><li class="item prices uk-text-right">Thành tiền</li></ul><div id="scrollbar" class="uk-overflow-container cart-scrrolbar" style="">
+                                <div class="list-order">
+                                    <div class="item">
+                                        <ul class="uk-list uk-clearfix list-item">
+                                            <li class="product"><div class="uk-flex"><div class="thumb"><a class="link ec-scaledown" href="dieu-hoa-panasonic-1-chieu-12000btu-inverter-cu-cs-pu12vkh-8-moi-2019.html" title="Điều hòa Panasonic 1 chiều 12000btu Inverter CU/CS-PU12VKH-8 ( Mới 2019)" target="_blank"><img src="/uploads/.thumbs/images/28392/dieu-hoa-panasonic-pu12vkh-8.jpg" alt="Điều hòa Panasonic 1 chiều 12000btu Inverter CU/CS-PU12VKH-8 ( Mới 2019)"></a></div><div class="info"><div class="title ec-line-3 mb10"><a class="link" href="dieu-hoa-panasonic-1-chieu-12000btu-inverter-cu-cs-pu12vkh-8-moi-2019.html" title="Điều hòa Panasonic 1 chiều 12000btu Inverter CU/CS-PU12VKH-8 ( Mới 2019)" target="_blank">Điều hòa Panasonic 1 chiều 12000btu Inverter CU/CS-PU12VKH-8 ( Mới 2019)</a></div><button class="delete"><i class="fa fa-trash"></i> Bỏ sản phẩm</button></div></div></li>
+                                            <li class="price uk-text-right"><span class="new">11,250,000₫</span><span class="old">0₫</span></li>
+                                            <li class="count">
+                                                <div class="uk-position-relative">
+                                                    <input type="hidden" name="1[rowid]" value="07cdfd23373b17c6b337251c22b7ea57">
+                                                    <input type="text" name="1[qty]" value="1" class="quantity ajax-quantity">
+                                                    <span class="btn abate"></span><span class="btn augment"></span>
+                                                </div>
+                                            </li>
+                                            <li class="prices uk-text-right"><span>11,250,000₫</span></li>
+                                        </ul><!-- .list-order -->
+                                    </div><div class="item">
+                                        <ul class="uk-list uk-clearfix list-item">
+                                            <li class="product"><div class="uk-flex"><div class="thumb"><a class="link ec-scaledown" href="dieu-hoa-casper-1-chieu-9-000btu-lc-09tl11-moi-2018.html" title="Điều hòa Casper 1 chiều 9.000BTU SC-09TL22" target="_blank"><img src="/uploads/images/000000000000000h.jpg" alt="Điều hòa Casper 1 chiều 9.000BTU SC-09TL22"></a></div><div class="info"><div class="title ec-line-3 mb10"><a class="link" href="dieu-hoa-casper-1-chieu-9-000btu-lc-09tl11-moi-2018.html" title="Điều hòa Casper 1 chiều 9.000BTU SC-09TL22" target="_blank">Điều hòa Casper 1 chiều 9.000BTU SC-09TL22</a></div><button class="delete"><i class="fa fa-trash"></i> Bỏ sản phẩm</button></div></div></li>
+                                            <li class="price uk-text-right"><span class="new">5,100,000₫</span><span class="old">0₫</span></li>
+                                            <li class="count">
+                                                <div class="uk-position-relative">
+                                                    <input type="hidden" name="2[rowid]" value="bc6dc48b743dc5d013b1abaebd2faed2">
+                                                    <input type="text" name="2[qty]" value="1" class="quantity ajax-quantity">
+                                                    <span class="btn abate"></span><span class="btn augment"></span>
+                                                </div>
+                                            </li>
+                                            <li class="prices uk-text-right"><span>5,100,000₫</span></li>
+                                        </ul><!-- .list-order -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .panel-body --><div class="panel-foot"><div class="total uk-text-right mb10"><span class="price">Thành tiền: <strong id="ajax-cart-totalprice">16,350,000₫</strong></span></div><div class="action uk-flex uk-flex-middle uk-flex-space-between"><a class="continue ec-cart-continue"><i class="fa fa-caret-left"></i> Tiếp tục mua hàng</a><a href="https://dieuhoanhapkhauchinhhang.com.vn/dat-mua.html" title="Tiến hành thanh toán" class="purchase">Tiến hành thanh toán</a></div></div><!-- .panel-foot -->
+                    </form>
+                </section><!-- .buynow-2 -->
+            </div>
+        </div>
+    </div>
+</div>

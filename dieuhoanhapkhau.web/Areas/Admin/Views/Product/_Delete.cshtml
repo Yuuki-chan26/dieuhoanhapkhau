@@ -1,0 +1,29 @@
+﻿<div id="product-delete-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Xác nhận xóa sản phẩm</h4>
+            </div>
+            @using (Ajax.BeginForm("Delete", "Product", null, new AjaxOptions()
+            {
+                HttpMethod = "POST",
+                OnSuccess = "deleteOnSuccess(data)",
+                OnFailure = "deleteOnFailure(error)"
+            }, new { @id = "product-delete-form"}))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" id="productId" />
+
+                <div class="modal-body">
+                    <p>Bạn thực sự muốn xóa sản phẩm <b label-name></b>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

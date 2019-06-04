@@ -1,0 +1,148 @@
+﻿@using dieuhoanhapkhau.biz.Services;
+@using dieuhoanhapkhau.biz.Models
+@model HtmlPageCategory
+@{
+    ViewBag.Title = "Dịch vụ - " + Model.HtmlPageCategoryTitle;
+    var listcate = ViewBag.ListCates as List<HtmlPageCategory>;
+
+
+}
+<script>
+    $(document).ready(function () {
+        $('.htmlpage-content img').addClass('img-responsive');
+    });
+</script>
+<div class="container">
+    @if (listcate.Count > 0 && listcate != null)
+    {
+        <div class="menuser container">
+            <div class="col-md-11 row" style="margin: 0 auto;">
+                @if (listcate.Count == 4)
+                {
+
+                    foreach (HtmlPageCategory item1 in listcate.OrderBy(m => m.OrderNo))
+                    {
+                        var listhtmlpage = ServiceFactory.HtmlPageManager.GetHtmlPageByCateId(item1.HtmlPageCategoryId, Culture);
+                        if (listhtmlpage.Count > 1)
+                        {
+
+                            if (item1.HtmlPageCategoryId == Model.HtmlPageCategoryId)
+                            {
+                                <a class="title-submenu-1 submenu " href="@Url.Action("ServicesSub", "HtmlPage", new { shortname = item1.HtmlPageCategoryShortName, shortnamehtml = listhtmlpage[0].HtmlPageShortName })">
+
+                                    @item1.HtmlPageCategoryTitle
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="title-submenu-1 submenu " href="@Url.Action("ServicesSub", "HtmlPage", new { shortname = item1.HtmlPageCategoryShortName, shortnamehtml = listhtmlpage[0].HtmlPageShortName })">
+
+                                    @item1.HtmlPageCategoryTitle
+                                </a>
+                            }
+
+                        }
+                        else
+                        {
+                            if (item1.HtmlPageCategoryId == Model.HtmlPageCategoryId)
+                            {
+                                <div class="add-active col-md-3 col-6">
+                                    <a class="title-submenu-1 submenu" href="@Url.Action("ServicesSub", "HtmlPage", new { shortname = item1.HtmlPageCategoryShortName })">
+                                        <div class="box">
+                                            @if (item1.OrderNo == 0)
+                                            {
+                                                <img src="~/Images/service_warranty.png" class="img-responsive" />
+
+                                            }
+                                            @if (item1.OrderNo == 1)
+                                            {
+                                                <img src="~/Images/service_center.png" class="img-responsive" />
+                                            }
+                                            @if (item1.OrderNo == 2)
+                                            {
+                                                <img src="~/Images/service_parts.png" class="img-responsive" />
+                                            }
+                                            @if (item1.OrderNo == 3)
+                                            {
+                                                <img src="~/Images/service_faq.png" class="img-responsive" />
+                                            }
+                                            @item1.HtmlPageCategoryTitle
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="add-active col-md-3 col-6">
+                                    <a class="title-submenu-1 submenu " href="@Url.Action("ServicesSub", "HtmlPage", new { shortname = item1.HtmlPageCategoryShortName })">
+                                        <div class="box">
+                                            @if (item1.OrderNo == 0)
+                                            {
+                                                <img src="~/Images/service_warranty.png" class="img-responsive" />
+
+                                            }
+                                            @if (item1.OrderNo == 1)
+                                            {
+                                                <img src="~/Images/service_center.png" class="img-responsive" />
+                                            }
+                                            @if (item1.OrderNo == 2)
+                                            {
+                                                <img src="~/Images/service_parts.png" class="img-responsive" />
+                                            }
+                                            @if (item1.OrderNo == 3)
+                                            {
+                                                <img src="~/Images/service_faq.png" class="img-responsive" />
+                                            }
+                                            @item1.HtmlPageCategoryTitle
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+    }
+    <div class="container">
+        @if (Model.ListPage.Count > 0)
+        {
+            if (Model.ListPage.Count == 1)
+            {
+                <div class="initiatory" style="padding-left: 0px;">
+                    <div class="text-title">@Model.ListPage[0].HtmlPageCategoryTitle</div>
+                    <hr>
+                </div>
+                <div class="col-sm-12 no-padding htmlpage-detail">
+
+                    <div class="col-md-12">
+                        @MvcHtmlString.Create(Model.ListPage[0].HtmlPageBody)
+                    </div>
+
+                </div>
+            }
+
+
+
+        }
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.menuser a').each(function () {
+            if ($(this).prop('href') == window.location.href) {
+                $(this).children('.box').addClass('active-box');
+            }
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("ServicesSub", "HtmlPage", new { shortname = Model.HtmlPageCategoryShortName })',
+        '@Url.Action("Services", "HtmlPage", new { shortname = "dich-vu" })');
+    @* setAdminCurrentUrl('@Url.Action("ServicesSub", "HtmlPage",
+    new { HtmlPageCateId = Model.HtmlPageCategoryId, shortname = Model.HtmlPageCategoryTitle, htmlpageid = 2 })');*@
+    setServiceUrl('@Url.Action("ServicesSub", "HtmlPage", new { shortname = Model.HtmlPageCategoryShortName })');
+</script>

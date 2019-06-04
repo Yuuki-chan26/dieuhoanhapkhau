@@ -1,0 +1,139 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@model ProducerProperties
+@{
+    ViewBag.Title = Model.PropertyName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var producer = ViewBag.Producer as Producers;
+}
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li><a href="@Url.Action("Admin", "Account")">Dashboard</a></li>
+            <li><a href="@Url.Action("Search", "Producers")">Danh sách sản phẩm</a></li>
+            <li><a href="@Url.Action("ProducerProperties", "Producers", new { productid=Model.ProducerId})">Danh sách thuộc tính</a></li>
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <li class="active">Sửa @Model.ProducerPropertyId</li>
+            }
+            else
+            {
+                <li class="active">Tạo mới thuộc tính</li>
+            }
+        </ul>
+        <!-- /.breadcrumb -->
+
+
+    </div>
+
+    <div class="page-content">
+
+
+        <div class="page-header">
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <h1>
+                    Sửa thuộc tính id @Model.ProducerPropertyId
+
+                </h1>
+            }
+            else
+            {
+                <h1>
+                    Tạo mới thuộc tính
+
+                </h1>
+            }
+        </div>
+        <!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "manageForm", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+                            {
+                                @Html.HiddenFor(mbox => mbox.ProducerPropertyId)
+
+                            }
+                            if (producer != null)
+                            {
+                               
+                                <input type="hidden" value="@producer.ProducerName" name="ProductName" />
+                            }
+                            @Html.HiddenFor(mbox => mbox.ProducerId)
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ReviewTitle">Tên thuộc tính:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="PropertyName" id="PropertyName" class="col-xs-12 col-sm-6" value="@Model.PropertyName" required />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="OrderNo">Thứ tự:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="number" name="OrderNo" id="OrderNo" class="col-xs-12 col-sm-1" value="@Model.OrderNo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @{var check = Model.IsActive ? "checked" : "";}
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="IsActive">Trạng thái:</label>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="IsActive" type="checkbox" class="ace" value="true" @check />
+
+                                        <span class="lbl"> Ẩn/Hiện thuộc tính</span>
+                                        <input name="IsActive" type="hidden" value="false" />
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-success" value="Lưu" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+<script type="text/javascript">
+    $('textarea[class*=autosize]').autosize({ append: "\n" });
+    $('textarea.limited').inputlimiter({
+        remText: '%n character%s remaining...',
+        limitText: 'max allowed : %n.'
+    });
+</script>
+<script type="text/javascript">
+    function Delete(id, title) {
+        bootbox.confirm("Are you sure to delete " + title + " ?", function (result) {
+            if (result) {
+                $("#ProducerPropertyId").val(id);
+                $('#manageForm').attr('action', '@(Url.Action("Delete"))').submit();
+            }
+        });
+    }
+    $('textarea[class*=autosize]').autosize({ append: "\n" });
+    $('textarea.limited').inputlimiter({
+        remText: '%n character%s remaining...',
+        limitText: 'max allowed : %n.'
+    });
+</script>
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("Search", "Producers")');
+</script>

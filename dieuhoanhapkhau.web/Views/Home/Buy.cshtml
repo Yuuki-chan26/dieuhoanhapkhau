@@ -1,0 +1,966 @@
+﻿<style tyle="text/css">
+    .order-1 .box_cart {
+        background: #fff;
+        padding: 0;
+    }
+
+    .order-1 .payment .step .item {
+        float: left;
+        width: 33.33%;
+    }
+
+    .order-1 .payment .step .link {
+        display: block;
+        padding: 8px 35px 8px 30px;
+        font-size: 13px;
+        line-height: 20px;
+        color: #333;
+        font-weight: bold;
+        background: #f0f0f0;
+        position: relative;
+    }
+
+    .order-1 .payment .step .active .link {
+        background: #f4f9fd;
+    }
+
+    .order-1 .payment .step .link:before, .order-1 .payment .step .link:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translate(0, -50%);
+        -ms-transform: translate(0, -50%);
+        -o-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 13px solid;
+        right: -13px;
+    }
+
+    .order-1 .payment .step .link:before {
+        border-left-color: #fff;
+        right: -14px;
+        z-index: 1;
+    }
+
+    .order-1 .payment .step .link:after {
+        z-index: 2;
+        border-left-color: #f1f1f1;
+    }
+
+    .order-1 .payment .step .step-3 .link:after, .order-1 .payment .step .step-3 .link:after {
+        display: none;
+    }
+
+    .order-1 .payment .step .active .link:after {
+        border-left-color: #f4f9fd;
+    }
+
+    .order-1 .payment .step .number {
+        display: inline-block;
+        margin-right: 5px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #999;
+        color: #fff;
+        text-align: center;
+        font-size: 12px;
+        line-height: 24px;
+    }
+
+    .order-1 .payment .step .complete .number {
+        text-indent: -999px;
+        background: url(../images/icon-checked.png) 0% 0% no-repeat;
+    }
+
+    .order-1 .payment .step .active .number {
+        background: #0492d5;
+    }
+
+    .order-1 .information .uk-panel {
+        border: 1px solid #eee;
+    }
+
+    .order-1 .information .panel-head {
+        padding: 10px 15px;
+        background: #f7f7f7;
+        border-bottom: 1px solid #eee;
+    }
+
+        .order-1 .information .panel-head .title {
+            font-size: 14px;
+            margin: 0;
+            color: #333;
+        }
+
+            .order-1 .information .panel-head .title .number {
+                color: #666;
+                font-size: 13px;
+            }
+
+        .order-1 .information .panel-head .change {
+            color: #0386ca;
+            font-size: 12px;
+        }
+
+    .order-1 .listorder > .item {
+        padding: 15px 15px;
+        overflow: hidden;
+    }
+
+        .order-1 .listorder > .item + .item {
+            border-top: 1px dotted #ccc;
+        }
+
+    .order-1 .listorder .colimg {
+        width: 80px;
+        margin-right: 15px;
+    }
+
+    .order-1 .listorder .colinfo {
+        width: calc(100% - 95px);
+        -moz-width: calc(100% - 95px);
+        -webkit-width: calc(100% - 95px);
+        -o-width: calc(100% - 95px);
+        -ms-width: calc(100% - 95px)
+    }
+
+    .order-1 .listorder .colimg .img {
+        height: 80px;
+        border: 1px solid #ebebeb;
+    }
+
+    .order-1 .listorder .colinfo .title {
+        margin-left: 10px;
+        font-size: 13px;
+        line-height: 18px;
+        margin-bottom: 0px;
+        width: 70%;
+        font-weight: bold;
+    }
+
+    .delete.delete_item {
+        cursor: pointer;
+        margin-top: 5px;
+        display: inline-block;
+        font-weight: normal;
+    }
+
+    .quantity input {
+        text-align: center;
+        margin: 0 5px;
+        height: 25px !important;
+        width: 30px !important;
+        border-radius: 4px;
+        font-size: 12px !important;
+    }
+
+    .order-1 .listorder .colinfo .title .link {
+        color: #555;
+        font-size: 12px;
+    }
+
+        .order-1 .listorder .colinfo .title .link:hover {
+            color: #288ad6;
+        }
+
+    .order-1 .listorder .colinfo .price, .order-1 .total .price {
+        font-size: 13px;
+        line-height: 18px;
+        text-align: right;
+        margin-right: 10px;
+        width: auto;
+    }
+
+    .order-1 .total {
+        padding: 8px 15px;
+        border-top: 1px solid #ebebeb;
+    }
+
+        .order-1 .total .tt-price {
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+        }
+
+            .order-1 .total .tt-price .price {
+                color: #d60c0c;
+            }
+
+    .order-1 .customer .panel-body, .order-1 .payment-methods .panel-body {
+        padding: 20px 30px 5px 30px;
+    }
+
+    .order-1 .customer .col.left {
+        float: left;
+        width: 105px;
+    }
+
+    .order-1 .customer .col.right {
+        float: right;
+        width: -moz-calc(100% - 115px);
+        width: -webkit-calc(100% - 115px);
+        width: -o-calc(100% - 115px);
+        width: calc(100% - 115px)
+    }
+
+    .order-1 .customer label.label, .order-1 .customer span.no-required {
+        display: block;
+        font-size: 13px;
+        color: #000;
+    }
+
+    .order-1 .customer span.no-required {
+        color: #999;
+    }
+
+    .order-1 .customer .panel-body .text, .order-1 .customer .panel-body .select {
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 13px;
+        color: #252525;
+    }
+
+    .order-1 .customer .sex .item + .item {
+        margin-left: 20px;
+    }
+
+    .order-1 .customer .sex input {
+        margin-right: 5px;
+    }
+
+    .order-1 .giftcode .panel-body {
+        padding: 20px 30px 20px 30px;
+    }
+
+    .order-1 .giftcode {
+        max-width: 230px
+    }
+
+        .order-1 .giftcode .text {
+            height: 30px;
+            border: 1px solid #ccc;
+        }
+
+        .order-1 .giftcode .btn {
+            position: absolute;
+            height: 30px;
+            padding: 4px 15px;
+            font-size: 13px;
+            color: #fff;
+            background: #0388cd;
+            border: none;
+            top: 0px;
+            right: -80px;
+            cursor: pointer;
+        }
+
+        .order-1 .giftcode .note {
+            font-size: 13px;
+            font-style: italic;
+            color: #999;
+        }
+
+            .order-1 .giftcode .note .text-black {
+                color: #252525;
+            }
+
+            .order-1 .giftcode .note .link {
+                color: #0386ca;
+            }
+
+    .order-1 .payment-methods input[type=radio] {
+        display: none;
+    }
+
+        .order-1 .payment-methods input[type=radio]:checked + .label .inner {
+            border-color: #0388cd;
+        }
+
+        .order-1 .payment-methods input[type=radio]:checked + .label:before {
+            border: 4px solid #0388cd;
+        }
+
+    .order-1 .payment-methods .label {
+        display: block;
+        position: relative;
+        padding-left: 25px;
+        cursor: pointer;
+    }
+
+        .order-1 .payment-methods .label:before {
+            display: none !important;
+            content: "";
+            display: block;
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            left: 0;
+            top: 50%;
+            margin-top: -7px;
+            border: 1px solid #666;
+            border-radius: 50%;
+        }
+
+    .order-1 .payment-methods .inner {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .order-1 .payment-methods .thumb {
+        float: left;
+        width: 80px;
+        padding: 4px;
+        height: 76px;
+    }
+
+    .order-1 .payment-methods .description {
+        border-left: 1px solid #ccc;
+        float: left;
+        width: -moz-calc(100% - 80px);
+        width: -webkit-calc(100% - 80px);
+        width: -o-calc(100% - 80px);
+        width: -ms-calc(100% - 80px);
+        width: calc(100% - 80px);
+        font-size: 13px;
+        color: #333;
+        padding: 8px 16px 8px 16px;
+    }
+
+        .order-1 .payment-methods .description .subtitle {
+            color: #999;
+        }
+
+    .order-1 .continue .btn {
+        display: inline-block;
+        position: relative;
+        padding: 8px 50px 8px 40px;
+        background: #d60c0c;
+        color: #fff;
+        border: none;
+        font-size: 13px;
+        line-height: 20px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        .order-1 .continue .btn:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 12px;
+            height: 8px;
+            background: url(templates/backend/images/spritesheet.png) -264px -81px no-repeat;
+            top: 14px;
+            right: 15px;
+        }
+</style>
+<!-- <html> -->
+<section class="order-1 mb20">
+    <div class="uk-container uk-container-center">
+        <div class="box_cart">
+            <div class="payment mtb20">
+                <ul class="uk-list uk-clearfix step">
+                    <li class="item step-1 complete"><a class="link" href="https://dieuhoanhapkhauchinhhang.com.vn/" title="Mua hàng"><span class="number">1</span> Đặt hàng</a></li>
+                    <li class="item step-2 active"><a class="link" href="https://dieuhoanhapkhauchinhhang.com.vn/dat-mua.html" title=""><span class="number">2</span> Thông tin giao hàng</a></li>
+                    <li class="item step-3"><a class="link" href="" onclick="return false;" title=""><span class="number">3</span> Hoàn tất đơn hàng</a></li>
+                </ul>
+            </div><!-- .payment -->
+            <form action="" method="post" class="uk-form">
+                <div class="uk-grid uk-grid-medium information">
+                    <div class="uk-width-medium-6-10">
+                        <div class="uk-panel customer mb20">
+                            <header class="panel-head"><h3 class="title"><span class="text">Thông tin thanh toán</span></h3></header>
+                            <div class="panel-body">
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">&nbsp;</label></div>
+                                    <div class="col right">
+                                        <div class="sex uk-flex uk-flex-middle">
+                                            <div class="item"><label class="label"><input type="radio" name="sex" value="0"> <b>Anh</b></label></div>
+                                            <div class="item">
+                                                <label class="label"><input type="radio" name="sex" value="1"> <b>Chị</b></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">Họ tên</label></div>
+                                    <div class="col right"><input type="text" name="fullname" class="text uk-width-1-1" placeholder="Ví dụ: Nguyễn Văn A"></div>
+                                </div>
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">Điện thoại</label></div>
+                                    <div class="col right"><input type="text" name="phone" class="text uk-width-1-1" placeholder="Ví dụ: 0987654321"></div>
+                                </div>
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">Email <span class="no-required">(không bắt buộc)</span></label></div>
+                                    <div class="col right"><input type="text" name="email" class="text uk-width-1-1" placeholder="supportxyz@gmail.com"></div>
+                                </div>
+
+                                <div class=" provincial uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">Tỉnh/Thành phố</label></div>
+                                    <div class="col right">
+                                        <select name="cityid" class="form-control" style="width: 100%;" id="cityid">
+                                            <option value="0">--Chọn Thành phố--</option>
+                                            <option value="24">Hà Nội</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class=" provincial uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">Quận/Huyện</label></div>
+                                    <div class="col right">
+                                        <select name="districtid" class="form-control" style="width: 100%;" id="districtid">
+                                            <option value="0">--Chọn Quận/Huyện--</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">Địa chỉ chi tiết</label></div>
+                                    <div class="col right"><input type="text" name="address" class="text uk-width-1-1" placeholder="Ví dụ: Số 10, Ngõ 50, Đường ABC"></div>
+                                </div>
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">Lời nhắn <span class="no-required">(không bắt buộc)</span></label></div>
+                                    <div class="col right"><textarea name="message" class="text uk-width-1-1" placeholder="Ví dụ: Chuyển hàng ngoài giờ hành chính"></textarea></div>
+                                </div>
+                            </div>
+                        </div><!-- .uk-panel -->
+                        <div class="uk-panel payment-methods mb20">
+                            <div class="panel-head"><h3 class="title"><span class="text">Phương thức thanh toán</span></h3></div>
+                            <div class="panel-body">
+                                <div class="list-payment">
+                                    <div class="item uk-clearfix mb15">
+                                        <!-- <input type="radio" id="pay-1" name="payment" value="0" > -->
+                                        <label for="pay-1" class="label" style="padding-left: 0">
+                                            <div class="inner uk-clearfix">
+                                                <div class="thumb uk-float-left ec-scaledown"><img src="~/images/pay-1.png" alt=""></div>
+                                                <div class="description">
+                                                    <div class="title"><span class="uk-text-bold">Thanh toán khi nhận hàng</span></div>
+                                                    <div class="subtitle">
+                                                        Quý khách sẽ thanh toán bằng tiền mặt hoặc thẻ khi
+                                                        https://dieuhoanhapkhauchinhhang.com.vn/
+                                                        giao hàng cho quý khách
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="item uk-clearfix mb15">
+                                        <!-- <input type="radio" id="pay-2" name="payment" value="1" > -->
+                                        <label for="pay-2" class="label" style="padding-left: 0">
+                                            <div class="inner uk-clearfix">
+                                                <div class="thumb uk-float-left ec-scaledown"><img src="~/images/pay-2.png" alt=""></div>
+                                                <div class="description">
+                                                    <div class="title"><span class="uk-text-bold">Thanh toán bằng thẻ ATM</span></div>
+                                                    <div class="subtitle">
+                                                        <p>
+                                                            Thẻ ATM của bạn cần đăng ký sử dụng dịch vụ Internet Banking.<br>
+                                                            Bạn sẽ được chuyển tới Napas để thanh toán
+                                                        </p>
+                                                        <p>bbbb</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="continue uk-text-right">
+                            <button type="submit" name="create" value="create" class="uk-button btn">Tiếp tục</button>
+                        </div>
+                    </div><!-- .uk-width -->
+                    <div class="uk-width-medium-4-10">
+                        <div class="uk-panel">
+                            <header class="panel-head uk-flex uk-flex-middle uk-flex-space-between">
+                                <h3 class="title"><span class="text">Đơn hàng <span class="number">(4 sản phẩm)</span></span></h3>
+                            </header>
+                            <div class="panel-body">
+                                <ul class="uk-list listorder">
+                                    <li class="item uk-clearfix">
+                                        <input name="quantity" value="bc6dc48b743dc5d013b1abaebd2faed2" class="quantity ajax-quantity" type="hidden">
+                                        <div class="colimg uk-float-left">
+                                            <a href="dieu-hoa-casper-1-chieu-9-000btu-lc-09tl11-moi-2018.html" title="Điều hòa Casper 1 chiều 9.000BTU SC-09TL22" class="img ec-scaledown" target="_blank"><img src="/uploads/images/000000000000000h.jpg" alt="Điều hòa Casper 1 chiều 9.000BTU SC-09TL22"></a>
+                                        </div>
+                                        <div class="colinfo uk-float-right">
+                                            <div class=" uk-flex uk-flex-space-between">
+                                                <div class="title ec-line-3"><a href="dieu-hoa-casper-1-chieu-9-000btu-lc-09tl11-moi-2018.html" title="Điều hòa Casper 1 chiều 9.000BTU SC-09TL22" class="link" target="_blank">Điều hòa Casper 1 chiều 9.000BTU SC-09TL22</a><br><span class="delete delete_item"><i class="fa fa-trash"></i> Bỏ sản phẩm</span></div>
+                                                <div class="price">
+                                                    <div class="tt-price">5,100,000₫</div>
+                                                    <div class="quantity" style="color:red;">x<input class="fc-cart-update" data-id="bc6dc48b743dc5d013b1abaebd2faed2" type="text" value="4" name="1[qty]" style="width:40px;"></div>
+                                                    <div class="tt-price"><strong>20,400,000₫</strong></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="total">
+                                    <div class=" uk-flex uk-flex-middle uk-flex-space-between mb10">
+                                        <div class="title">Tổng tiền</div>
+                                        <div class="price"><strong>20,400,000₫</strong></div>
+                                    </div>
+                                    <div class=" mb10 uk-flex uk-flex-middle uk-flex-space-between">
+                                        <div class="title">Phí vận chuyển</div>
+                                        <div class="price"><strong class="ec-uppercase">0₫</strong></div>
+                                    </div>
+                                    <div class=" tt-price uk-flex uk-flex-middle uk-flex-space-between">
+                                        <div class="title">Số tiền còn lại cần thanh toán</div>
+                                        <div class="price"><strong>20,400,000₫</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .uk-panel -->
+                    </div><!-- .uk-width -->
+                </div><!-- .uk-grid -->
+            </form>
+        </div>
+    </div>
+</section><!-- .order-1 -->
+<!-- </html> -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#cityid').change(function () {
+            var city_id = $('#cityid').val();
+            $.post('https://dieuhoanhapkhauchinhhang.com.vn/products/ajax/cart/ajax_location.html', {
+                cityid: city_id,
+            },
+                function (data) {
+                    var json = JSON.parse(data);
+                    $('#districtid').html(json.option);
+                });
+            return false;
+        });
+    });</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.fc-cart-update').change(function () {
+            var qty = $(this).val();
+            var rowid = $(this).attr('data-id');
+            $.post('https://dieuhoanhapkhauchinhhang.com.vn/products/ajax/cart/updateitemcart.html', {
+                qty: qty,
+                rowid: rowid,
+            },
+                function (data) {
+                    window.location.href = 'https://dieuhoanhapkhauchinhhang.com.vn/dat-mua.html';
+                });
+            return false;
+        });
+    });
+    $(document).on('click', '.delete_item', function () {
+        var item = $(this);
+        var idprd = item.parent().parent().parent().parent().find('.quantity').val();
+        ajax_cart_update1(idprd);
+        return false;
+    });
+    function ajax_cart_update1(idprd) {
+        $.post('https://dieuhoanhapkhauchinhhang.com.vn/products/ajax/cart/deletecart.html', { idprd: idprd }, function (data) {
+            window.location.href = 'https://dieuhoanhapkhauchinhhang.com.vn/dat-mua.html';
+        });
+    }</script>
+
+
+
+
+
+
+
+
+
+
+@using dieuhoanhapkhau.biz.Models
+@using dieuhoanhapkhau.biz.Services
+@using dieuhoanhapkhau.web.Models
+@using idocNet.Core.Extensions
+@model ShoppingCartModels
+@{
+    ViewBag.Title = "Đặt hàng";
+    List<CartItem> modelCarts = new List<CartItem>();
+
+}
+<script>
+    function _getDistrict() {
+        var cityid = $("#LocationDiscountId").val();
+        var url = '@Url.Action("GetDistrict","ProductAction")';
+		$.ajax({
+            url: url,
+            data: { cityid: cityid },
+		    type: 'get',
+		    dataType: 'html',
+		    success: function (data) {
+		        if (data.length > 0) {
+		            $("#LocationId").html(data);
+		        }
+		        else {
+
+		        }
+		    }
+		});
+    }
+</script>
+
+<div class="box_cart">
+    <div class="container">
+        <div class="cart_menu">
+            <div class="info-detail">
+                <div class="row">
+                    <div class="col-md-12 tab_panel">
+                        <div class="list-group cart-tab" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action " href="@Url.Action("Index","Home")">
+                                <span class="number number_1">1</span>
+                                Đặt hàng
+                            </a>
+                            <a class="list-group-item list-group-item-action active" id="list-profile-list" data-toggle="list" href="#list-info" role="tab" aria-controls="why_choose">
+                                <span class="number">2</span>
+                                Thông tin giao hàng
+                            </a>
+                            <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-success" role="tab" aria-controls="sale">
+                                <span class="number">3</span>
+                                Hoàn tất đơn hàng
+                            </a>
+                        </div>
+                    </div>
+                    <form action="" method="post" class="uk-form-blank row col-sm-12 ">
+                        <div class="col-12 content_tab">
+                            <div class="tab-content" id="nav-tabContent">
+
+                                <div class="tab-pane fade show active" id="list-info" role="tabpanel" aria-labelledby="list-info-list">
+                                    <div class="col-12 col-md-6 uk-float-left tab-left">
+                                        <div class="box_info">
+                                            <div class="header-tab">
+                                                Thông tin thanh toán
+                                            </div>
+                                            <div class="content_info">
+                                                <div class="form-group row">
+                                                    <label for="gender" class="col-sm-3 col-form-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="gender" id="gender" value="0" checked>
+                                                            <label class="form-check-label" for="male">
+                                                                Anh
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="gender" id="gender" value="1">
+                                                            <label class="form-check-label" for="female">
+                                                                Chị
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="name" class="col-sm-3 col-form-label">Họ và tên</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="name" placeholder="Ví dụ: Nguyễn Văn A" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="phone" class="col-sm-3 col-form-label">Điện thoại</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="phone" placeholder="Ví dụ: 098875454" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="email" class="col-sm-3 col-form-label">Email <br /><span>(không bắt buộc)</span></label>
+                                                    <div class="col-sm-9">
+                                                        <input type="email" class="form-control" id="email" placeholder="Ví dụ: supportxyz@gmail.com">
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="city" class="col-sm-3 col-form-label">Tỉnh/Thành phố</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.DropDownListDefault("LocationDiscountId", ViewData.Get<SelectList>("ListLocationDis"), "", "-- Chọn Tỉnh/Thành phố --", new { @required = "required", @class = "form-control", onchange = "_getDistrict()" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="district" class="col-sm-3 col-form-label">Quận/Huyện</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.DropDownListDefault("LocationId", ViewData.Get<SelectList>("Locations"), "", "-- Chọn Quận/Huyện --", new { @required = "required", @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="address" class="col-sm-3 col-form-label">Địa chỉ chi tiết</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="address" placeholder="Ví dụ: Số 10, Ngõ 50, Đường ABC" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="message" class="col-sm-3 col-form-label">Lời nhắn <br /><span>(không bắt buộc)</span></label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="message" placeholder="Ví dụ: Chuyển hàng ngoài giờ hành chính">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box_info">
+                                            <div class="header-tab">
+                                                Phương thức thanh toán
+                                            </div>
+                                            <div class="content_info">
+                                                <div class="pay_1">
+                                                    <div class="row payment">
+                                                        <div class="col-12 col-md-3 pay_left">
+                                                            <img src="@Url.Content("/Img/pay-1.png")" alt="Alternate Text" />
+                                                        </div>
+                                                        <div class="col-12 col-md-9  pay_right">
+                                                            <span>Thanh toán khi nhận hàng</span>
+                                                            <p>
+                                                                Quý khách sẽ thanh toán bằng tiền mặt hoặc thẻ khi <br />
+                                                                https://dieuhoanhapkhauchinhhang.com.vn/ giao hàng cho quý khách
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pay_1">
+                                                    <div class="row payment">
+                                                        <div class="col-12 col-md-3 pay_left">
+                                                            <img src="@Url.Content("/Img/pay-2.png")" alt="Alternate Text" />
+                                                        </div>
+                                                        <div class="col-12 col-md-9  pay_right">
+                                                            <span>Thanh toán bằng thẻ ATM</span>
+                                                            <p>
+                                                                Thẻ ATM của bạn cần đăng ký sử dụng dịch vụ Internet Banking. <br />
+                                                                Bạn sẽ được chuyển tới Napas để thanh toán
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="buttonOrder">
+                                            <div class="right">
+                                                <a name="submit" id="submit" class="uk-button btn btnOrder" href="javascript:" onclick="_order()">
+                                                    Tiếp tục
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (Model.Cart != null)
+                                    {
+                                        var listItemCart = Model.Cart.ListItem as List<CartItem>;
+                                        modelCarts = listItemCart;
+                                        decimal totalMoney = 0;
+                                        if (listItemCart.Count > 0 && listItemCart != null)
+                                        {
+                                            <div class="col-12 col-md-6 cart_box_items">
+                                                <div class="box_info">
+                                                    <div class="header-tab">
+                                                        <span>Đơn hàng </span> (@listItemCart.Count sản phẩm)
+                                                    </div>
+                                                    <div class="content_info">
+                                                        <ul class="uk-list">
+                                                            @foreach (var item in listItemCart)
+                                                            {
+                                                                <li class="item-cate uk-clearfix">
+                                                                    <div class="img_item uk-float-left">
+                                                                        <a href="@Url.Action("Detail","Product",new { shortname=item.ShortName})">
+                                                                            <img src="@Url.Content(item.ProductImage)" alt="Alternate Text" />
+                                                                        </a>
+                                                                        <input type="hidden" name="@item.ProductId" value="@item.ProductId" id="@item.ProductId" />
+                                                                    </div>
+                                                                    <div class="item_info uk-float-right">
+                                                                        <div class="name_item">
+                                                                            <a href="@Url.Action("Detail","Product",new { shortname=item.ShortName})">
+                                                                                <span>@item.ProductName</span>
+                                                                            </a> <br />
+                                                                            <a href="@Url.Action("Remove","ProductAction",new { id=item.ProductId})">
+                                                                                <span class="delete_item">
+                                                                                    <i class="fas fa-trash"></i>
+                                                                                    Bỏ sản phẩm
+                                                                                </span>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="price">
+                                                                            <div class="title-price">
+                                                                                @item.Price.ToString("#,##") đ
+                                                                            </div>
+                                                                            <div class="quality" style=" color:red;">
+                                                                                x <input type="number" class=" quality" name="quality" value="@item.Quantity" size="1" maxlength="1" min="1" max="10"
+                                                                                         onchange="myFunction(this,@item.ProductId);" />
+                                                                                @if (ViewBag.Message != null)
+                                                                                {
+                                                                                    <span>@ViewBag.Message</span>
+                                                                                }
+                                                                            </div>
+                                                                            <div class="tt-price-@item.ProductId">
+                                                                                @item.Total.ToString("#,##") đ
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <label class="d-none">@(totalMoney += @item.Total)</label>
+                                                            }
+
+                                                            <li class="item-cate uk-clearfix">
+                                                                <div class="total">
+                                                                    <div class="uk-flex uk-flex-middle b_total">
+                                                                        <div class="uk-float-left">
+                                                                            Tổng tiền
+                                                                        </div>
+                                                                        <div class="uk-float-right tt-price">
+                                                                            @totalMoney.ToString("#,##") đ
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="uk-flex uk-flex-middle b_total">
+                                                                        <div class="uk-float-left">
+                                                                            Phí vận chuyển
+                                                                        </div>
+                                                                        <div class="uk-float-right tt-vat">
+                                                                            0 đ
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="uk-flex uk-flex-middle b_total b_tt_price">
+                                                                        <div class="uk-float-left">
+                                                                            Số tiền còn lại cần thanh toán
+                                                                        </div>
+                                                                        <div class="uk-float-right tt-price">
+                                                                            @totalMoney.ToString("#,##") đ
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div></div>
+                                        }
+                                    }
+
+                                </div>
+                                <div class="tab-pane fade" id="list-success" role="tabpanel" aria-labelledby="list-success-list"></div>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    function myFunction(thiz, proID) {
+
+        debugger;
+        var qty = $(thiz).val();
+
+        //alert(qty);
+        $.ajax({
+        url: '@Url.Action("UpdateCart", "ProductAction")',
+        data: {
+            proid: proID,
+            quanlity: qty
+        },
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+
+            if (data.Success) {
+                if (data.Flag === "0") {
+                    debugger;
+                    var cartQuanlity = 0;
+                    var totalPrice = 0;
+                    for (var i = 0; i < data.Cart.ListItem.length; i++) {
+                        var Item = data.Cart.ListItem[i];
+                        cartQuanlity += Item.Quantity;
+                        var total = Item.Quantity * Item.Price;
+                        var totalprice = ".tt-price-" + Item.ProductId;
+                        $(totalprice).text(formatPrice(total) + " đ");
+                        totalPrice += total;
+
+                        $(".tt-price").text(formatPrice(totalPrice) +"đ")
+                    }
+
+                    $("#cartQuanlity").text(cartQuanlity);
+
+                }
+
+            }
+            else if (data.Flag === "1") {
+                debugger;
+                var error = data.Message;
+                alert(error);
+
+            }
+        }
+    });
+    }
+</script>
+
+<script>
+    function _order() {
+        debugger;
+
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var address = $("#address").val();
+        var phone = $("#phone").val();
+        var city = $("#LocationDiscountId").val();
+        var district = $("#LocationId").val();
+        var message = $("#message").val();
+        var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
+        if (name == null || name == "") {
+            alert("Hãy nhập họ và tên của bạn");
+            return false;
+        }
+        if (phone == null || phone == "") {
+            alert("Hãy nhập số điện thoại của bạn");
+            return false;
+        }
+        if (email == null || email == "") {
+            alert("Hãy nhập email của bạn");
+            return false;
+        } else if (pattern.test(email) == false) {
+            alert("Email không đúng định dạng");
+            return false;
+        }
+
+        if (address == null || address == "") {
+            alert("Hãy nhập address của bạn");
+            return false;
+        }
+
+
+        var url = '@Url.Action("/Order")';
+        $.ajax({
+            url: url,
+            data:{ CustomerName: name, Phone: phone, Email: email, Address: address, City: city, District: district, Message: message},
+            type: 'post',
+            //dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                if (data)
+                {
+                    alert("Khách hàng " + name + ", đã đặt hàng thành công hãy kiểm tra email của bạn!");
+                    window.location.href = window.location.href;
+                }
+            },
+        });
+    }
+</script>
+
+<script>
+    function formatPrice(str) {
+
+        if (str == null) {
+            return '0';
+        }
+
+        str = typeof str != 'string' ? str.toString() : parseFloat(str).toString();
+
+        return str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    }
+</script>

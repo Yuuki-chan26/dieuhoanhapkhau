@@ -1,0 +1,104 @@
+﻿
+<div class="main_main">
+    <div class="main-content">
+        <div class="uk-container uk-container-center">
+            <div class="breadcrumb">
+                <ul class="uk-breadcrumb">
+                    <li><a href="#" title="Trang chủ"><i class="fa fa-home"></i> Trang chủ</a></li>
+                    <li class="uk-active"><a href="tin-tuc-su-kien.html" title="Tin Tức &amp; Sự Kiện">Tin Tức &amp; Sự Kiện</a></li>
+                </ul>
+            </div>
+            <div class="row10">
+                <div class="uk-grid uk-grid-collapse">
+                    <div class="uk-width-large-1-2 p10">
+                        <div class="panel contacts">
+                            <div class="panel-body">
+                                <div class="mb20">Vui lòng nhập đầy đủ thông tin dưới đây, chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất.</div>
+                                <form action="@Url.Action("Contact","Home")" method="post" class="uk-form form">
+                                    <div class="uk-grid uk-grid-medium uk-grid-width-large-1-1">
+                                        <div class=" mb15">
+                                            <input type="text" name="fullname" id="Name" value="" class="text uk-width-1-1" placeholder="Họ tên *">
+                                        </div>
+                                        <div class=" mb15">
+                                            <input type="text" name="email" id="Email" value="" class="text uk-width-1-1" placeholder="Email *">
+                                        </div>
+                                        <div class=" mb15">
+                                            <input type="text" name="phone" id="Phone" value="" class="text uk-width-1-1" placeholder="Số điện thoại *">
+                                        </div>
+                                        <div class=" mb15">
+                                            <input type="text" name="address" id="Address" value="" class="text uk-width-1-1" placeholder="Địa chỉ *">
+                                        </div>
+                                    </div><!-- end .uk-grid -->
+                                    <div class=" mb20">
+                                        <textarea name="message" value="" id="Message" class="text uk-width-1-1" style="height: 175px;" placeholder="Nội dung *"></textarea>
+                                    </div>
+                                    <div class="mb15" style="margin: 20px 0;">
+                                        <input style="background: #0088cc; color: #fff;" type="submit" id="submitContact" name="create" value="Gửi thông tin" class="btn">
+                                    </div>
+                                </form><!-- end .form -->
+                            </div><!-- end .panel-body -->
+                        </div><!-- end .contacts -->
+                    </div>
+                    <div class="uk-width-large-1-2 p10">
+                        <div class="box_right_content">
+                            <div class="uk-grid uk-grid-width-medium-1-1 pb20">
+                                <div class="panel contacts">
+                                    <div class="panel-body">
+                                        <h1 class="company mb15"><span class="fc-uppercase">CÔNG TY TNHH THẾ GIỚI ĐIỆN LẠNH GIA ĐÌNH</span></h1>
+                                        <p>
+                                            VP: Số 10 Thái Thịnh 1 - Đống Đa - Hà Nội<br>
+                                            Email: thegioidienlanhkd@gmail.com<br>
+                                            Kho Hàng 2: Số 71 ngõ 14 vũ hữu - thanh xuân - Hà Nội<br>
+                                            Điện thoại: 0435 627 671 - 0435 627 670 - 0435 627 672 - Mr kha : 0974.028.279
+                                        </p>
+                                    </div><!-- end .panel-body -->
+                                </div><!-- end .contacts -->
+                            </div><!-- end .uk-grid -->
+                        </div>
+                    </div>
+                </div>
+                <div class="panel contacts">
+                    <div class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5629141256227!2d105.81494151493233!3d21.010150886008443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac9d4672b2cd%3A0x91497d67daf1fddf!2zMTAgTmfDtSBUaMOhaSBUaOG7i25oIDEsIFRo4buLbmggUXVhbmcsIMSQ4buRbmcgxJBhLCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1496222357999" style="border:0" allowfullscreen="" width="600" height="450" frameborder="0"></iframe>
+                    </div>
+                </div><!-- end .contacts -->
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("Contact", "Home")', '@Url.Action("Contact", "Home")');
+</script>
+<script>
+    $("#submitContact").click(function () {
+        
+        var name = $("#Name").val();
+        var email = $("#Email").val();
+        var address = $("#Address").val();
+        var phone = $("#Phone").val();
+        var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (name == null || name == "") {
+            alert("Nhập tên của bạn");
+            return false;
+        }
+
+        if (phone == null || phone == "") {
+            alert("Nhập số điện thoại của bạn");
+            return false;
+        }
+        if (email == null || email == "") {
+            alert("Nhập email của bạn");
+            return false;
+        }
+        if (reg.test(email) == false) {
+            alert("Email không đúng định dạng");
+            return false;
+        }
+        if (address == null || address == "") {
+            alert("Nhập địa chỉ của bạn");
+            return false;
+        }
+        return true;
+    });
+</script>

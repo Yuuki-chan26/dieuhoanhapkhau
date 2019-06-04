@@ -1,0 +1,101 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@model Company
+@{
+    ViewBag.Title = "Thông tin công ty";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li><a href="@Url.Action("Admin", "Account")">Dashboard</a></li>
+            <li class="active">Thông tin công ty</li>
+        </ul>
+        <!-- /.breadcrumb -->
+        <!-- /.nav-search -->
+    </div>
+
+    <div class="page-content">
+
+
+        <div class="page-header">
+            <h1>
+                Thông tin công ty
+
+            </h1>
+        </div>
+        <!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "manageForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tên công ty</th>
+                                        <th>Hotline</th>
+                                        <th>Email liên hệ</th>
+                                        <th class="hidden-480">
+                                            <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                            Ngày cập nhật
+                                        </th>
+                                        <th>Người cập nhật</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            @Model.CompanyName
+
+                                        </td>
+                                        <td>
+                                            @Model.CompanyHotline
+
+                                        </td>
+                                        <td>
+                                            @Model.CompanyMail
+                                        </td>
+                                        <td class="hidden-480">@Model.UpdateDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@Model.UpdateBy</td>
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+
+                                                <a class="btn btn-xs btn-info" href="@Url.Action("Update", "Company", new { Id = Model.CompanyId })">
+                                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+
+
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("Search","Company")');
+</script>

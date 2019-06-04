@@ -1,0 +1,376 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using dieuhoanhapkhau.biz.Services
+@using dieuhoanhapkhau.web.Models
+@using idocNet.Core.Extensions
+@model ShoppingCartModels
+@{
+    ViewBag.Title = "Đặt hàng";
+    List<CartItem> modelCarts = new List<CartItem>();
+
+}
+<script>
+    function _getDistrict() {
+        var cityid = $("#LocationDiscountId").val();
+        var url = '@Url.Action("GetDistrict","ProductAction")';
+        $.ajax({
+            url: url,
+            data: { cityid: cityid },
+            type: 'get',
+            dataType: 'html',
+            success: function (data) {
+                if (data.length > 0) {
+                    $("#LocationId").html(data);
+                }
+                else {
+
+                }
+            }
+        });
+    }
+</script>
+<section class="order-1 mb20">
+    <div class="uk-container uk-container-center">
+        <div class="box_cart">
+            <div class="payment mtb20">
+                <ul class="uk-list uk-clearfix step">
+                    <li class="item step-1 complete"><a class="link" href="" title="Mua hàng"><span class="number">1</span> Đặt hàng</a></li>
+                    <li class="item step-2 active"><a class="link" href="" title=""><span class="number">2</span> Thông tin giao hàng</a></li>
+                    <li class="item step-3"><a class="link" href="" onclick="return false;" title=""><span class="number">3</span> Hoàn tất đơn hàng</a></li>
+                </ul>
+            </div><!-- .payment -->
+            <form action="" method="post" class="uk-form">
+                <div class="uk-grid uk-grid-medium information">
+                    <div class="uk-width-medium-6-10">
+                        <div class="uk-panel customer mb20">
+                            <header class="panel-head"><h3 class="title"><span class="text">Thông tin thanh toán</span></h3></header>
+                            <div class="panel-body">
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="" class="label">&nbsp;</label></div>
+                                    <div class="col right">
+                                        <div class="sex uk-flex uk-flex-middle">
+                                            <div class="item">
+                                                <label class="label">
+                                                    <input class="form-check-input" type="radio" name="gender" id="gender" value="0" checked>
+                                                    <label class="form-check-label" for="male">
+                                                        Anh
+                                                    </label>
+                                                </label>
+                                            </div>
+                                            <div class="item">
+                                                <label class="label">
+                                                    <input class="form-check-input" type="radio" name="gender" id="gender" value="1">
+                                                    <label class="form-check-label" for="female">
+                                                        Chị
+                                                    </label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="name" class="label">Họ tên</label></div>
+                                    <div class="col right">
+                                        <input type="text" class="form-control" id="name" placeholder="Ví dụ: Nguyễn Văn A" required>
+                                    </div>
+                                </div>
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="phone" class="label">Điện thoại</label></div>
+                                    <div class="col right"><input type="text" class="form-control" id="phone" placeholder="Ví dụ: 098875454" required></div>
+                                </div>
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="email" class="label">Email <span class="no-required">(không bắt buộc)</span></label></div>
+                                    <div class="col right"><input type="email" class="form-control" id="email" placeholder="Ví dụ: abcxyz@gmail.com"></div>
+                                </div>
+
+                                <div class=" provincial uk-clearfix mb15">
+                                    <div class="form-group row">
+                                        <label for="city" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
+                                        <div class="col-sm-10">
+                                            @Html.DropDownListDefault("LocationDiscountId", ViewData.Get<SelectList>("ListLocationDis"), "", "-- Chọn Tỉnh/Thành phố --", new { @required = "required", @class = "form-control", onchange = "_getDistrict()" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" provincial uk-clearfix mb15">
+                                    <div class="form-group row">
+                                        <label for="district" class="col-sm-2 col-form-label">Quận/Huyện</label>
+                                        <div class="col-sm-10">
+                                            @Html.DropDownListDefault("LocationId", ViewData.Get<SelectList>("Locations"), "", "-- Chọn Quận/Huyện --", new { @required = "required", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class=" uk-clearfix mb15">
+                                    <div class="col left"><label for="address" class="label">Địa chỉ chi tiết</label></div>
+                                    <div class="col right"><input type="text" class="form-control" id="address" placeholder="Ví dụ: Số 10, Ngõ 50, Đường ABC" required></div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="message" class="col-sm-2 col-form-label">Lời nhắn <br /><span>(không bắt buộc)</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="message" placeholder="Ví dụ: Chuyển hàng ngoài giờ hành chính">
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .uk-panel -->
+                        <div class="uk-panel payment-methods mb20">
+                            <div class="panel-head"><h3 class="title"><span class="text">Phương thức thanh toán</span></h3></div>
+                            <div class="panel-body">
+                                <div class="list-payment">
+                                    <div class="item uk-clearfix mb15">
+                                        <!-- <input type="radio" id="pay-1" name="payment" value="0" > -->
+                                        <label for="pay-1" class="label" style="padding-left: 0">
+                                            <div class="inner uk-clearfix">
+                                                <div class="thumb uk-float-left ec-scaledown"><img src="~/images/pay-1.png" alt=""></div>
+                                                <div class="description">
+                                                    <div class="title"><span class="uk-text-bold">Thanh toán khi nhận hàng</span></div>
+                                                    <div class="subtitle" style="color: #999;font-weight:500;">
+                                                        Quý khách sẽ thanh toán bằng tiền mặt hoặc thẻ khi</br>
+                                                        https://dieuhoanhapkhauchinhhang.com.vn/
+                                                        giao hàng cho quý khách
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="item uk-clearfix mb15">
+                                        <!-- <input type="radio" id="pay-2" name="payment" value="1" > -->
+                                        <label for="pay-2" class="label" style="padding-left: 0">
+                                            <div class="inner uk-clearfix">
+                                                <div class="thumb uk-float-left ec-scaledown"><img src="~/images/pay-2.png" alt=""></div>
+                                                <div class="description">
+                                                    <div class="title"><span class="uk-text-bold">Thanh toán bằng thẻ ATM</span></div>
+                                                    <div class="subtitle">
+                                                        <p>
+                                                            Thẻ ATM của bạn cần đăng ký sử dụng dịch vụ Internet Banking.<br>
+                                                            Bạn sẽ được chuyển tới Napas để thanh toán
+                                                        </p>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="continue uk-text-right">
+                            <button name="submit" id="submit" href="javascript:" onclick="_order()" class="uk-button btn">Tiếp tục</button>
+                        </div>
+                    </div><!-- .uk-width -->
+                    @if (Model.Cart != null)
+                    {
+                        var listItemCart = Model.Cart.ListItem as List<CartItem>;
+                        modelCarts = listItemCart;
+                        decimal totalMoney = 0;
+                        if (listItemCart.Count > 0 && listItemCart != null)
+                        {
+                            <div class="uk-width-medium-4-10">
+                                <div class="uk-panel">
+                                    <header class="panel-head uk-flex uk-flex-middle uk-flex-space-between">
+                                        <h3 class="title"><span class="text">Đơn hàng <span class="number">(@listItemCart.Count sản phẩm)</span></span></h3>
+                                    </header>
+                                    <div class="panel-body">
+                                        <ul class="uk-list listorder">
+                                            @foreach (var item in listItemCart)
+                                            {
+                                                <li class="item uk-clearfix">
+                                                    <input name="quantity" value="bc6dc48b743dc5d013b1abaebd2faed2" class="quantity ajax-quantity" type="hidden">
+                                                    <div class="colimg uk-float-left">
+                                                        <a href="@Url.Action("Detail", "Product", new { shortname = item.ShortName })" class="img ec-scaledown" target="_blank">
+                                                            <img src="@Url.Content(item.ProductImage)" alt="Alternate Text" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="colinfo uk-float-right">
+                                                        <div class=" uk-flex uk-flex-space-between">
+                                                            <div class="title ec-line-3">
+                                                                <a href="@Url.Action("Detail","Product",new { shortname=item.ShortName})">
+                                                                    @item.ProductName
+                                                                </a>
+                                                                <br>
+                                                                <a href="@Url.Action("Remove","ProductAction",new { id=item.ProductId})">
+                                                                    <span class="delete delete_item"><i class="fa fa-trash"></i> Bỏ sản phẩm</span>
+                                                                </a>
+
+                                                            </div>
+                                                            <div class="price">
+                                                                <div class="tt-price-@item.ProductId">@item.Price.ToString("#,##") đ</div>
+                                                                <div class="quantity" style="color:red;">
+                                                                    x
+                                                                    <input type="text" class=" quality" name="quality" value="@item.Quantity" size="1" maxlength="1" min="1" max="10"
+                                                                           onchange="myFunction(this,@item.ProductId);" />
+                                                                    @if (ViewBag.Message != null)
+                                                                    {
+                                                                        <span>@ViewBag.Message</span>
+                                                                    }
+                                                                </div>
+                                                                <div class="tt-price-@item.ProductId">
+                                                                    @item.Total.ToString("#,##") đ
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <label class="d-none" style="display:none;">@(totalMoney += @item.Total)</label>
+                                            }
+                                        </ul>
+                                        <div class="total">
+                                            <div class=" uk-flex uk-flex-middle uk-flex-space-between mb10">
+                                                <div class="title">Tổng tiền</div>
+                                                <div class="price"><strong>@totalMoney.ToString("#,##") đ</strong></div>
+                                            </div>
+                                            <div class=" mb10 uk-flex uk-flex-middle uk-flex-space-between">
+                                                <div class="title">Phí vận chuyển</div>
+                                                <div class="price"><strong class="ec-uppercase">0₫</strong></div>
+                                            </div>
+                                            <div class=" tt-price uk-flex uk-flex-middle uk-flex-space-between">
+                                                <div class="title">Số tiền còn lại cần thanh toán</div>
+                                                <div class="price"><strong>@totalMoney.ToString("#,##") đ</strong></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- .uk-panel -->
+                            </div><!-- .uk-width -->
+                        }
+                        else
+                        {
+
+                            <div></div>
+                        }
+
+                    }
+
+
+            </form>
+        </div>
+    </div>
+</section><!-- .order-1 -->
+<!-- </html> -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#cityid').change(function () {
+            var city_id = $('#cityid').val();
+            $.post('https://dieuhoanhapkhauchinhhang.com.vn/products/ajax/cart/ajax_location.html', {
+                cityid: city_id,
+            },
+                function (data) {
+                    var json = JSON.parse(data);
+                    $('#districtid').html(json.option);
+                });
+            return false;
+        });
+    });</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.fc-cart-update').change(function () {
+            var qty = $(this).val();
+            var rowid = $(this).attr('data-id');
+            $.post('https://dieuhoanhapkhauchinhhang.com.vn/products/ajax/cart/updateitemcart.html', {
+                qty: qty,
+                rowid: rowid,
+            },
+                function (data) {
+                    window.location.href = 'https://dieuhoanhapkhauchinhhang.com.vn/dat-mua.html';
+                });
+            return false;
+        });
+    });
+    //$(document).on('click', '.delete_item', function () {
+    //    var item = $(this);
+    //    var idprd = item.parent().parent().parent().parent().find('.quantity').val();
+    //    ajax_cart_update1(idprd);
+    //    return false;
+    //});
+    function ajax_cart_update1(idprd) {
+        $.post('https://dieuhoanhapkhauchinhhang.com.vn/products/ajax/cart/deletecart.html', { idprd: idprd }, function (data) {
+            window.location.href = 'https://dieuhoanhapkhauchinhhang.com.vn/dat-mua.html';
+        });
+    }</script>
+<script>
+    function _order() {
+        //debugger;
+
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var address = $("#address").val();
+        var phone = $("#phone").val();
+        var city = $("#LocationDiscountId").val();
+        var district = $("#LocationId").val();
+        var message = $("#message").val();
+        var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
+        if (name == null || name == "") {
+            alert("Hãy nhập họ và tên của bạn");
+            return false;
+        }
+        if (phone == null || phone == "") {
+            alert("Hãy nhập số điện thoại của bạn");
+            return false;
+        }
+        if (email == null || email == "") {
+            alert("Hãy nhập email của bạn");
+            return false;
+        } else if (pattern.test(email) == false) {
+            alert("Email không đúng định dạng");
+            return false;
+        }
+
+        if (address == null || address == "") {
+            alert("Hãy nhập address của bạn");
+            return false;
+        }
+        debugger;
+        var url = '@Url.Action("Order", "ProductAction")';
+		$.ajax({
+		    url: url,
+            data: { CustomerName: name, Phone: phone, Email: email, Address: address, City: city, District: district, Message: message },
+		    type: 'post',
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+            traditional: true,
+            beforeSend: function () {
+                //bodycur.addClass("my-loading");
+            },
+            success: function (data) {
+                try {
+                    debugger;
+                    var getData = data;
+                    if (getData.Success === false || getData.Success === 'false') {
+                        _showErrorMsg123("Lỗi!", getData.Detail);
+                    } else {
+                        alert(getData.Title);
+                        if (getData.CheckSuccess === "1") {
+                            if (getData.strUrl !== null && getData.strUrl.length > 0) {
+                                window.location = getData.strUrl;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.log(e.message);
+                }
+            },
+            complete: function (data) {
+                // Hide image container
+                //bodycur.removeClass("my-loading");
+            }
+        });
+
+        @*debugger
+         var url = '@Url.Action("/Order")';
+        $.ajax({
+            url: url,
+            data: { CustomerName: name, Phone: phone, Email: email, Address: address, City: city, District: district, Message: message},
+            type: 'post',
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                if (data)
+                {
+                    alert("Khách hàng " + name + ", đã đặt hàng thành công hãy kiểm tra email của bạn!");
+                    window.location.href = '@(Url.Action("OrderSuccess", "ProductAction"))';
+                }
+            },
+        });*@
+        
+    
+    }
+</script>

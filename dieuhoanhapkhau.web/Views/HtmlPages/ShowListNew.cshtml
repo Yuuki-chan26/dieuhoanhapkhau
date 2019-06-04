@@ -1,0 +1,73 @@
+﻿@using dieuhoanhapkhau.biz.Services;
+@using dieuhoanhapkhau.biz.Models
+@using idocNet.Core.Extensions
+@{
+    ViewBag.Title = "Tin tức";
+    var listcate = ViewBag.ListCates as List<HtmlPageCategory>;
+}
+@{
+    Layout = " ~/Views/Shared/_Layouthtml.cshtml";
+}
+<div class="hearder_cat">
+    <h2>
+        <span>
+            <img src="~/tempfiles/uploads/products/DHTreoTuong/icon_sofas.png" alt="icon">
+        </span>
+        <a href="" title="Tin tức và sự kiện">
+            Tin tức và sự kiện
+        </a>
+    </h2>
+
+</div>
+
+<section class="page-content">
+    <section class="articleCatalogue" style="padding: 0;">
+        <section class="panel-body">
+
+            <div class="panel-body bgwhite">
+
+                <ul class="uk-list listAticle">
+                    @foreach (HtmlPageCategory item1 in listcate)
+                     {
+                        if (item1.HtmlPageCategoryShortName == "tin-tuc" || item1.HtmlPageCategoryShortName == "bai-viet-huu-ich-ve-dieu-hoa")
+                        {
+                            var htmldetail = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageManager.GetHtmlPageByCateId(item1.HtmlPageCategoryId, Culture);
+                            foreach (HtmlPage itemhtml in htmldetail)
+                            {
+                                <li class="article-item">
+                                    <article class="article-1 uk-grid uk-grid-collapse">
+                                        <div class="uk-width-small-2-5 uk-width-medium-3-10">
+                                            <div class="article-thumb img-flash">
+                                                <a class="cover ec-cover" href="@Url.Action("Detail", "HtmlPages",new { category = item1.HtmlPageCategoryShortName, shortname = itemhtml.HtmlPageShortName, htmlid = itemhtml.HtmlPageId})" title="@itemhtml.HtmlPageTitle">
+                                                    <img src="@itemhtml.HtmlPageImage" alt="@itemhtml.HtmlPageTitle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-small-3-5 uk-width-medium-7-10">
+                                            <div class="article-info">
+                                                <h2 class="article-title"><a class="link" href="tim-giai-dap-cho-cau-hoi-tai-sao-phai-dat-may-lanh-tren-cao.html" title="@itemhtml.HtmlPageTitle">@itemhtml.HtmlPageTitle</a></h2>
+                                                <div class="article-meta"><span class="time">@itemhtml.CreateDate.ToString("dd/MM/yyy")</span> - <span class="viewed">127</span></div>
+                                                <div class="article-description lib-line-4">@itemhtml.HtmlPageDescription</div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="article-item">
+                                <article class="article-1 uk-grid uk-grid-collapse">
+                                    
+                                </article>
+                            </li>
+                        }
+                    }
+                </ul>
+
+            </div><!-- .panel-body -->
+
+        </section>
+
+    </section><!-- .article-catalogue -->
+</section>

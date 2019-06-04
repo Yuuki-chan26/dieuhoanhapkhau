@@ -1,0 +1,195 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using dieuhoanhapkhau.biz.Services
+@using idocNet.Core.Extensions
+@model ProductProperty
+@{
+    ViewBag.Title = Model.ProductPropertyTitle;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var product = ViewBag.Products as Product;
+}
+
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li><a href="@Url.Action("Admin", "Account")">Dashboard</a></li>
+            <li><a href="@Url.Action("Search", "Product")">Danh sách sản phẩm</a></li>
+            <li><a href="@Url.Action("Properties", "Product")">Danh sách thuộc tính</a></li>
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+                {
+                    ViewBag.Title = "Sửa Thuộc tính sản phẩm";
+                }
+                else
+                {
+                    ViewBag.Title = "Thêm mới thuộc tính";
+                }
+                
+        </ul>
+        <!-- /.breadcrumb -->
+
+
+    </div>
+
+    <div class="page-content">
+
+
+        <div class="page-header">
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <h1>
+                    Sửa thuộc tính sản phẩm
+
+                </h1>
+            }
+            else
+            {
+                <h1>
+                    Tạo mới thuộc tính
+
+                </h1>
+            }
+        </div>
+        <!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "manageForm", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+                            {
+                                @Html.HiddenFor(mbox => mbox.ProductPropertyId)
+
+                            }
+                            
+                            @Html.HiddenFor(mbox => mbox.ProductId)
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ReviewTitle">Tên thuộc tính:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="ProductPropertyTitle" id="ProductPropertyTitle" class="col-xs-12 col-sm-6" value="@Model.ProductPropertyTitle" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ProducerId">Hãng:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @Html.DropDownListDefault("ProducerId", ViewData.Get<SelectList>("Producers"), "0", "-- Tất cả --", new { @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="PrdCategoryId">Danh mục:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @Html.DropDownListDefault("PrdCategoryId", ViewData.Get<SelectList>("Categories"), "0", "-- Tất cả --", new { @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ProductPropertyBody">Nội dung:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        @Html.TextAreaFor(model => model.ProductPropertyBody)
+                                        <script>
+                                            CKEDITOR.replace('ProductPropertyBody', { customConfig: '/Areas/Admin/Content/ckeditor/config.js' });
+                                        </script>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="OrderNo">Thứ tự:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="number" name="OrderNo" id="OrderNo" class="col-xs-12 col-sm-1" value="@Model.OrderNo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @{var check = Model.IsActive ? "checked" : "";}
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="IsActive">Trạng thái:</label>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="IsActive" type="checkbox" class="ace" value="true" @check />
+
+                                        <span class="lbl"> Ẩn/Hiện thuộc tính</span>
+                                        <input name="IsActive" type="hidden" value="false" />
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-success" value="Lưu" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+<script type="text/javascript">
+    $('textarea[class*=autosize]').autosize({ append: "\n" });
+    $('textarea.limited').inputlimiter({
+        remText: '%n character%s remaining...',
+        limitText: 'max allowed : %n.'
+    });
+</script>
+<script src="/Scripts/tinymce/tiny_mce.js"></script>
+<script type="text/javascript">
+
+    tinyMCE.init({
+        // General options
+        mode: "exact",
+        elements: "ProductPropertyBody",
+        theme: "advanced",
+        plugins: "safari,pagebreak,style,layer,table,save,advhr,netadvimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+        // Theme options
+        theme_advanced_buttons1: "netadvimage,|,save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+        theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+        theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+        theme_advanced_buttons4: "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+        theme_advanced_toolbar_location: "top",
+        theme_advanced_toolbar_align: "left",
+        theme_advanced_statusbar_location: "bottom",
+        theme_advanced_resizing: true,
+        width: "800",
+        height: "300"
+    });
+</script>
+<script type="text/javascript">
+    var editorOptions = {
+        script_url: "/scripts/tinymce/tiny_mce.js",
+        theme: "advanced",
+        plugins: "safari,pagebreak,style,layer,table,save,advhr,netadvimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+        // Theme options
+        theme_advanced_buttons1: "netadvimage,|,save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+        theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+        theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+        theme_advanced_buttons4: "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+        theme_advanced_toolbar_location: "top",
+        theme_advanced_toolbar_align: "left",
+        theme_advanced_statusbar_location: "bottom",
+        theme_advanced_resizing: true,
+        width: "500",
+        height: "300"
+    };
+</script>
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("Search", "Product")');
+</script>

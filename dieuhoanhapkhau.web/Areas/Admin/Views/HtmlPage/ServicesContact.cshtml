@@ -1,0 +1,164 @@
+﻿@using dieuhoanhapkhau.biz.Services;
+@using dieuhoanhapkhau.biz.Models;
+@{
+    ViewBag.Title = "Dịch vụ - Đặt lịch hẹn sửa chữa";
+    var listcate = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("dich-vu", Culture);
+}
+
+@if (listcate.Count > 0)
+{
+    <div class="sub-menu col-md-12 no-padding">
+                
+                @foreach (HtmlPageCategory item1 in listcate)
+                {
+                   
+                    if (item1.HtmlPageCategoryTitle.Count() < 16)
+                    {
+                        if (item1.HtmlPageCategoryShortName == "dat-lich-hen")
+                        {
+                            
+                                <a class="col-md-3 col-sm-6 title-submenu submenu " href="@Url.Action("ServicesContact", "HtmlPage",new { shortname = "dat-lich-hen" })">
+                                    Đặt lịch hẹn dịch vụ
+                                </a>
+                            
+                        }
+                        else
+                        {                              
+                            var listhtmlpage = ServiceFactory.HtmlPageManager.GetHtmlPageByCateId(item1.HtmlPageCategoryId, Culture);
+                            var n = 1;
+                            foreach (HtmlPage itemhtml in listhtmlpage)
+                            {
+                                if (n == 1)
+                                {
+                                    <a class="col-md-3 col-sm-6 title-submenu submenu " href="@Url.Action("ServicesSub", "HtmlPage", new { HtmlPageCateId = item1.HtmlPageCategoryId, shortname = item1.HtmlPageCategoryShortName, htmlpageid = itemhtml.HtmlPageId })">
+                                        @itemhtml.HtmlPageCategoryTitle
+                                    </a>
+                                }
+                                n++;
+                            }
+                    
+                        }
+                    }
+                    else
+                    {
+                      var listhtmlpage = ServiceFactory.HtmlPageManager.GetHtmlPageByCateId(item1.HtmlPageCategoryId, Culture);
+                            var n = 1;
+                            foreach (HtmlPage itemhtml in listhtmlpage)
+                            {
+                                if (n == 1)
+                                {
+                                    <a class="col-md-3 col-sm-6 title-submenu submenu " href="@Url.Action("ServicesSub", "HtmlPage", new { HtmlPageCateId = item1.HtmlPageCategoryId, shortname = item1.HtmlPageCategoryShortName, htmlpageid = itemhtml.HtmlPageId })">
+                                        @itemhtml.HtmlPageCategoryTitle
+                                    </a>
+                                }
+                                n++;
+                            }
+                      
+                    }
+                    
+                }
+    </div>  
+}
+
+<div class="row" style="margin-top:47px;margin-bottom: 50px">
+    <div class="col-lg-12 col-centered container">
+        @*<div class="titlenews " style="margin-bottom:20px; text-align: center;">Đặt lịch hẹn dịch vụ với chúng tôi theo mẫu ở dưới</div>*@
+        <form action="@Url.Action("ServicesContact", "HtmlPage")" method="post" class="form-horizontal">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Subject" class="col-sm-3 control-label">TIÊU ĐỀ</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="Subject" name="Subject" placeholder="Tiêu đề" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Name" class="col-sm-3 control-label">HỌ TÊN</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="Name" name="Name" placeholder="Họ tên" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Phone" class="col-sm-3 control-label">SỐ ĐIỆN THOẠI</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" name="Phone" id="Phone" placeholder="Số điện thoại" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Address" class="col-sm-3 control-label">ĐỊA CHỈ</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="Address" name="Address" placeholder="Địa chỉ" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Email" class="col-sm-3 control-label">EMAIL</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" name="Email" id="Email" placeholder="Email" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Email" class="col-sm-3 control-label">THỜI GIAN</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="Time" id="Time" placeholder="Thời gian" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm")" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="Subject" class="col-sm-1 control-label" style="width: 12.5%">NỘI DUNG</label>
+                    <div class="col-sm-11" style="width: 87.5%">
+                        <textarea class="form-control" rows="7" name="Content" placeholder="Nội dung"></textarea>
+                    </div>
+                </div>
+                <div style="margin-left: 82%;">
+                    <input type="reset" value="Xóa" class="btn bnt-contact" />
+                    <input class="btn bnt-contact" value="Gửi" type="submit" id="submitContact"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("ServicesContact", "HtmlPage",new{shortname = "dat-lich-hen"})', '@Url.Action("Services", "HtmlPage", new { shortname = "dich-vu" })');
+    //setServicesContactUrl()
+</script>
+@*<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("ServicesContact", "HtmlPage", new { HtmlPageCateId = Model.HtmlPageCategoryId, shortname = Model.HtmlPageCategoryShortName })',
+        '@Url.Action("ServicesContact", "HtmlPage", new { shortname="dich-vu"})');
+</script>*@
+<script>
+    $("#submitContact").click(function () {
+        var subject = $("#Subject").val();
+        var name = $("#Name").val();
+        var email = $("#Email").val();
+        var address = $("#Address").val();
+        var phone = $("#Phone").val();
+        var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (subject == null || subject == "") {
+            alert("Nhập tiêu đề");
+            return false;
+        }
+        if (name == null || name == "") {
+            alert("Nhập tên của bạn");
+            return false;
+        }
+        if (address == null || address == "") {
+            alert("Nhập địa chỉ của bạn");
+            return false;
+        }
+        if (email == null || email == "") {
+            alert("Nhập email của bạn");
+            return false;
+        }
+        if (reg.test(email) == false) {
+            alert("Email không đúng định dạng");
+            return false;
+        }
+        if (phone == null || phone == "") {
+            alert("Nhập số điện thoại của bạn");
+            return false;
+        }
+        return true;
+    });
+</script>

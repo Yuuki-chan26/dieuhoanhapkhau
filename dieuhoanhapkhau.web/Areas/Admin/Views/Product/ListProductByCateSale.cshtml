@@ -1,0 +1,140 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@model ProductCategory
+@{
+    ViewBag.Title = "Danh sách sản phẩm - " + Model.PrdCategoryTitle;
+    var listcate = ViewBag.ListCates as List<ProductCategory>;
+}
+@if (listcate.Count > 0)
+{
+    var n = 1;
+    <div class="row" style=" margin-top:20px; margin-bottom: 30px;  margin-left: 0px;">
+        <div class="col-md-12 col-centered">
+
+            <div class="row ">
+                @foreach (ProductCategory item1 in listcate)
+                {
+                    if (n % 4 == 0)
+                    {
+                        <div class="col-md-3 title-submenu-noline" style="text-align: center">
+                            <a class="submenu " style="vertical-align: middle;" href="@Url.Action("ListProductByCateSale", "Product", new { shortname = item1.PrdCategoryShortName })">
+                                @item1.PrdCategoryTitle
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3 title-submenu" style="text-align: center">
+                            <a class="submenu " style="vertical-align: middle;" href="@Url.Action("ListProductByCateSale", "Product", new { shortname = item1.PrdCategoryShortName })">
+                                @item1.PrdCategoryTitle
+                            </a>
+                        </div>
+                    }
+                    n++;
+                }
+            </div>
+
+        </div>
+    </div>
+}
+<div class="row modernHBold" style="margin-top:5px;margin-bottom:30px">
+    @if (Model.ListProducts.Count > 0)
+    {
+
+        var count = 1;
+
+        foreach (Product itemprd in Model.ListProducts)
+        {
+            if (Model.ListProducts.Count % 4 == 0)
+            {
+
+                <div class="col-md-3 col-sm-6 itemlistproduct">
+                    <a href="@Url.Action("Detail", "Product", new { productcode = itemprd.ProductCode })">
+                        <img src="@itemprd.ProductImage" class="img-responsive" alt="@itemprd.ProductName" />
+                        <div class="carname ">@itemprd.ProductName</div>
+                    </a>
+
+                </div>
+
+            }
+            else if (Model.ListProducts.Count % 4 == 1)
+            {
+
+                if (count != Model.ListProducts.Count)
+                {
+                    <div class="col-md-3 itemlistproduct" style="">
+                        <a href="@Url.Action("Detail", "Product", new { productcode = itemprd.ProductCode })">
+                            <img src="@itemprd.ProductImage" class="img-responsive" alt="@itemprd.ProductName" />
+                            <div class="carname">@itemprd.ProductName</div>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-12 itemlistproduct" style="">
+                        <a href="@Url.Action("Detail", "Product", new { productcode = itemprd.ProductCode })">
+                            <img src="@itemprd.ProductImage" class="img-responsive" alt="@itemprd.ProductName" />
+                            <div class="carname">@itemprd.ProductName</div>
+                        </a>
+                    </div>
+                }
+                count++;
+
+            }
+            else if (Model.ListProducts.Count % 4 == 2)
+            {
+
+                if (count < Model.ListProducts.Count - 1)
+                {
+                    <div class="col-md-3 itemlistproduct" style="">
+                        <a href="@Url.Action("Detail", "Product", new { productcode = itemprd.ProductCode })">
+                            <img src="@itemprd.ProductImage" class="img-responsive" alt="@itemprd.ProductName" />
+                            <div class="carname">@itemprd.ProductName</div>
+                        </a>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6 itemlistproduct" style="">
+                        <a href="@Url.Action("Detail", "Product", new { productcode = itemprd.ProductCode })">
+                            <img src="@itemprd.ProductImage" class="img-responsive" alt="@itemprd.ProductName" />
+                            <div class="carname">@itemprd.ProductName</div>
+                        </a>
+                    </div>
+                }
+                count++;
+
+            }
+            else if (Model.ListProducts.Count % 4 == 3)
+            {
+
+                if (count < Model.ListProducts.Count - 2)
+                {
+                    <div class="col-md-3 itemlistproduct" style="">
+                        <a href="@Url.Action("Detail", "Product", new { productcode = itemprd.ProductCode })">
+                            <img src="@itemprd.ProductImage" class="img-responsive" alt="@itemprd.ProductName" />
+                            <div class="carname">@itemprd.ProductName</div>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-4 itemlistproduct" style="">
+                        <a href="@Url.Action("Detail", "Product", new { productcode = itemprd.ProductCode })">
+                            <img src="@itemprd.ProductImage" class="img-responsive" alt="@itemprd.ProductName" />
+                            <div class="carname">@itemprd.ProductName</div>
+                        </a>
+                    </div>
+                }
+
+
+                count++;
+            }
+        }
+    }
+</div>
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("ListProductByCateSale", "Product", new { shortname = Model.PrdCategoryShortName })', '@Url.Action("ListProductSale", "Product")');
+</script>
+
+

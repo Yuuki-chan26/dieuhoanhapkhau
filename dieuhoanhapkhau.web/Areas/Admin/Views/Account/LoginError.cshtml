@@ -1,0 +1,21 @@
+﻿@using idocNet.Core.Data.Entities.Validation
+@using idocNet.Core.Extensions
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewBag.Title = "Có lỗi xảy ra trong quá trình đăng nhập!";
+	const string userpassError = "UserName or password incorect!";
+}
+<style>
+    ul.validation-summary-errors li {
+        list-style:none;
+        color:red;
+    }
+</style>
+	@Html.ValidationSummary( new Dictionary<string, object>()
+	{
+		{"UserName", new Dictionary<ValidationErrorType, string>(){
+			    {ValidationErrorType.CompareNotMatch, userpassError}
+            }
+        }
+	}, null)
+	@Html.Partial("LoginPartial")

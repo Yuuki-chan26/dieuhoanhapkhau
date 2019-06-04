@@ -1,0 +1,548 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using dieuhoanhapkhau.biz.Services
+@using dieuhoanhapkhau.web.Models
+
+@model Product
+@{
+    ViewBag.Title = "Detail";
+    var proCate = ServiceFactory.ProductCategoryManager.Get(new ProductCategory { PrdCategoryId = Model.PrdCategoryId });
+    var parentCate = ServiceFactory.ProductCategoryManager.Get(new ProductCategory { PrdCategoryId = proCate.ParentId });
+    double totalMoney = 0;
+    ShoppingCartModels modelCarts = new ShoppingCartModels();
+    modelCarts.Cart = (Carts)System.Web.HttpContext.Current.Session["Cart"];
+}
+<div id="body" class=" uk-container uk-container-center" style="margin-top:30px;">
+    <section class="main_main">
+        <section class="products_catelogies key-1">
+            <div class="breadcrumb">
+                <ul class="uk-breadcrumb">
+                    <li><a href="#" title="Trang chủ"><i class="fa fa-home"></i> Trang chủ</a></li>
+                    <li class="uk-active"><a href="tin-tuc-su-kien.html" title="Tin Tức &amp; Sự Kiện">Tin Tức &amp; Sự Kiện</a></li>
+                </ul>
+            </div>
+        </section>
+        <div class="uk-grid uk-grid-collapse">
+            <div class="col-main-left uk-width-23 uk-visible-large">
+                @Html.Partial("Menu_left")
+                @Html.Partial("Filter")
+                @Html.Partial("Menu_left_bottom")
+                <!-- .uk-panel -->
+                <div class="clr"></div>
+            </div>
+            <div class="col-main-right uk-width-77" style="">
+                <div class="uk-grid uk-grid-medium uk-grid-width-medium-1-2">
+                    <script>
+                        $(window).load(function () {
+                            $('#carousel').flexslider({ animation: "slide", controlNav: false, itemWidth: 100, animationLoop: false, prevText: "", nextText: "", slideshow: false, asNavFor: '#slider' });
+                            $('#slider').flexslider({ animation: "slide", controlNav: false, animationLoop: false, slideshow: false, prevText: "", nextText: "", sync: "#carousel", start: function (slider) { $('body').removeClass('loading'); } });
+                        });</script>
+
+                    <div class="uk-width-medium-4-10">
+                        <div class="productDetailGallery">
+                            <div id="slider" class="flexslider">
+
+                                <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                                    <ul class="slides" style="width: 400%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+                                        <li class="flex-active-slide" style="width: 331px; float: left; display: block;">
+                                            <a href="#" class="img-scaledown image example-image-link" data-lightbox="example-set" data-title="@Model.ProductName">
+                                                <img src="@Model.ProductImage" alt="" draggable="false">
+                                            </a>
+                                        </li>
+                                        <li style="width: 331px; float: left; display: block;">
+                                            <a href="" class="img-scaledown imageimage example-image-link" data-lightbox="example-set" data-title="Điều hòa Casper 1 chiều 9.000BTU SC-09TL22">
+                                                <img src="" alt="" draggable="false">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <ul class="flex-direction-nav">
+                                    <li class="flex-nav-prev">
+                                        <a class="flex-prev flex-disabled" href="#" tabindex="-1">
+                                        </a>
+                                    </li>
+                                    <li class="flex-nav-next">
+                                        <a class="flex-next" href="#">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="carousel" class="flexslider row5">
+
+                                <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                                    <ul class="slides" style="width: 400%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+                                        @if (Model.ProductImages.Count > 0)
+                                        {
+                                            foreach (ProductImages item in Model.ProductImages)
+                                            {
+                                                <li class="flex-active-slide" style="width: 100px; float: left; display: block;">
+
+                                                    <a href="#" class="img-cover image" data-uk-lightbox="{group: '#product-gallery'}">
+
+                                                        <img src="@item.ProductImage" alt="" draggable="false">
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
+                                        <li style="width: 100px; float: left; display: block;">
+                                            <a href="" class="img-cover image" data-uk-lightbox="{group: '#product-gallery'}">
+                                                <img src="" alt="" draggable="false">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <ul class="flex-direction-nav">
+                                    <li class="flex-nav-prev">
+                                        <a class="flex-prev flex-disabled" href="#" tabindex="-1">
+                                        </a>
+                                    </li>
+                                    <li class="flex-nav-next">
+                                        <a class="flex-next flex-disabled" href="#" tabindex="-1">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><!-- .uk-grid -->
+                    </div><!-- .gallery -->
+                    <div class="uk-width-medium-6-10">
+                        <header class="panel-head">
+                            <h1 class="heading-4"><span style="padding-left: 0">@Model.ProductName</span></h1>
+                        </header>
+                        <div class="productDetail-des">
+                            <ul class="ProductField" style="box-sizing: border-box; margin: 0px; padding-right: 0px; padding-left: 0px; color: rgb(0, 0, 0); font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 12.8px;">
+                                <p>@MvcHtmlString.Create(Model.ProductDescription)</p>
+                            </ul>
+                        </div>
+                        <div class="productDetailIntroduce uk-width-medium-10">
+                            <div class="price_status">
+                                Giá bán: <div class="productDetailPrice">@String.Format("{0:0,0}", Convert.ToDouble(Model.ProductPrice)) đ</div>
+                            </div>
+                            <div class="productDetail-buy">
+                                <form action="" class="uk-form form">
+                                    <div class="uk-flex-middle uk-flex-space-between box">
+
+                                        <div class="action">
+                                            <button type="button" class="btn btn-cart" data-quantity="1" value="1" data-id="@Model.ProductId" data-price="@Model.ProductPrice">Mua ngay</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Share -->
+                            <div class="box_showroom">
+                                <ul class="l">
+                                    <li><font>Cơ sở 1:</font> Số 10 Thái Thịnh 1, Đống Đa, Hà Nội</li>
+                                    <li>Điện thoại: 0974 028 279</li>
+                                    <li>Email: thegioidienlanhkd@gmail.com</li>
+                                    <li><font>Giờ mở cửa:</font> 8h00 đến 19h00</li>
+                                </ul>
+                            </div>
+
+                        </div><!-- .productDetailIntroduce -->
+                    </div>
+                </div>
+                <div class="productDetailContent" style="padding-left:3%;">
+                    <ul class="uk-list uk-clearfix tabControl" data-uk-switcher="{connect:'#tabContent'}">
+                        <li class="uk-active" aria-expanded="true">Thông tin sản phẩm</li>
+                        <li aria-expanded="false">Tại sao chọn Điện Lạnh Gia Đình</li>
+                        <li aria-expanded="false">Khuyến mại</li>
+                    </ul>
+                    <ul id="tabContent" class="uk-switcher tab-content">
+                        <li aria-hidden="false" class="uk-active">
+                            <p>@Model.ProductSummary</p>
+                        </li>
+                        <li aria-hidden="true"></li>
+                        <li aria-hidden="true"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <section class="home_products" style="width:100%;">
+            <div class="uk-container-center">
+                <div class="header-col">
+                    <div class="h2 section-title">Sản phẩm cùng loại</div>
+                </div>
+                <section class="panel-body">
+                    <div class="row10">
+                        <ul class="uk-grid lib-grid-20 uk-grid-width-1-2 uk-grid-width-medium-1-4 uk-grid-width-large-1-5 products-catehome" data-uk-grid-match="{target: '.box_box_categories .prd-title'}">
+
+                            <li class="mb20" style="padding-left:0px; padding-right:10px;">
+                                <div class="box_box_categories">
+                                    <div class="img_box_categories">
+                                        <a href="#" title="Điều Hoà DaiKin 9000BTU 1 chiều thường gas R32 FTC25NV1V">
+                                            <img src="~/tempfiles/uploads/products/DHTuDung/dieu-hoa-tu-panasonic-c18ffh-2.jpg" alt="Điều Hoà DaiKin 9000BTU 1 chiều thường gas R32 FTC25NV1V">
+                                        </a>
+                                    </div>
+                                    <div class="content_box_categories">
+                                        <h3 class="prd-title" style="min-height: 63px;">
+                                            <a href="dieu-hoa-daikin-9000btu-1-chieu-thuong-gas-r32-ftc25nv1v-p332.html" title="">
+                                                Điều Hoà DaiKin 9000BTU 1 chiều thường gas R32 FTC25NV1V
+                                            </a>
+                                        </h3>
+                                        <div class="item_price_box_categories">
+                                            <span class="no-trike">Giá: <font>7.700.000 đ</font></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </section><!-- .panel-body -->
+            </div>
+        </section>
+    </section>
+</div>
+<div class="uk-modal" id="myCart">
+    <div class="modal-dialog" style="width:786px!important">
+
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+
+                <h4 class="modal-title"><span class="title_text">Giỏ hàng của bạn ( sản phẩm)</span></h4>
+                <button class="uk-modal-close uk-close"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <ul class="uk-list uk-clearfix">
+                    <li class="item pro_item">
+                        Sản phẩm
+                    </li>
+                    <li class="item price_item">
+                        Đơn giá
+                    </li>
+                    <li class="item count">
+                        Số lượng
+                    </li>
+                    <li class="item total_money">
+                        Thành tiền
+                    </li>
+                </ul>
+                <div class="table_price">
+                    <div class="list_order">
+
+                        @if (modelCarts.Cart != null && modelCarts.Cart.ListItem.Count > 0)
+                        {
+                            if (modelCarts.Cart.ContainsItem(Model.ProductId))
+                            {
+                                foreach (var item in modelCarts.Cart.ListItem)
+                                {
+                                    <div class="item_cart">
+                                        <ul class="uk-list uk-clearfix list-item">
+
+                                            <li class="pro_item">
+                                                <div class="thumb">
+                                                    <a href="#">
+                                                        <img src="@Url.Content(item.ProductImage)" alt="Alternate Text" height="60" />
+                                                    </a>
+                                                </div>
+                                                <div class="name-item-cart">
+                                                    <a href="#">
+                                                        @item.ProductName
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li class="price_item">
+                                                <div class="">
+                                                    @item.Price.ToString("#,##") đ
+                                                </div>
+                                            </li>
+                                            <li class="count">
+                                                <div>
+                                                    <input type="number" name="count" value="@item.Quantity" min="1" max="50" class="form-control count_pro" onchange="myFunction(this,@item.ProductId);" />
+                                                    @if (ViewBag.Message != null)
+                                                    {
+                                                        <span>@ViewBag.Message</span>
+                                                    }
+                                                </div>
+                                            </li>
+                                            <li class="tt-price-@item.ProductId">
+                                                @item.Total.ToString("#,##") đ
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    totalMoney += Convert.ToDouble(item.Price);
+                                }
+                            }
+                            else
+                            {
+                                <div class="item_cart">
+                                    <ul class="uk-list uk-clearfix list-item">
+
+                                        <li class="pro_item">
+                                            <div class="thumb">
+                                                <a href="#">
+                                                    <img src="@Url.Content(Model.ProductImage)" alt="Alternate Text" height="60" />
+                                                </a>
+                                            </div>
+                                            <div class="name-item-cart">
+                                                <a href="#">
+                                                    @Model.ProductName
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <li class="price_item">
+                                            <div class="">
+                                                @Model.ProductPrice.ToString("#,##") đ
+                                            </div>
+                                        </li>
+                                        <li class="count">
+                                            <div>
+                                                <input type="number" name="count" value="" min="1" max="50" class="form-control count_pro" onchange="addToCart(this,@Model.ProductId);" />
+                                                @if (ViewBag.Message != null)
+                                                {
+                                                    <span>@ViewBag.Message</span>
+                                                }
+                                            </div>
+                                        </li>
+                                        <li class="tt-price-@Model.ProductId">
+                                            @Model.ProductPrice.ToString("#,##") đ
+                                        </li>
+                                    </ul>
+                                </div>
+                                totalMoney += Convert.ToDouble(Model.ProductPrice);
+                                foreach (var item in modelCarts.Cart.ListItem)
+                                {
+                                    <div class="item_cart">
+                                        <ul class="uk-list uk-clearfix list-item">
+
+                                            <li class="pro_item">
+                                                <div class="thumb">
+                                                    <a href="#">
+                                                        <img src="@Url.Content(item.ProductImage)" alt="Alternate Text" height="60" />
+                                                    </a>
+                                                </div>
+                                                <div class="name-item-cart">
+                                                    <a href="#">
+                                                        @item.ProductName
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li class="price_item">
+                                                <div class="">
+                                                    @item.Price.ToString("#,##") đ
+                                                </div>
+                                            </li>
+                                            <li class="count">
+                                                <div>
+                                                    <input type="number" name="count" value="@item.Quantity" min="1" max="50" class="form-control count_pro" onchange="myFunction(this,@item.ProductId);" />
+                                                    @if (ViewBag.Message != null)
+                                                    {
+                                                        <span>@ViewBag.Message</span>
+                                                    }
+                                                </div>
+                                            </li>
+                                            <li class="tt-price-@item.ProductId">
+                                                @item.Total.ToString("#,##") đ
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    totalMoney += Convert.ToDouble(item.Price);
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            <div class="item_cart">
+                                <ul class="uk-list uk-clearfix list-item">
+
+                                    <li class="pro_item">
+                                        <div class="thumb">
+                                            <a href="#">
+                                                <img src="@Url.Content(Model.ProductImage)" alt="Alternate Text" height="60" />
+                                            </a>
+                                        </div>
+                                        <div class="name-item-cart">
+                                            <a href="#">
+                                                @Model.ProductName
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li class="price_item">
+                                        <div class="">
+                                            @Model.ProductPrice.ToString("#,##") đ
+                                        </div>
+                                    </li>
+                                    <li class="count">
+                                        <div>
+                                            <input type="number" name="count" value="" min="1" max="50" class="form-control count_pro" onchange="addToCart(this,@Model.ProductId);" />
+                                            @if (ViewBag.Message != null)
+                                            {
+                                                <span id="errorQuanlity">@ViewBag.Message</span>
+                                            }
+                                        </div>
+                                    </li>
+                                    <li class="tt-price-@Model.ProductId">
+                                        đ
+                                    </li>
+                                </ul>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="total_modal">
+                    Thành tiền: @totalMoney.ToString("#,##") Đ
+                </div>
+                <a href="@Url.Action("Index", "Home")" style="float:left;"><i class="fas fa-caret-left"></i> Tiếp tục mua hàng</a>
+                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("OrderDetail", "ProductAction")'" style="float:right;">
+                    Tiến hành thanh toán
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    function formatPrice(str) {
+
+        if (str == null) {
+            return '0';
+        }
+
+        str = typeof str != 'string' ? str.toString() : parseFloat(str).toString();
+
+        return str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    }
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('.slide_images').bxSlider({
+            auto: true,
+            speed: 600,
+            pause: 7000,
+            pager: false,
+        });
+    });
+</script>
+<script>
+    $('#carousel').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        itemWidth: 210,
+        itemMargin: 5,
+        asNavFor: '#slider'
+    });
+
+    $('#slider').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        sync: "#carousel"
+    });
+</script>
+<script>
+    function myFunction(thiz, proID) {
+
+        debugger;
+        var qty = $(thiz).val();
+        //alert(qty);
+        $.ajax({
+        url: '@Url.Action("UpdateCart", "ProductAction")',
+        data: {
+            proid: proID,
+            quanlity: qty
+        },
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+
+            if (data.Success) {
+                if (data.Flag === "0") {
+                    debugger;
+                    var cartQuanlity = 0;
+                    var totalPrice = 0;
+                    for (var i = 0; i < data.Cart.ListItem.length; i++) {
+                        var Item = data.Cart.ListItem[i];
+                        cartQuanlity += Item.Quantity;
+                        var total = Item.Quantity * Item.Price;
+                        var totalprice = ".tt-price-" + Item.ProductId;
+                        $(totalprice).text(formatPrice(total) + " đ");
+                        totalPrice += total;
+
+                        $(".total_modal").text( "Thành tiền: "+ formatPrice(totalPrice) + " đ")
+                    }
+
+                    $("#cartQuanlity").text(cartQuanlity);
+
+                }
+
+            }
+            else if (data.Flag === "1") {
+                debugger;
+                var error = data.Message;
+                alert(error);
+
+            }
+        }
+    });
+
+    }
+
+
+</script>
+<script>
+    $(".btn-cart").click(function () {
+        var modal = UIkit.modal("#myCart", {
+            bgclose: false,
+        });
+        modal.show();
+    });
+    function addToCart(thiz, proid) {
+        var id = proid;
+        var quanlity = $(thiz).val();
+        var strUrl = '@Url.Action("AddToCart","ProductAction")';
+        debugger;
+        $.ajax({
+            url: strUrl,
+            data: { "id": id, "quanlity": quanlity, url: strUrl },
+            type: "post",
+            dataType: 'json',
+            success: function (data) {
+
+                if (data.Success) {
+                    if (data.Flag === "0") {
+                        debugger;
+                        var cartQuanlity = 0;
+                        var totalPrice = 0;
+                        for (var i = 0; i < data.Cart.ListItem.length; i++) {
+                            var Item = data.Cart.ListItem[i];
+                            cartQuanlity += Item.Quantity;
+                            var total = Item.Quantity * Item.Price;
+                            var totalprice = ".tt-price-" + Item.ProductId;
+                            $(totalprice).text(formatPrice(total) + " đ");
+                            totalPrice += total;
+
+                            $(".total_modal").text("Thành tiền: " + formatPrice(totalPrice) + " đ")
+                        }
+
+                        $("#cartQuanlity").text(cartQuanlity);
+
+                    }
+
+                }
+                else if (data.Flag === "1") {
+                    debugger;
+                    var error = data.Message;
+                    alert(error);
+
+                }
+            }
+        });
+    }
+
+</script>

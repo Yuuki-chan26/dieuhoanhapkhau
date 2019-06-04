@@ -1,0 +1,202 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@model List<Customers>
+@{
+    ViewBag.Title = "Danh sách khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-content-inner">
+    <div class="breadcrumb" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li><a href="@Url.Action("Admin","Account")">Dashboard</a></li>
+            <li class="active">Danh sách Customer</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="page-header">
+            <h1>Danh sách Customer</h1>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "manageForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <table id="dynamic-table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="table_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Tên khách: activate to sort column ascending">Tên khách</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Địa chỉ: activate to sort column ascending">Địa chỉ</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Email</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Điện thoại: activate to sort column ascending">Điện thoại</th>
+                                        
+                                        <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myTable">
+                                    @foreach (Customers item in Model)
+                                    {
+                                        <tr role="row" class="odd">
+                                            <td>@item.Name</td>
+                                            
+                                            <td>@item.Address</td>
+                                            <td class="hidden-480">@item.Email</td>
+                                            <td>@item.Phone</td>
+                                            <td>
+                                                <div class="hidden-sm hidden-xs btn-group">
+                                                    <a href="@Url.Action("Update","Customer",new { id=item.CustomerId})" title="Update" class="btn btn-xs btn-info">
+                                                        <i class="ace-icon fas fa-pen-alt bigger-120"></i>
+                                                    </a>
+                                                    <a href="javascript:" title="Delete" class="btn btn-xs btn-danger" onclick="Delete('@item.CustomerId')">
+                                                        <i class="ace-icon fa fa-trash bigger-120"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="hidden-md hidden-lg">
+                                                    <div class="inline pos-rel dropup">
+                                                        <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto" aria-expanded="false">
+                                                            <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                        </button>
+
+                                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                            <li>
+                                                                <a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="Promote">
+                                                                    <span class="green">
+                                                                        <i class="ace-icon fa fa-arrow-circle-up bigger-120"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+
+                                                            <li>
+                                                                <a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Demote">
+                                                                    <span class="yellow">
+                                                                        <i class="ace-icon fa fa-arrow-circle-down bigger-120"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="ChangePass">
+                                                                    <span class="blue">
+                                                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Lock">
+                                                                    <span class="red">
+
+                                                                        <i class="ace-icon fa fa-lock bigger-120"></i>
+
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="col-xs-12">
+                        <a href="@Url.Action("Create","Customer")" class="btn btn-success">Tạo mới</a>
+                    </div>
+                </div>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("Search", "Customer")');
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        var oTable1 =
+            $('#dynamic-table')
+                .dataTable({
+                    bAutoWidth: false,
+                    "aoColumns": [
+                        null, null, null, null,
+                        { "bSortable": false }
+                    ],
+                    "aaSorting": [],
+                });
+        $('[data-rel="tooltip"]').tooltip({ placement: tooltip_placement });
+
+
+        function tooltip_placement(context, source) {
+            var $source = $(source);
+            var $parent = $source.closest('table')
+            var off1 = $parent.offset();
+            var w1 = $parent.width();
+            var off2 = $source.offset();
+            if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+            return 'left';
+        }
+
+    })
+</script>
+
+<script>
+    function Delete(id) {
+    if (id!=null) {
+            bootbox.confirm({
+                title: "Thông báo!",
+                message: "Đồng ý xóa khách hàng có mã là : '" + id + "' ?",
+                buttons: {
+                    'cancel': {
+                        label: 'Cancel',
+                        className: 'btn mybtn-Button btnButton'
+                    },
+                    'confirm': {
+                        label: 'OK',
+                        className: 'btn mybtn-Button btnButton'
+                    }
+                },
+                callback: function (result) {
+                    //debugger;
+                    if (result) {
+                        debugger;
+                        var url = '@Url.Action("Delete", "Customer")';
+                        //yêu cầu mã xác thực
+                        var __RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+                        $.ajax({
+                            url: url,
+                            data: {
+                                id: id,
+                                __RequestVerificationToken: __RequestVerificationToken
+                            },
+                            type: 'post',
+                            dataType: 'json',
+                            success: function (data) {
+                                debugger;
+                                if (data) {
+                                    alert(data.Message);
+                                    window.location.href = window.location.href;
+
+                                } else {
+                                    _showErrorMsg123(data.Message);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            alert("Chưa chọn bản ghi cần xóa!");
+            return;
+        }
+    }
+</script>

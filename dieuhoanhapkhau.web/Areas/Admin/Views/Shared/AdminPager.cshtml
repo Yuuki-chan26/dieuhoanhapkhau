@@ -1,0 +1,32 @@
+﻿@using idocNet.Core.Extensions
+
+@model String
+
+@{
+    var pagesize = 20;
+}
+
+@if (Model.Equals("product"))
+{
+@Html.Pager(pagesize, (int)ViewData["Page"], (int)ViewData["TotalItems"], new { catId = ViewBag.catId, kCode = ViewBag.keyword, kName = ViewBag.keyname, nameby = ViewBag.pageName, codeby = ViewBag.pageCode, status = ViewBag.Status }, "Trang trước", "Trang sau", "Trang đầu", "Trang cuối")	
+}
+@if (Model.Equals("locations"))
+{
+    @Html.Pager(pagesize, (int)ViewData["Page"], (int)ViewData["TotalItems"], new {kCode = ViewBag.keycode, kWord = ViewBag.keyname}, "Trang trước", "Trang sau", "Trang đầu", "Trang cuối")	
+}
+@if (Model.Equals("agents"))
+{
+	@Html.Pager(pagesize, (int)ViewData["Page"], (int)ViewData["TotalItems"], new {AgentRegion = ViewBag.kcode, kword = ViewBag.keyword, dateby = ViewBag.pageOrderBy, codeby = ViewBag.pageOrderBy, editorby = ViewBag.pageOrderBy, status = ViewBag.Status}, "Trang trước", "Trang sau", "Trang đầu", "Trang cuối")	
+}
+@if (Model.Equals("news"))
+{
+	@Html.Pager(pagesize, (int)ViewData["Page"], (int)ViewData["TotalItems"], new {groupNewsId = ViewBag.groupNewsId, kNewsHeadline = ViewBag.kNewsHeadline, codeby = ViewBag.pageCode, status = ViewBag.Status}, "Trang trước", "Trang sau", "Trang đầu", "Trang cuối")	
+}
+@if (Model.Equals("sliderbanner"))
+{
+	@Html.Pager(pagesize, (int)ViewData["Page"], (int)ViewData["TotalItems"], new { }, "Trang trước", "Trang sau", "Trang đầu", "Trang cuối")	
+}
+@if(Model.Equals("register"))
+{
+	@Html.Pager(pagesize, (int)ViewData["Page"], (int)ViewData["TotalItems"], new {proId = ViewBag.proId, startDate = ViewBag.startDate, endDate = ViewBag.endDate, status = ViewBag.Status }, "Trang trước", "Trang sau", "Trang đầu", "Trang cuối")	
+}

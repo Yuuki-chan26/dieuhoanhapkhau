@@ -1,0 +1,322 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@using idocNet.Core.Extensions
+@model Product
+@{
+    if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+    {
+        ViewBag.Title = Model.ProductName;
+    }
+    else
+    {
+        ViewBag.Title = "Tạo mới sản phẩm";
+    }
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<script>
+    function _getProperty() {
+        var producerId = $("#ProducerId").val();
+        var url = '@Url.Action("GetProperty", "Product")';
+		$.ajax({
+            url: url,
+            data: { producerId: producerId },
+		    type: 'get',
+		    dataType: 'html',
+		    success: function (data) {
+		        if (data.length > 0) {
+                    $("#ProducerPropertyId").html(data);
+		        }
+		        else {
+
+		        }
+		    }
+		});
+    }
+</script>
+<script>
+    
+    function Browser(e) {
+        var finder = new CKFinder();
+        finder.selectActionFunction = function (url) {
+            $('#ProductImage').val(url);
+        };
+        finder.popup();
+    };
+    //var editor = CKEDITOR.replace('txtContent', {
+    //    customConfig: '/Content/ckeditor/config.js',
+    //});
+</script>
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li><a href="@Url.Action("Admin", "Account")">Dashboard</a></li>
+            <li><a href="@Url.Action("Search", "Product")">Danh sách sản phẩm</a></li>
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <li class="active">Sửa sản phẩm </li>
+            }
+            else
+            {
+                <li class="active">Tạo mới sản phẩm</li>
+            }
+        </ul>
+        <!-- /.breadcrumb -->
+
+
+    </div>
+
+    <div class="page-content">
+
+
+        <div class="page-header">
+            @if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+            {
+                <h1>
+                    Sửa sản phẩm @Model.ProductName
+
+                </h1>
+            }
+            else
+            {
+                <h1>
+                    Tạo mới sản phẩm
+
+                </h1>
+            }
+        </div>
+        <!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <iv class="col-xs-12">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "manageForm", @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (ViewBag.IsEdit != null && ViewBag.IsEdit == true)
+                            {
+                                @Html.HiddenFor(mbox => mbox.ProductId)
+                            }
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ProductName">Tên sản phẩm:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="ProductName" id="ProductName" class="col-xs-12 col-sm-6" value="@Model.ProductName" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ProductTitle">Tiêu đề seo:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="ProductTitle" id="ProductTitle" class="col-xs-12 col-sm-6" value="@Model.ProductTitle" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ProducerId">Danh mục hãng điều hòa:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @Html.DropDownListDefault("ProducerId", ViewData.Get<SelectList>("Producers"), "0", "-- Tất cả --", new { @required = "required", onchange = "_getProperty()" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ProductPropertyId">Danh mục thuộc tính:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @*@Html.DropDownListDefault("ProducerPropertyId", ViewData.Get<SelectList>("Productpty"), "0", "-- Tất cả --", new { @required = "required" })*@
+                                        @Html.DropDownListDefault("ProductPropertyId", ViewData.Get<SelectList>("Property"), "", "-- Tất cả --", new { @required = "required"})
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="PrdCategoryId">Loại sản phẩm:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        @Html.DropDownListDefault("PrdCategoryId", ViewData.Get<SelectList>("Categories"), "", "-- Tất cả --", new { @required = "required" })
+                                        @* <input type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal" value="Thêm mới" />*@
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" role="dialog">
+                                            <div class="modal-dialog modal-md">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Tạo mới loại xe</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageTitle">Tiêu đề loại xe:</label>
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageTitle">Danh mục:</label>
+
+                                                            </div>
+
+
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageSummary">Keyword:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        @Html.TextAreaFor(m => m.ProductKeyword, new { @class = "form-control limited autosize-transition", @required = "" })
+                                        @*<textarea class="form-control limited autosize-transition" required id="HtmlPageKeyword" name="HtmlPageKeyword" maxlength="150">@Model.HtmlPageKeyword</textarea>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageSummary">Tóm tắt:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        <textarea class="form-control limited autosize-transition" required id="ProductSummary" name="ProductSummary">@Model.ProductSummary</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageSummary">Slogan:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="text" name="ProductSlogan" id="ProductSlogan" class="col-xs-12 col-sm-6" value="@Model.ProductSlogan" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageSummary">Mô tả:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        @Html.TextAreaFor(model => model.ProductDescription)
+                                        <script>
+                                            CKEDITOR.replace('ProductDescription', { customConfig: '/Areas/Admin/Content/ckeditor/config.js' });
+                                        </script>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="ProductPrice">Giá sản phẩm:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        <input type="number" name="ProductPrice" id="ProductPrice" class="col-xs-12 col-sm-6" value="@Model.ProductPrice.ToString("#.##")" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="Quality">Số lượng sản phẩm:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        <input type="number" name="Quality" id="Quality" class="col-xs-12 col-sm-6" value="@Model.Quality" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="HtmlPageSummary">Ảnh:</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="clearfix">
+                                        @Html.TextBoxFor(model => model.ProductImage)
+                                        <button type="button" id="btnBrowser" class="btn btn-sm btn-success" onclick="Browser();">Browser...</button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="OrderNo">Thứ tự:</label>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="number" name="OrderNo" id="OrderNo" class="col-xs-12 col-sm-1" value="@Model.OrderNo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @{var check = Model.IsActive ? "checked" : "";}
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="IsActive">Trạng thái:</label>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="IsActive" type="checkbox" class="ace" value="true" @check>
+
+                                        <span class="lbl">Ẩn/Hiện sản phẩm</span>
+                                        <input name="IsActive" type="hidden" value="false" />
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @{var checkhot = Model.IsHotProduct ? "checked" : "";}
+                                <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="IsHotProduct">Trạng thái:</label>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="IsHotProduct" type="checkbox" class="ace" value="true" @checkhot>
+
+                                        <span class="lbl">Sản phẩm Hot </span>
+                                        <input name="IsHotProduct" type="hidden" value="false" />
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <input type="submit" class="btn btn-success" value="Lưu" />
+                        }
+</div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+<script type="text/javascript">
+    function Delete(id, title) {
+        bootbox.confirm("Are you sure to delete " + title + " ?", function (result) {
+            if (result) {
+                $("#NewsId").val(id);
+                $('#manageForm').attr('action', '@(Url.Action("Delete"))').submit();
+            }
+        });
+    }
+    $('textarea[class*=autosize]').autosize({ append: "\n" });
+    $('textarea.limited').inputlimiter({
+        remText: '%n character%s remaining...',
+        limitText: 'max allowed : %n.'
+    });
+</script>
+
+<script type="text/javascript">
+    setAdminCurrentUrl('@Url.Action("Search", "Product")');
+</script>

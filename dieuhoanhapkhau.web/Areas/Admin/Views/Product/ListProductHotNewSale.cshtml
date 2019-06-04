@@ -1,0 +1,53 @@
+﻿@using dieuhoanhapkhau.biz.Models
+@model Product
+@{
+    ViewBag.Title = "Danh sách sản phẩm ";
+    var listpro = ViewData["ListHotNewSaleProduct"] as List<Product>;
+}
+<div class="row modernHBold" style="margin-top:20px;margin-bottom:30px">
+    @if (listpro.Count > 0)
+    {
+
+
+
+        foreach (Product itemprd in listpro)
+        {
+            <div class="col-md-3 col-sm-6 itemlistproduct">
+                <a href="@Url.Action("Detail", "Product", new {productcode = itemprd.ProductCode})">
+                    @if (itemprd.IsHotProduct)
+                    {
+                        <div class="listhotcar-img">
+                            <img src="@itemprd.ProductImage" class="img-responsive" style="" alt="@itemprd.ProductName" />
+                        </div>
+                    }
+                    else if (itemprd.IsNewProduct)
+                    {
+                        <div class="listnewcar-img">
+                            <img src="@itemprd.ProductImage" class="img-responsive" style="" alt="@itemprd.ProductName" />
+                        </div>
+                    }
+                    else if (itemprd.IsSaleProduct)
+                    {
+                        <div class="listsalecar-img">
+                            <img src="@itemprd.ProductImage" class="img-responsive" style="" alt="@itemprd.ProductName" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="listcar-img">
+                            <img src="@itemprd.ProductImage" class="img-responsive" style="" alt="@itemprd.ProductName" />
+                        </div>
+                    }
+                    <div class="list-carname ">@itemprd.ProductName</div>
+
+                </a>
+                <div class="list-carsologan ">@itemprd.ProductSlogan</div>
+
+            </div>
+
+
+
+
+        }
+    }
+</div>

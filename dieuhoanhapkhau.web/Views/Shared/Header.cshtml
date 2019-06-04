@@ -1,0 +1,169 @@
+﻿@using System.Net.Mime;
+@using dieuhoanhapkhau.biz.Services;
+@using dieuhoanhapkhau.biz.Models;
+@using dieuhoanhapkhau.web.Models;
+@{
+    /**/
+    Layout = null;
+    var news = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("tin-tuc", Culture);
+    var about = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("gioi-thieu", Culture);
+    var baogiavattu = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("bao-gia-vat-tu", Culture);
+    var contact = dieuhoanhapkhau.biz.Services.ServiceFactory.HtmlPageCategoryManager.GetAllActiveByShortName("lien-he", Culture);
+    var listcate = dieuhoanhapkhau.biz.Services.ServiceFactory.ProductCategoryManager.ListAllProductCategory(Culture);
+    var listPrdCate = dieuhoanhapkhau.biz.Services.ServiceFactory.ProductCategoryManager.ListAllProductCategory(Culture);
+    var listCategories = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(0, Culture);
+}
+
+<header class="header">
+    <div class="mobile-hotline uk-hidden-large">
+        <span class="label1">Hotline: </span>
+        <a href="tel:0987.349.590">0987.349.590</a>
+    </div>
+    <section class="top_heard">
+        <div class="uk-container uk-container-center">
+            <div class="top_header">
+                <div class="uk-grid uk-grid-collapse uk-flex-middle" style="display: block;">
+
+                    <div class="logos uk-width-large-1-5">
+                        <div class="logo">
+                            <a href="@Url.Action("Index","Home")" title="CÔNG TY TNHH THẾ GIỚI ĐIỆN LẠNH GIA ĐÌNH">
+                                <img src="~/images/logo.png" alt="CÔNG TY TNHH THẾ GIỚI ĐIỆN LẠNH GIA ĐÌNH">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="logos uk-width-large-2-5">
+
+                        <div class="vnt-hotline">Giờ làm việc:  <span>7h30 sáng - 8h tối (24/7)</span></div>
+
+                        <div class="header-search">
+                            <form action="@Url.Action("Search","Home")" method="post" class="uk-form form">
+                               
+                                <input type="text" name="txtSearch" id="txtSearch" class="uk-width-1-1 input-text" placeholder="Nhập từ khóa tìm kiếm">
+                                <button type="submit" name="submit" class="btn-submit">Tìm kiếm</button>
+                            </form>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="right-box uk-width-large-2-5" style="float: right;">
+
+                        <div class="hotline">
+                            <img src="/images/hotline-home.png" alt="Hotline">
+                            <div class="cart_box">
+                                <a class="item_cart" href="@Url.Action("OrderDetail","ProductAction")">
+                                    @{
+                                        ShoppingCartModels modelCart = new ShoppingCartModels();
+                                        modelCart.Cart = (Carts)System.Web.HttpContext.Current.Session["Cart"];
+                                        if (modelCart.Cart != null)
+                                        {
+                                            var listItemCart = modelCart.Cart.ListItem as List<CartItem>;
+                                            var count = 0;
+                                            if (listItemCart.Count > 0 && listItemCart != null)
+                                            {
+                                                foreach (var item in listItemCart)
+                                                {
+                                                    count += item.Quantity;
+                                                }
+
+                                            }
+                                            
+                                            <span class="quantity" id="cartQuanlity">@count</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="quantity" id="cartQuanlity">0</span>
+                                        }
+                                    }
+
+                                </a>
+                            </div>
+                        </div>
+
+                        <ul class="menu-top">
+                            <li>
+                                <a href="tel: 0987.349.590" class="link">
+                                    Tư vấn công trình 0987.349.590
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        function setActive() {
+            var aObj = document.getElementById('menu2').getElementsByTagName('a');
+            for (i = 0; i < aObj.length; i++) {
+                if (aObj[i].href == document.location.href)
+                    aObj[i].className = 'menu_select';
+            }
+        }
+        window.onload = setActive;</script>
+    <section class="lower">
+        <div class="uk-container uk-container-center">
+            <div class="header_header">
+                <div class="mobile-menu uk-hidden-large">
+                    <a href="#offcanvas" class="offcanvas-bar" data-uk-offcanvas="{target:'#offcanvas'}"><i class="fa fa-bars"></i></a>
+                </div>
+                <div class="uk-grid uk-grid-collapse uk-flex-middle" style="display: block;">
+
+                    <div class="right-box uk-width-large-4-4">
+                        <div class="bg_menu">
+
+
+                            <nav class="naviagtion uk-visible-large">
+                                <ul class="uk-navbar-nav uk-visible-large mainMenu" id="menu2">
+
+                                    <li><a href="@Url.Action("Index","Home")" title="Trang chủ">Trang chủ</a></li>
+                                    <li><a href="@Url.Action("About", "Home", new { shortname = "gioi-thieu", shortnamehtml = "gioi-thieu" }) " title="Giới thiệu">Giới thiệu</a></li>
+
+                                    @if (listcate != null)
+                                    {
+                                        foreach (ProductCategory item in listCategories)
+                                        {
+                                            var listProductCates = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(item.PrdCategoryId, Culture);
+                                            <li class="parent">
+
+                                                <a href="@Url.Action("GetByParentId","Products",new { parentId=item.PrdCategoryId})" class="link" title="@item.PrdCategoryTitle">@item.PrdCategoryTitle</a>
+
+                                                <div class="dropdownMenu multiple">
+                                                    <ul class="uk-list uk-clearfix subMenu">
+                                                        @foreach (ProductCategory item1 in listProductCates)
+                                                        {
+                                                            var itemProperties = ServiceFactory.ProductPropertyManager.GetByCateId(item1.PrdCategoryId);
+                                                            //var propItems = ServiceFactory.ProductCategoryManager.GetAllActiveByParentId(item1.PrdCategoryId, Culture);
+                                                            <li>
+                                                                <a href="@Url.Action("GetByParentId","Products",new { parentId=item1.PrdCategoryId})" title="@item1.PrdCategoryTitle"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> @item1.PrdCategoryTitle</a>
+
+                                                                <ul class="uk-list uk-clearfix subMenus">
+                                                                    @foreach (ProductProperty item2 in itemProperties)
+                                                                    {
+                                                                        <li><a href="@Url.Action("GetByPropertyShortName", "Products", new { shortname=item2.ShortName, culture=Culture})" title="@item2.ProductPropertyTitle">@item2.ProductPropertyTitle</a></li>
+
+                                                                    }
+                                                                </ul>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+
+                                    <li><a href="@Url.Action("ShowListNew", "HtmlPages", new { shortname = "tin-tuc", shortnamehtml = "tin-tuc" })" title="Tin tức">Tin tức</a></li>
+                                    <li><a href="@Url.Action("Contact", "Home", new { shortname = "lien-he", shortnamehtml = "lien-he" })" title="Liên hệ">Liên hệ</a></li>
+                                    <li><a href="@Url.Action("Baogiavattu", "Home", new { shortname = "bao-gia-vat-tu", shortnamehtml = "bao-gia-vat-tu" })" title="Báo giá vật tư">Báo giá vật tư</a></li>
+                                </ul>
+                            </nav>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- .lower -->
+</header>
